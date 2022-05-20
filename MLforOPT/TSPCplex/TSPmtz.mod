@@ -7,7 +7,7 @@
 // Data
 int n = ...;
 range cities = 1 .. n;
-int Cost[cities][cities] = ...;
+float Cost[cities][cities] = ...;
 
 
 // Decision variables xij
