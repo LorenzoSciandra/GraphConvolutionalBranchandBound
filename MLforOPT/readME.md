@@ -1,1 +1,1 @@
-In this second part of the thesis I use some machine learning approach like reinforcement learning or supervised learning to learn better heuristics for NP problems like TSP.
+Questa cartella contiene tutte le diverse risoluzioni per il TSP proposte per la tesi. Tutte useranno le 10 istanze presenti nella sottocartella Data e prese dalla libreria [http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/][TSPLIB].
