@@ -20,6 +20,16 @@ def convert(input_file, output_file):
     # let every list in the final_matrix of the same size of the len of final_matrix adding zeros at the end
     #final_matrix = np.pad(final_matrix, (0, len(final_matrix) - len(final_matrix[0])), 'constant', constant_values=(0))
 
+    n_nodes = len(final_matrix)
+    n_edges = 0
+
+    for row in final_matrix:
+        for element in row:
+            if element != 0:
+                n_edges += 1
+    
+    print("File: " + input_file  , "\tNumber of nodes: " + str(n_nodes), "\tNumber of edges: " + str(n_edges))
+
     lengths = []
     # save all the element of the list final_matrix in a txt file
     with open(output_file, 'w') as f:
@@ -36,7 +46,7 @@ def convert(input_file, output_file):
     for i in range(len(lengths)):
         if lengths[i] != lengths[0]:
             print('Error: the matrix is not square')
-            sys.exit()
+            sys.exit(0)
 
 def convert_all_file():
     """
