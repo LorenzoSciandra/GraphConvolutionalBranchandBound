@@ -1,1 +1,0 @@
-Questa cartella contiene tutte le diverse risoluzioni per il TSP proposte per la tesi. Tutte useranno le 10 istanze presenti nella sottocartella Data e prese dalla libreria [TSPLIB](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/).
