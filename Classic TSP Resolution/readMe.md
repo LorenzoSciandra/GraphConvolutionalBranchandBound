@@ -1,1 +1,1 @@
-Sono qua presentati i file d'implementazione del TSP secondo la formulazione Miller-Tucker-Zemlin, come modello di programmazione lineare intera, per eseguirlo su IBM ILOG CPLEX Optimization Studio.
+Here are presented the TSP implementation file according to the Miller-Tucker-Zemlin formulation, as an integer linear programming model, to run it on IBM ILOG CPLEX Optimization Studio.
