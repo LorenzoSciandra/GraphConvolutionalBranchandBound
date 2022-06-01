@@ -1,0 +1,1 @@
+These are the 10 instances of TSP that I have taken from the official [http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/](TSPLIB) library, and of which all the algorithms produced will be tested.
