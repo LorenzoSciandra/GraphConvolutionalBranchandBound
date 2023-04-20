@@ -12,7 +12,7 @@ Our approach outperforms all recently proposed autoregressive deep learning
 techniques in terms of solution quality, inference speed and sample efficiency 
 for problem instances of fixed graph sizes. 
 
-![model-blocks](res/model-blocks.png)
+![model-blocks](../../../../res/model-blocks.png)
 
 ## Overview
 
