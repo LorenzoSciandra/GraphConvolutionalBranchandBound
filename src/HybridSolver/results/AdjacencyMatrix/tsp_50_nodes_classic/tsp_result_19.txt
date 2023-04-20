@@ -1,0 +1,66 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_50_nodes/tsp_test_19.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_50_nodes_classic/tsp_result_19.txt'
+
+Optimal tour found with candidate node = 8, elapsed time = 9.168850s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 10712,  explored BBNodes = 6345 and max tree level = 19
+
+SUBPROBLEM with cost = 5.838665, type = CLOSED_NEW_BEST, level of the BB tree = 12, prob = 0.000000, BBNode number = 10597 and time to obtain = 8.904401s
+MST or 1-Tree with cost: 5.681897 and validity = TRUE
+Edge725: 17 <--> 45 weight = 0.220749 prob = 0.000000
+Edge1031: 29 <--> 45 weight = 0.128943 prob = 0.000000
+Edge854: 22 <--> 29 weight = 0.155752 prob = 0.000000
+Edge866: 22 <--> 41 weight = 0.073256 prob = 0.000000
+Edge1196: 41 <--> 48 weight = 0.041260 prob = 0.000000
+Edge924: 24 <--> 48 weight = 0.052122 prob = 0.000000
+Edge911: 24 <--> 35 weight = 0.166458 prob = 0.000000
+Edge1129: 35 <--> 44 weight = 0.039069 prob = 0.000000
+Edge590: 13 <--> 44 weight = 0.121977 prob = 0.000000
+Edge585: 13 <--> 39 weight = 0.117801 prob = 0.000000
+Edge1079: 32 <--> 39 weight = 0.121056 prob = 0.000000
+Edge1078: 32 <--> 38 weight = 0.088298 prob = 0.000000
+Edge686: 16 <--> 38 weight = 0.035938 prob = 0.000000
+Edge668: 16 <--> 20 weight = 0.098864 prob = 0.000000
+Edge804: 20 <--> 34 weight = 0.076003 prob = 0.000000
+Edge957: 26 <--> 34 weight = 0.111685 prob = 0.000000
+Edge959: 26 <--> 36 weight = 0.135604 prob = 0.000000
+Edge36: 0 <--> 36 weight = 0.067774 prob = 0.000000
+Edge31: 0 <--> 31 weight = 0.098010 prob = 0.000000
+Edge997: 28 <--> 31 weight = 0.068719 prob = 0.000000
+Edge928: 25 <--> 28 weight = 0.146759 prob = 0.000000
+Edge421: 9 <--> 25 weight = 0.021383 prob = 0.000000
+Edge195: 4 <--> 9 weight = 0.152359 prob = 0.000000
+Edge229: 4 <--> 43 weight = 0.053322 prob = 0.000000
+Edge784: 19 <--> 43 weight = 0.101396 prob = 0.000000
+Edge67: 1 <--> 19 weight = 0.222602 prob = 0.000000
+Edge95: 1 <--> 47 weight = 0.099817 prob = 0.000000
+Edge662: 15 <--> 47 weight = 0.130795 prob = 0.000000
+Edge664: 15 <--> 49 weight = 0.011499 prob = 0.000000
+Edge847: 21 <--> 49 weight = 0.240954 prob = 0.000000
+Edge840: 21 <--> 42 weight = 0.175990 prob = 0.000000
+Edge1201: 42 <--> 46 weight = 0.144371 prob = 0.000000
+Edge627: 14 <--> 46 weight = 0.010413 prob = 0.000000
+Edge113: 2 <--> 18 weight = 0.063166 prob = 0.000000
+Edge285: 6 <--> 12 weight = 0.083836 prob = 0.000000
+Edge355: 7 <--> 40 weight = 0.074596 prob = 0.000000
+Edge491: 11 <--> 18 weight = 0.189471 prob = 0.000000
+Edge153: 3 <--> 12 weight = 0.116181 prob = 0.000000
+Edge878: 23 <--> 27 weight = 0.046492 prob = 0.000000
+Edge884: 23 <--> 33 weight = 0.043947 prob = 0.000000
+Edge1038: 30 <--> 33 weight = 0.044285 prob = 0.000000
+Edge462: 10 <--> 27 weight = 0.146951 prob = 0.000000
+Edge621: 14 <--> 40 weight = 0.168136 prob = 0.000000
+Edge326: 7 <--> 11 weight = 0.196243 prob = 0.000000
+Edge178: 3 <--> 37 weight = 0.134201 prob = 0.000000
+Edge303: 6 <--> 30 weight = 0.321246 prob = 0.000000
+Edge267: 5 <--> 37 weight = 0.082962 prob = 0.000000
+Edge105: 2 <--> 10 weight = 0.337182 prob = 0.000000
+Edge373: 8 <--> 17 weight = 0.173155 prob = 0.000000
+Edge238: 5 <--> 8 weight = 0.085619 prob = 0.000000
+
+Cycle with 50 edges:  8 <-> 17   17 <-> 45   29 <-> 45   22 <-> 29   22 <-> 41   41 <-> 48   24 <-> 48   24 <-> 35   35 <-> 44   13 <-> 44   13 <-> 39   32 <-> 39   32 <-> 38   16 <-> 38   16 <-> 20   20 <-> 34   26 <-> 34   26 <-> 36   0 <-> 36   0 <-> 31   28 <-> 31   25 <-> 28   9 <-> 25   4 <-> 9   4 <-> 43   19 <-> 43   1 <-> 19   1 <-> 47   15 <-> 47   15 <-> 49   21 <-> 49   21 <-> 42   42 <-> 46   14 <-> 46   14 <-> 40   7 <-> 40   7 <-> 11   11 <-> 18   2 <-> 18   2 <-> 10   10 <-> 27   23 <-> 27   23 <-> 33   30 <-> 33   6 <-> 30   6 <-> 12   3 <-> 12   3 <-> 37   5 <-> 37   5 <-> 8 
+34 Mandatory edges:  8 <-> 17   17 <-> 45   29 <-> 45   22 <-> 29   22 <-> 41   41 <-> 48   24 <-> 48   24 <-> 35   35 <-> 44   13 <-> 44   13 <-> 39   32 <-> 39   32 <-> 38   16 <-> 38   16 <-> 20   20 <-> 34   26 <-> 34   26 <-> 36   0 <-> 36   0 <-> 31   28 <-> 31   25 <-> 28   9 <-> 25   4 <-> 9   4 <-> 43   19 <-> 43   1 <-> 19   1 <-> 47   15 <-> 47   15 <-> 49   21 <-> 49   21 <-> 42   42 <-> 46   14 <-> 46 
+12 Forbidden edges:  12 <-> 17   35 <-> 41   21 <-> 47   47 <-> 49   2 <-> 38   2 <-> 16   2 <-> 32   18 <-> 38   18 <-> 20   23 <-> 46   8 <-> 45   14 <-> 23 
+Time taken: 9.17334794998169s

@@ -1,0 +1,1 @@
+These 10 TSP instances were obtained from the [TSPLIB subfolder](./TSPLIB/) using a Python converter,[`converter_tsp_to_dat.py`](./TSPLIB/converter_tsp_to_dat.py) that I created to transform `.tsp` files into `.dat` files suitable for running on the [`TSPmtz.mod`](../TSPmtz.mod) program.

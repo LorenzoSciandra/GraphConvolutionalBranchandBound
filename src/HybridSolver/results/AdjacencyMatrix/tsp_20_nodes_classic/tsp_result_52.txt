@@ -1,0 +1,36 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_52.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_52.txt'
+
+Optimal tour found with candidate node = 6, elapsed time = 0.041099s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 300,  explored BBNodes = 189 and max tree level = 8
+
+SUBPROBLEM with cost = 4.085590, type = CLOSED_NEW_BEST, level of the BB tree = 4, prob = 0.000000, BBNode number = 193 and time to obtain = 0.008213s
+MST or 1-Tree with cost: 4.195377 and validity = TRUE
+Edge118: 7 <--> 13 weight = 0.336923 prob = 0.000000
+Edge73: 4 <--> 7 weight = 0.111602 prob = 0.000000
+Edge78: 4 <--> 12 weight = 0.151818 prob = 0.000000
+Edge155: 11 <--> 12 weight = 0.207050 prob = 0.000000
+Edge91: 5 <--> 11 weight = 0.209537 prob = 0.000000
+Edge23: 1 <--> 5 weight = 0.085629 prob = 0.000000
+Edge33: 1 <--> 15 weight = 0.212182 prob = 0.000000
+Edge141: 9 <--> 15 weight = 0.150947 prob = 0.000000
+Edge145: 9 <--> 19 weight = 0.093939 prob = 0.000000
+Edge154: 10 <--> 19 weight = 0.154450 prob = 0.000000
+Edge153: 10 <--> 18 weight = 0.089876 prob = 0.000000
+Edge69: 3 <--> 18 weight = 0.337552 prob = 0.000000
+Edge8: 0 <--> 8 weight = 0.166299 prob = 0.000000
+Edge51: 2 <--> 16 weight = 0.167986 prob = 0.000000
+Edge177: 14 <--> 16 weight = 0.275369 prob = 0.000000
+Edge59: 3 <--> 8 weight = 0.457774 prob = 0.000000
+Edge2: 0 <--> 2 weight = 0.277937 prob = 0.000000
+Edge178: 14 <--> 17 weight = 0.367399 prob = 0.000000
+Edge106: 6 <--> 13 weight = 0.019639 prob = 0.000000
+Edge110: 6 <--> 17 weight = 0.211683 prob = 0.000000
+
+Cycle with 20 edges:  6 <-> 13   7 <-> 13   4 <-> 7   4 <-> 12   11 <-> 12   5 <-> 11   1 <-> 5   1 <-> 15   9 <-> 15   9 <-> 19   10 <-> 19   10 <-> 18   3 <-> 18   3 <-> 8   0 <-> 8   0 <-> 2   2 <-> 16   14 <-> 16   14 <-> 17   6 <-> 17 
+13 Mandatory edges:  6 <-> 13   7 <-> 13   4 <-> 7   4 <-> 12   11 <-> 12   5 <-> 11   1 <-> 5   1 <-> 15   9 <-> 15   9 <-> 19   10 <-> 19   10 <-> 18   3 <-> 18 
+4 Forbidden edges:  1 <-> 9   1 <-> 8   2 <-> 3   8 <-> 19 
+Time taken: 0.043851613998413086s

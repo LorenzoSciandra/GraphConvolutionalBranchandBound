@@ -1,0 +1,16 @@
+MEAN RESULTS for 100 instances
+
+Mean total time: 0.028303890228271483s
+Mean BB time: 0.02584911999999999s
+Mean total tree level: 4.72
+Mean generated BBNodes: 228.69
+Mean explored BBNodes: 170.04
+Percentage of resolved instances: 100.0%
+Percentage of feasible solutions found: 100.0%
+Mean time to best: 0.008555019999999998s
+Mean best level: 1.49
+Mean prob best: 0.0
+Mean BBNodes before best: 110.47
+Mean best value: 3.8051686400000007
+Mean mandatory edges: 3.37
+Mean forbidden edges: 1.49

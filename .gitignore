@@ -1,0 +1,5 @@
+.vscode/*
+
+res/docs/Doxyfile
+res/docs/html/*
+res/docs/latex/*

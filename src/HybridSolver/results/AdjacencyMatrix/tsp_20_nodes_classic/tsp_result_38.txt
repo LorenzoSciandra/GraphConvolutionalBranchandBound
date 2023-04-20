@@ -1,0 +1,36 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_38.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_38.txt'
+
+Optimal tour found with candidate node = 8, elapsed time = 0.001181s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
+
+SUBPROBLEM with cost = 4.072870, type = CLOSED_NEW_BEST, level of the BB tree = 0, prob = 0.000000, BBNode number = 0 and time to obtain = 0.000238s
+MST or 1-Tree with cost: 3.384318 and validity = TRUE
+Edge87: 5 <--> 7 weight = 0.071591 prob = 0.000000
+Edge22: 1 <--> 4 weight = 0.026222 prob = 0.000000
+Edge29: 1 <--> 11 weight = 0.032458 prob = 0.000000
+Edge9: 0 <--> 9 weight = 0.017007 prob = 0.000000
+Edge177: 14 <--> 16 weight = 0.198231 prob = 0.000000
+Edge64: 3 <--> 13 weight = 0.071785 prob = 0.000000
+Edge45: 2 <--> 10 weight = 0.399081 prob = 0.000000
+Edge172: 13 <--> 16 weight = 0.113800 prob = 0.000000
+Edge110: 6 <--> 17 weight = 0.092653 prob = 0.000000
+Edge184: 15 <--> 19 weight = 0.128958 prob = 0.000000
+Edge61: 3 <--> 10 weight = 0.209208 prob = 0.000000
+Edge95: 5 <--> 15 weight = 0.470335 prob = 0.000000
+Edge161: 11 <--> 18 weight = 0.179293 prob = 0.000000
+Edge179: 14 <--> 18 weight = 0.223237 prob = 0.000000
+Edge6: 0 <--> 6 weight = 0.156779 prob = 0.000000
+Edge114: 7 <--> 9 weight = 0.504881 prob = 0.000000
+Edge54: 2 <--> 19 weight = 0.513086 prob = 0.000000
+Edge167: 12 <--> 17 weight = 0.279871 prob = 0.000000
+Edge128: 8 <--> 12 weight = 0.112144 prob = 0.000000
+Edge74: 4 <--> 8 weight = 0.272252 prob = 0.000000
+
+Cycle with 20 edges:  8 <-> 12   12 <-> 17   6 <-> 17   0 <-> 6   0 <-> 9   7 <-> 9   5 <-> 7   5 <-> 15   15 <-> 19   2 <-> 19   2 <-> 10   3 <-> 10   3 <-> 13   13 <-> 16   14 <-> 16   14 <-> 18   11 <-> 18   1 <-> 11   1 <-> 4   4 <-> 8 
+0 Mandatory edges:
+0 Forbidden edges:
+Time taken: 0.0036706924438476562s

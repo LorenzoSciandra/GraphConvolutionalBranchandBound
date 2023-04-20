@@ -1,0 +1,36 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_33.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_33.txt'
+
+Optimal tour found with candidate node = 6, elapsed time = 0.001062s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 14,  explored BBNodes = 1 and max tree level = 1
+
+SUBPROBLEM with cost = 3.491404, type = CLOSED_NEW_BEST, level of the BB tree = 0, prob = 0.000000, BBNode number = 0 and time to obtain = 0.000195s
+MST or 1-Tree with cost: 3.273939 and validity = TRUE
+Edge162: 11 <--> 19 weight = 0.054691 prob = 0.000000
+Edge82: 4 <--> 16 weight = 0.276070 prob = 0.000000
+Edge128: 8 <--> 12 weight = 0.035757 prob = 0.000000
+Edge2: 0 <--> 2 weight = 0.056638 prob = 0.000000
+Edge12: 0 <--> 12 weight = 0.064108 prob = 0.000000
+Edge21: 1 <--> 3 weight = 0.133662 prob = 0.000000
+Edge73: 4 <--> 7 weight = 0.269250 prob = 0.000000
+Edge156: 11 <--> 13 weight = 0.114096 prob = 0.000000
+Edge145: 9 <--> 19 weight = 0.164466 prob = 0.000000
+Edge185: 16 <--> 17 weight = 0.278928 prob = 0.000000
+Edge174: 13 <--> 18 weight = 0.136036 prob = 0.000000
+Edge123: 7 <--> 18 weight = 0.155118 prob = 0.000000
+Edge32: 1 <--> 14 weight = 0.187845 prob = 0.000000
+Edge141: 9 <--> 15 weight = 0.123140 prob = 0.000000
+Edge94: 5 <--> 14 weight = 0.130316 prob = 0.000000
+Edge68: 3 <--> 17 weight = 0.378284 prob = 0.000000
+Edge50: 2 <--> 15 weight = 0.336445 prob = 0.000000
+Edge126: 8 <--> 10 weight = 0.335607 prob = 0.000000
+Edge103: 6 <--> 10 weight = 0.154126 prob = 0.000000
+Edge86: 5 <--> 6 weight = 0.106822 prob = 0.000000
+
+Cycle with 20 edges:  6 <-> 10   8 <-> 10   8 <-> 12   0 <-> 12   0 <-> 2   2 <-> 15   9 <-> 15   9 <-> 19   11 <-> 19   11 <-> 13   13 <-> 18   7 <-> 18   4 <-> 7   4 <-> 16   16 <-> 17   3 <-> 17   1 <-> 3   1 <-> 14   5 <-> 14   5 <-> 6 
+0 Mandatory edges:
+0 Forbidden edges:
+Time taken: 0.003481149673461914s

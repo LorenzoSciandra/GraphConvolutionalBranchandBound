@@ -1,0 +1,36 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_94.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_94.txt'
+
+Optimal tour found with candidate node = 15, elapsed time = 0.000777s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
+
+SUBPROBLEM with cost = 3.763766, type = CLOSED_HAMILTONIAN, level of the BB tree = 0, prob = 0.000000, BBNode number = 0 and time to obtain = 0.000110s
+MST or 1-Tree with cost: 3.763766 and validity = TRUE
+Edge187: 16 <--> 19 weight = 0.202539 prob = 0.000000
+Edge154: 10 <--> 19 weight = 0.288600 prob = 0.000000
+Edge45: 2 <--> 10 weight = 0.033583 prob = 0.000000
+Edge2: 0 <--> 2 weight = 0.078355 prob = 0.000000
+Edge11: 0 <--> 11 weight = 0.168705 prob = 0.000000
+Edge77: 4 <--> 11 weight = 0.046311 prob = 0.000000
+Edge72: 4 <--> 6 weight = 0.116159 prob = 0.000000
+Edge24: 1 <--> 6 weight = 0.197061 prob = 0.000000
+Edge23: 1 <--> 5 weight = 0.207478 prob = 0.000000
+Edge87: 5 <--> 7 weight = 0.020870 prob = 0.000000
+Edge58: 3 <--> 7 weight = 0.059385 prob = 0.000000
+Edge60: 3 <--> 9 weight = 0.425797 prob = 0.000000
+Edge141: 9 <--> 15 weight = 0.203689 prob = 0.000000
+Edge131: 8 <--> 15 weight = 0.092292 prob = 0.000000
+Edge129: 8 <--> 13 weight = 0.258683 prob = 0.000000
+Edge170: 13 <--> 14 weight = 0.449980 prob = 0.000000
+Edge164: 12 <--> 14 weight = 0.210869 prob = 0.000000
+Edge167: 12 <--> 17 weight = 0.087572 prob = 0.000000
+Edge188: 17 <--> 18 weight = 0.086804 prob = 0.000000
+Edge186: 16 <--> 18 weight = 0.529036 prob = 0.000000
+
+Cycle with 20 edges:  16 <-> 19   19 <-> 10   10 <-> 2   2 <-> 0   0 <-> 11   11 <-> 4   4 <-> 6   6 <-> 1   1 <-> 5   5 <-> 7   7 <-> 3   3 <-> 9   9 <-> 15   15 <-> 8   8 <-> 13   13 <-> 14   14 <-> 12   12 <-> 17   17 <-> 18   18 <-> 16 
+0 Mandatory edges:
+0 Forbidden edges:
+Time taken: 0.002576589584350586s

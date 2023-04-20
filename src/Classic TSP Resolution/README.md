@@ -1,1 +1,0 @@
-Here there is the TSP implementation according to the Miller-Tucker-Zemlin formulation, as an integer linear programming model, to run on IBM ILOG CPLEX Optimization Studio. In the folder **Data** there is also a python converter (`converter_tsp_to_dat.py`) which turns .tsp files into .dat files to run on my `TSPmtz.mod` program.

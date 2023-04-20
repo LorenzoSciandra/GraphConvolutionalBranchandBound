@@ -1,0 +1,1 @@
+These 10 TSP instances were taken from [TSPLIB](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/) and were used to compare the performance of the [Cplex Solver](../../TSPmtz.mod) with that of [Concorde](https://www.math.uwaterloo.ca/tsp/concorde/index.html) and [LKH3](http://akira.ruc.dk/~keld/research/LKH/).

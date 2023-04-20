@@ -1,0 +1,5 @@
+# Data
+
+This directory contains all the data files that can be used as input for the Hybrid Solver. There are two different types of input files:
+- **Adjacency Matrix**: s `.csv` file that contains the adjacency matrix of the graph. Each entry in the matrix is a pair of real values $(w_{ij}, p_{ij})$, where $w_{ij}$ represents the weight of the edge between nodes $i$ and $j$, and $p_{ij}$ is the probability of that edge being in the optimal tour. The Hybrid Solver can be run similarly to the 1-Tree B-&-B method proposed by Held and Karp, and therefore the values of $p_{ij}$ are not considered;
+- **TSPLIB**: A `.tsp` file that contains the problem data in the TSPLIB `EUC_2D` format. Each row of the file contains the coordinates of a node in the graph, and the edges are determined by calculating the Euclidean distance between them. As the TSPLIB format does not include the probability of the edges being in the optimal tour, this data file can only be used with the classic 1-Tree B-&-B method.
