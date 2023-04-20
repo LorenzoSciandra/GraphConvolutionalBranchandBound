@@ -31,14 +31,14 @@ Here are the mean values obtained on 100 instances for each Graph size. In each 
 |   *20 nodes             100 instances          max 10 minutes*   |||
 |                           |                    |                   |
 | Total time (s)            | **0.028**          | 1.494             |
-| B-and-B time (s)          | 0.025              | **0.020**         |
-| B-and-B tree depth        | 4.72               | **3.94**          |
-| Generated B-and-B nodes   | 228.69             | **147.95**        |
-| Explored B-and-B nodes    | 170.04             | **142.8**         |
+| B-&-B time (s)            | 0.025              | **0.020**         |
+| B-&-B tree depth          | 4.72               | **3.94**          |
+| Generated B-&-B nodes     | 228.69             | **147.95**        |
+| Explored B-&-B nodes      | 170.04             | **142.8**         |
 | Best value                | 3.805              | 3.805             |
 | Time to Best (s)          | 0.008              | **0.002**         |
 | Depth of the best         | 1.49               | **0.32**          |
-| B-and-B nodes before best | 110.47             | **19.62**         |
+| B-&-B nodes before best   | 110.47             | **19.62**         |
 | Probability of the best   | -                  | 0.974             |
 | Mandatory edges in best   | 3.37               | 0.72              |
 | Forbidden edges in best   | 1.49               | 0.32              |
@@ -46,14 +46,14 @@ Here are the mean values obtained on 100 instances for each Graph size. In each 
 |   *50 nodes             100 instances             max 10 minutes* |||
 |                           |                    |                   |
 | Total time (s)            | 24.931             | **16.512**        |
-| B-and-B time (s)          | 24.922             | **14.633**        |
-| B-and-B tree depth        | 13.57              | **12.44**         |
-| Generated B-and-B nodes   | 18384.37           | **10519.63**      |
-| Explored B-and-B nodes    | 9850.52            | **9225.95**       |
+| B-&-B time (s)            | 24.922             | **14.633**        |
+| B-&-B tree depth          | 13.57              | **12.44**         |
+| Generated B-&-B nodes     | 18384.37           | **10519.63**      |
+| Explored B-&-B nodes      | 9850.52            | **9225.95**       |
 | Best value                | 5.678              | 5.678             |
 | Time to Best (s)          | 17.555             | **2.825**         |
 | Depth of the best         | 6.33               | **1.6**           |
-| B-and-B nodes before best | 13084.21           | **2224.68**       |
+| B-&-B nodes before best   | 13084.21           | **2224.68**       |
 | Probability of the best   | -                  | 0.988             |
 | Mandatory edges in best   | 23.08              | 5.0               |
 | Forbidden edges in best   | 6.33               | 1.6               |
@@ -61,14 +61,14 @@ Here are the mean values obtained on 100 instances for each Graph size. In each 
 |   *100 nodes*            *100 instances*       *max 10 minutes*  |||
 |                           |                    |                   |
 | Total time (s)            | 188.989            | **103.150**       |
-| B-and-B time (s)          | 188.870            | **98.586**        |
-| B-and-B tree depth        | 14.37              | **12.49**         |
-| Generated B-and-B nodes   | 37802.4            | **13214.54**      |
-| Explored B-and-B nodes    | 10199.05           | **7207.29**       |
+| B-&-B time (s)            | 188.870            | **98.586**        |
+| B-&-B tree depth          | 14.37              | **12.49**         |
+| Generated B-&-B nodes     | 37802.4            | **13214.54**      |
+| Explored B-&-B nodes      | 10199.05           | **7207.29**       |
 | Best value                | 7.753              | 7.751             |
 | Time to Best (s)          | 128.527            | **39.935**        |
 | Depth of the best         | 7.61               | **3.49**          |
-| B-and-B nodes before best | 26659.2            | **6652.21**       |
+| B-&-B nodes before best   | 26659.2            | **6652.21**       |
 | Probability of the best   | -                  | 0.994             |
 | Mandatory edges in best   | 50.46              | 21.71             |
 | Forbidden edges in best   | 7.61               | 3.49              |
