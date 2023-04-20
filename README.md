@@ -4,14 +4,14 @@ This repository contains my implementation of a hybrid TSP solver for my master'
 
 ## Idea 
 
-My approach involves using the Graph Conv Net to preprocess the input Graph to create a distance matrix file. Each entry in this file will be a pair \f$(w_{ij}, p_{ij})\f$, where \f$w_{ij}\f$ is the weight of the Edge between nodes \f$i\f$ and \f$j\f$, computed as the euclidean distance, and \f$p_{ij} \in [0,1]\f$ is the probability, obtained by the neural network, that the corresponding Edge is part of the optimal tour. I will leverage this probabilistic information to expedite the exploration of the branch and bound tree.
+My approach involves using the Graph Conv Net to preprocess the input Graph to create a distance matrix file. Each entry in this file will be a pair $(w_{ij}, p_{ij})$, where $w_{ij}$ is the weight of the Edge between nodes $i$ and $j$, computed as the euclidean distance, and $p_{ij} \in [0,1]$ is the probability, obtained by the neural network, that the corresponding Edge is part of the optimal tour. I will leverage this probabilistic information to expedite the exploration of the branch and bound tree.
 
 ## 1-Tree Branch and Bound
 
 To improve efficiency, the original 1-Tree Branch and Bound approach proposed by Held and Karp was not implemented. Instead, a modified version, well described in the [Valenzuela and Jones](https://www.sciencedirect.com/science/article/abs/pii/S0377221796002147?via%3Dihub) paper, was used. For each Node in the branch-and-bound tree, the associated 1-Tree is reformulated by performing a linear number of dual ascent steps to enhance the lower and upper bounds.
 ## Graph Convolutional Network
 
-I utilized the pre-trained Graph Conv Nets that Joshi released in the [official repository](https://github.com/chaitjo/graph-convnet-tsp) of the paper. These networks were trained on one million instances of Euclidean TSP, with cities sampled from the range \f$[0,1] \times [0,1]\f$ and sizes of 20, 50, and 100 nodes. The edge embeddings from the last convolutional layer were transformed into a **probabilistic adjacency matrix** using a multi-layer perceptron with softmax.
+I utilized the pre-trained Graph Conv Nets that Joshi released in the [official repository](https://github.com/chaitjo/graph-convnet-tsp) of the paper. These networks were trained on one million instances of Euclidean TSP, with cities sampled from the range $[0,1] \times [0,1]$ and sizes of 20, 50, and 100 nodes. The edge embeddings from the last convolutional layer were transformed into a **probabilistic adjacency matrix** using a multi-layer perceptron with softmax.
 
 ## Neural Grafting
 
