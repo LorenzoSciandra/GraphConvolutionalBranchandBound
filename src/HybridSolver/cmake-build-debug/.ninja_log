@@ -1,0 +1,19 @@
+# ninja log v5
+2	241	1699796808684167109	CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o	d15e634139533730
+241	341	1699796808784168685	CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o	4ae84ec02a49aca0
+2	133	1699796808576165407	CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o	5dd8ffb4bbf59c55
+3	41	1699874651886840944	build.ninja	94fc1ba5ae8cf03a
+193	285	1699796808728167803	CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o	384e64e4061b5ccf
+117	192	1699796808636166353	CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o	771e0997f117414b
+1	110	1699796808552165029	CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.o	f3c12c5e6e4d9d64
+111	206	1699796808648166542	CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o	93a6383c3dc8f124
+133	207	1699796808648166542	CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o	a94b4fa2307a8229
+1	138	1699796808580165470	CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o	46c9fbfe62bb9d04
+354	400	1699796808844169631	BranchAndBound1Tree	453dd70251b0c938
+207	312	1699796808756168244	CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o	783e64ae392459dc
+152	287	1699796808732167866	CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o	2582fea297d9bc52
+138	275	1699796808716167613	CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o	eaebe766fb4a4e13
+3	152	1699796808596165722	CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o	a705e63aae3944df
+275	353	1699796808796168874	CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o	d8763e68fee580e8
+2	117	1699796808560165155	CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o	b17e34f1df4bcd3d
+208	294	1699796808736167929	CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o	8d0121a72748c505

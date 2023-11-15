@@ -29,6 +29,8 @@ static Problem * problem;
 void dfs(SubProblem *subProblem);
 
 
+void hyb_branch_ordering(SubProblem *subProblem);
+
 //!This function is used to check if the 1Tree of a SubProblem is a tour.
 /**
  * @brief This is done by simply check if all the edges are in the cycle passing through the candidate Node.

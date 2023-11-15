@@ -71,6 +71,7 @@ void dfs(SubProblem *subProblem) {
             Edge current_in_cycle = problem->graph.edges_matrix[fromNode][toNode];
             subProblem->cycleEdges[subProblem->num_edges_in_cycle].src = current_in_cycle.src;
             subProblem->cycleEdges[subProblem->num_edges_in_cycle].dest = current_in_cycle.dest;
+            subProblem->cycleEdges[subProblem->num_edges_in_cycle].prob = current_in_cycle.prob;
             subProblem->num_edges_in_cycle++;
             toNode = fromNode;
         }
@@ -78,9 +79,29 @@ void dfs(SubProblem *subProblem) {
 
 }
 
+int compare_func (const void * a, const void * b){
+    ConstrainedEdge *edge_a = (ConstrainedEdge *) a;
+    ConstrainedEdge *edge_b = (ConstrainedEdge *) b;
+
+    if(edge_a->prob > edge_b->prob){
+        return +1;
+    }else if(edge_a->prob < edge_b->prob){
+        return 1;
+    }
+    return 0;
+}
+
+void hyb_branch_ordering(SubProblem *subProblem){
+    // order edges in the cycle by probability decreasing
+    qsort(subProblem->cycleEdges, subProblem->num_edges_in_cycle, sizeof(ConstrainedEdge), compare_func);
+}
+
 
 bool check_hamiltonian(SubProblem *subProblem) {
     dfs(subProblem);
+    if(HYBRID){
+        hyb_branch_ordering(subProblem);
+    }
     return subProblem->num_edges_in_cycle == subProblem->oneTree.num_edges;
 }
 
@@ -185,11 +206,15 @@ void copy_constraints(SubProblem *subProblem, const SubProblem *otherSubProblem)
 }
 
 
+bool better_than_best(SubProblem *subProblem) {
+    return problem->bestValue - subProblem->value > EPSILON;
+}
+
 // a better than b?
 bool compare_subproblems(const SubProblem *a, const SubProblem *b) {
     if (HYBRID) {
         return ((b->value - a->value) > EPSILON) ||
-               (((b->value - a->value) > EPSILON2) && ((a->prob - b->prob) >= BETTER_PROB));
+                ((b->value - a->value >= EPSILON2) && ((a->prob - b->prob) >= BETTER_PROB));
     } else {
         return (b->value - a->value) > EPSILON;
     }
@@ -263,7 +288,7 @@ void branch(SubProblemsList *openSubProblems, const SubProblem *currentSubProble
 
 void held_karp_bound(SubProblem *currentSubProb) {
 
-    if (compare_subproblems(currentSubProb, &problem->bestSolution) || currentSubProb->treeLevel == 0) {
+    if (better_than_best(currentSubProb) || currentSubProb->treeLevel == 0) {
         problem->exploredBBNodes++;
         float pi[MAX_VERTEX_NUM] = {0};
         float v[MAX_VERTEX_NUM] = {0};
@@ -312,7 +337,7 @@ void held_karp_bound(SubProblem *currentSubProb) {
                         analyzedSubProblem.value += problem->graph.edges_matrix[edge->src][edge->dest].weight;
                     }
 
-                    bool better_value = compare_subproblems(&analyzedSubProblem, &problem->bestSolution);
+                    bool better_value = better_than_best(&analyzedSubProblem);
                     if (!better_value) {
                         analyzedSubProblem.type = CLOSED_BOUND;
                     } else {

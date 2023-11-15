@@ -20,6 +20,7 @@
 typedef struct ConstrainedEdge{
     unsigned short src; ///< The source Node of the Edge.
     unsigned short dest; ///< The destination Node of the Edge.
+    float prob; ///< Probability of the Edge to be in an optimal tour.
 }ConstrainedEdge;
 
 

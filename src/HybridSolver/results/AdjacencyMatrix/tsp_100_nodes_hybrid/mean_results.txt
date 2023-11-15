@@ -1,16 +1,16 @@
-MEAN RESULTS for 100 instances
+MEAN RESULTS for 10 instances
 
-Mean total time: 103.15012925624848s
-Mean BB time: 98.58664508000001s
-Mean total tree level: 12.49
-Mean generated BBNodes: 13214.54
-Mean explored BBNodes: 7207.29
+Mean total time: 116.27053830623626s
+Mean BB time: 110.94215609999999s
+Mean total tree level: 12.8
+Mean generated BBNodes: 11771.8
+Mean explored BBNodes: 8063.0
 Percentage of resolved instances: 100.0%
 Percentage of feasible solutions found: 100.0%
-Mean time to best: 39.93527108999999s
-Mean best level: 3.49
-Mean prob best: 0.9945824099999997
-Mean BBNodes before best: 6652.21
-Mean best value: 7.751458789999997
-Mean mandatory edges: 21.71
-Mean forbidden edges: 3.49
+Mean time to best: 47.4779515s
+Mean best level: 4.4
+Mean prob best: 0.9897914999999999
+Mean BBNodes before best: 7242.8
+Mean best value: 7.766903999999999
+Mean mandatory edges: 33.5
+Mean forbidden edges: 4.4
