@@ -1,0 +1,118 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_100_nodes/tsp_test_53.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_100_nodes_hybrid/tsp_result_53.txt'
+
+Optimal tour found with candidate node = 64, elapsed time = 10.170400s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 5903,  explored BBNodes = 785 and max tree level = 7
+
+Number of fixed edges = 485675
+
+SUBPROBLEM with cost = 7.903456, type = CLOSED_NEW_BEST, level of the BB tree = 5, prob = 0.990991, BBNode number = 4379 and time to obtain = 8.476464s
+MST or 1-Tree with cost: 7.950780 and validity = TRUE
+Edge14: 0 <--> 14 weight = 0.052312 prob = 1.000000
+Edge21: 0 <--> 21 weight = 0.100471 prob = 0.998414
+Edge116: 1 <--> 18 weight = 0.078126 prob = 0.961035
+Edge180: 1 <--> 82 weight = 0.081581 prob = 0.886553
+Edge248: 2 <--> 53 weight = 0.048358 prob = 1.000000
+Edge294: 2 <--> 99 weight = 0.150281 prob = 0.948023
+Edge382: 3 <--> 91 weight = 0.057815 prob = 1.000000
+Edge398: 4 <--> 12 weight = 0.126322 prob = 1.000000
+Edge428: 4 <--> 42 weight = 0.212746 prob = 1.000000
+Edge541: 5 <--> 61 weight = 0.144590 prob = 0.993006
+Edge572: 5 <--> 92 weight = 0.055451 prob = 1.000000
+Edge700: 7 <--> 35 weight = 0.051088 prob = 1.000000
+Edge716: 7 <--> 51 weight = 0.089178 prob = 0.998436
+Edge863: 9 <--> 17 weight = 0.079636 prob = 1.000000
+Edge945: 9 <--> 99 weight = 0.131676 prob = 1.000000
+Edge1000: 10 <--> 65 weight = 0.088876 prob = 0.986259
+Edge1004: 10 <--> 69 weight = 0.065739 prob = 0.916487
+Edge1144: 12 <--> 34 weight = 0.048181 prob = 1.000000
+Edge1242: 13 <--> 46 weight = 0.080230 prob = 0.929544
+Edge1285: 13 <--> 89 weight = 0.033191 prob = 1.000000
+Edge1374: 14 <--> 93 weight = 0.104729 prob = 0.999356
+Edge1401: 15 <--> 36 weight = 0.078930 prob = 0.995297
+Edge1423: 15 <--> 58 weight = 0.035084 prob = 0.998295
+Edge1568: 17 <--> 38 weight = 0.076545 prob = 1.000000
+Edge1682: 18 <--> 71 weight = 0.083567 prob = 1.000000
+Edge1784: 19 <--> 93 weight = 0.077491 prob = 0.999968
+Edge1819: 20 <--> 49 weight = 0.090728 prob = 0.997926
+Edge1821: 20 <--> 51 weight = 0.043471 prob = 0.999542
+Edge1910: 21 <--> 62 weight = 0.135336 prob = 0.972031
+Edge2399: 28 <--> 33 weight = 0.073249 prob = 1.000000
+Edge2434: 28 <--> 68 weight = 0.107358 prob = 1.000000
+Edge2488: 29 <--> 52 weight = 0.039406 prob = 1.000000
+Edge2511: 29 <--> 75 weight = 0.070684 prob = 1.000000
+Edge2694: 32 <--> 54 weight = 0.107386 prob = 1.000000
+Edge2740: 33 <--> 34 weight = 0.070269 prob = 1.000000
+Edge2927: 35 <--> 92 weight = 0.134386 prob = 0.999586
+Edge2936: 36 <--> 38 weight = 0.079096 prob = 0.995980
+Edge3376: 43 <--> 65 weight = 0.055351 prob = 1.000000
+Edge3386: 43 <--> 75 weight = 0.059678 prob = 1.000000
+Edge3520: 46 <--> 47 weight = 0.074301 prob = 0.999152
+Edge3605: 47 <--> 80 weight = 0.022257 prob = 1.000000
+Edge3684: 49 <--> 58 weight = 0.066534 prob = 1.000000
+Edge3896: 53 <--> 80 weight = 0.068522 prob = 0.983763
+Edge3942: 54 <--> 81 weight = 0.074643 prob = 1.000000
+Edge4210: 61 <--> 62 weight = 0.069662 prob = 0.999451
+Edge4471: 68 <--> 85 weight = 0.122935 prob = 1.000000
+Edge4498: 69 <--> 82 weight = 0.011981 prob = 1.000000
+Edge4536: 70 <--> 91 weight = 0.035912 prob = 1.000000
+Edge4562: 71 <--> 89 weight = 0.102268 prob = 0.978298
+Edge4638: 74 <--> 87 weight = 0.025973 prob = 1.000000
+Edge4783: 81 <--> 85 weight = 0.049726 prob = 1.000000
+Edge1741: 19 <--> 50 weight = 0.180677 prob = 1.000000
+Edge3753: 50 <--> 78 weight = 0.055350 prob = 1.000000
+Edge4578: 72 <--> 78 weight = 0.095689 prob = 0.999462
+Edge4579: 72 <--> 79 weight = 0.032098 prob = 1.000000
+Edge4755: 79 <--> 94 weight = 0.021907 prob = 1.000000
+Edge4204: 60 <--> 94 weight = 0.051737 prob = 1.000000
+Edge4200: 60 <--> 90 weight = 0.099243 prob = 0.999859
+Edge3230: 40 <--> 90 weight = 0.132234 prob = 1.000000
+Edge2613: 31 <--> 40 weight = 0.130612 prob = 0.998886
+Edge2630: 31 <--> 57 weight = 0.075283 prob = 0.999941
+Edge4088: 57 <--> 98 weight = 0.058740 prob = 0.999916
+Edge389: 3 <--> 98 weight = 0.130665 prob = 1.000000
+Edge2146: 24 <--> 70 weight = 0.070894 prob = 1.000000
+Edge2103: 24 <--> 27 weight = 0.081443 prob = 1.000000
+Edge2250: 26 <--> 27 weight = 0.073122 prob = 0.999845
+Edge2176: 25 <--> 26 weight = 0.026449 prob = 1.000000
+Edge2237: 25 <--> 87 weight = 0.115972 prob = 1.000000
+Edge3494: 45 <--> 74 weight = 0.115741 prob = 1.000000
+Edge3504: 45 <--> 84 weight = 0.105454 prob = 1.000000
+Edge4841: 84 <--> 95 weight = 0.028044 prob = 1.000000
+Edge2096: 23 <--> 95 weight = 0.032333 prob = 1.000000
+Edge2097: 23 <--> 96 weight = 0.063603 prob = 1.000000
+Edge2736: 32 <--> 96 weight = 0.158856 prob = 1.000000
+Edge3318: 42 <--> 63 weight = 0.047212 prob = 0.999990
+Edge4297: 63 <--> 76 weight = 0.025573 prob = 0.999905
+Edge649: 6 <--> 76 weight = 0.099270 prob = 0.999894
+Edge639: 6 <--> 66 weight = 0.204102 prob = 0.998926
+Edge1089: 11 <--> 66 weight = 0.061767 prob = 1.000000
+Edge767: 8 <--> 11 weight = 0.051614 prob = 1.000000
+Edge823: 8 <--> 67 weight = 0.071485 prob = 1.000000
+Edge4015: 56 <--> 67 weight = 0.018330 prob = 1.000000
+Edge3961: 55 <--> 56 weight = 0.053402 prob = 1.000000
+Edge3978: 55 <--> 73 weight = 0.058095 prob = 0.999945
+Edge3257: 41 <--> 59 weight = 0.070145 prob = 0.999659
+Edge3246: 41 <--> 48 weight = 0.008487 prob = 0.989408
+Edge1962: 22 <--> 37 weight = 0.017794 prob = 1.000000
+Edge4708: 77 <--> 88 weight = 0.023474 prob = 1.000000
+Edge2593: 30 <--> 88 weight = 0.045111 prob = 0.997744
+Edge3167: 39 <--> 86 weight = 0.041839 prob = 0.999892
+Edge3043: 37 <--> 83 weight = 0.069721 prob = 1.000000
+Edge3443: 44 <--> 77 weight = 0.036833 prob = 0.998899
+Edge3164: 39 <--> 83 weight = 0.087418 prob = 0.863371
+Edge1470: 16 <--> 22 weight = 0.064951 prob = 0.998426
+Edge3414: 44 <--> 48 weight = 0.059289 prob = 0.955616
+Edge4870: 86 <--> 97 weight = 0.062556 prob = 0.999869
+Edge1507: 16 <--> 59 weight = 0.143695 prob = 0.940622
+Edge4623: 73 <--> 97 weight = 0.086757 prob = 0.822674
+Edge3834: 52 <--> 64 weight = 0.230210 prob = 1.000000
+Edge2569: 30 <--> 64 weight = 0.204872 prob = 0.999946
+
+Cycle with 100 edges:  52 <-> 64   29 <-> 52   29 <-> 75   43 <-> 75   43 <-> 65   10 <-> 65   10 <-> 69   69 <-> 82   1 <-> 82   1 <-> 18   18 <-> 71   71 <-> 89   13 <-> 89   13 <-> 46   46 <-> 47   47 <-> 80   53 <-> 80   2 <-> 53   2 <-> 99   9 <-> 99   9 <-> 17   17 <-> 38   36 <-> 38   15 <-> 36   15 <-> 58   49 <-> 58   20 <-> 49   20 <-> 51   7 <-> 51   7 <-> 35   35 <-> 92   5 <-> 92   5 <-> 61   61 <-> 62   21 <-> 62   0 <-> 21   0 <-> 14   14 <-> 93   19 <-> 93   19 <-> 50   50 <-> 78   72 <-> 78   72 <-> 79   79 <-> 94   60 <-> 94   60 <-> 90   40 <-> 90   31 <-> 40   31 <-> 57   57 <-> 98   3 <-> 98   3 <-> 91   70 <-> 91   24 <-> 70   24 <-> 27   26 <-> 27   25 <-> 26   25 <-> 87   74 <-> 87   45 <-> 74   45 <-> 84   84 <-> 95   23 <-> 95   23 <-> 96   32 <-> 96   32 <-> 54   54 <-> 81   81 <-> 85   68 <-> 85   28 <-> 68   28 <-> 33   33 <-> 34   12 <-> 34   4 <-> 12   4 <-> 42   42 <-> 63   63 <-> 76   6 <-> 76   6 <-> 66   11 <-> 66   8 <-> 11   8 <-> 67   56 <-> 67   55 <-> 56   55 <-> 73   73 <-> 97   86 <-> 97   39 <-> 86   39 <-> 83   37 <-> 83   22 <-> 37   16 <-> 22   16 <-> 59   41 <-> 59   41 <-> 48   44 <-> 48   44 <-> 77   77 <-> 88   30 <-> 88   30 <-> 64 
+85 Mandatory edges
+4879 Forbidden edges
+Time taken: 15.928340911865234s

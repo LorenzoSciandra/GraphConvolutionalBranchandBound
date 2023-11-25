@@ -50,6 +50,7 @@ void create_graph(Graph * graph, List *nodes_list, List *edges_list, GraphKind k
         graph->edges[numEdges].weight = current_edge->weight;
         graph->edges[numEdges].symbol = current_edge->symbol;
         graph->edges[numEdges].positionInGraph =  numEdges;
+
         graph->nodes[src].neighbours[graph->nodes[src].num_neighbours] = dest;
         graph->nodes[src].num_neighbours++;
         graph->edges_matrix[src][dest] = graph->edges[numEdges];

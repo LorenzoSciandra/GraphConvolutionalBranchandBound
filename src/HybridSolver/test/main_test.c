@@ -34,7 +34,6 @@ void kruskal_tests(void) {
     printf("\n\n\n##################################### KRUSKAL TESTS ######################################\n");
     test_quick_sort();
     test_kruskal();
-    test_kruskal_constrained();
 }
 
 

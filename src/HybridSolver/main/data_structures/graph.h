@@ -30,7 +30,7 @@ typedef enum GraphKind{
 typedef struct Node {
     float x; ///< x coordinate of the Node.
     float y; ///< y coordinate of the Node.
-    unsigned short positionInGraph; ///< Position of the Node in the list of Nodes of the Graph.
+    unsigned short positionInGraph; ///< Position of the Node in the list of Nodes of the Graph, i.e. its unique ID.
     unsigned short num_neighbours; ///< Number of neighbours of the Node.
     unsigned short neighbours [MAX_VERTEX_NUM - 1]; ///< Array of IDs of the Node's neighbors.
 }Node;

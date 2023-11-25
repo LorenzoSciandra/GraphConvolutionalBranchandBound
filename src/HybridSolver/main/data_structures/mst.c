@@ -26,6 +26,11 @@ void create_mst(MST * mst, const Node * nodes, unsigned short num_nodes) {
         mst->nodes[i].x = nodes[i].x;
         mst->nodes[i].y = nodes[i].y;
         mst->nodes[i].num_neighbours = 0;
+
+        for (unsigned short j = i; j < num_nodes; j++) {
+            mst->edges_matrix[i][j] = -1;
+            mst->edges_matrix[j][i] = -1;
+        }
     }
 }
 
@@ -45,6 +50,8 @@ void add_edge(MST * tree, const Edge * edge){
     tree->nodes[src].num_neighbours++;
     tree->nodes[dest].neighbours[tree->nodes[dest].num_neighbours] = src;
     tree->nodes[dest].num_neighbours++;
+    tree->edges_matrix[src][dest] = (short) tree->num_edges;
+    tree->edges_matrix[dest][src] = (short) tree->num_edges;
 
     tree->num_edges++;
     tree->cost += edge->weight;

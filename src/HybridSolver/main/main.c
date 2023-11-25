@@ -49,14 +49,7 @@ int main(int argc, char *argv[]) {
 
     branch_and_bound(&new_problem);
 
-    printf("\nOptimal tour found with candidate node = %i, elapsed time = %lfs and interrupted = %s\n",
-            new_problem.candidateNodeId,  ((double) (new_problem.end - new_problem.start)) / CLOCKS_PER_SEC,
-           new_problem.interrupted ? "TRUE" : "FALSE");
-
-    printf("\nB-&-B tree with generated BBNodes = %u,  explored BBNodes = %u and max tree level = %u\n",
-           new_problem.generatedBBNodes, new_problem.exploredBBNodes, new_problem.totTreeLevels);
-
-    print_subProblem(&new_problem.bestSolution);
+    print_problem();
 
     fclose(stdout);
 

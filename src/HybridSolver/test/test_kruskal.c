@@ -41,34 +41,3 @@ void test_kruskal(void){
     print_mst(&mst);
     printf("\n------------------------------------ END TEST KRUSKAL ------------------------------------\n\n");
 }
-
-
-void test_kruskal_constrained(void){
-    printf("\n\n-------------------------------- TEST KRUSKAL CONSTRAINED --------------------------------\n");
-    Graph graph;
-    test_create_return_graph(&graph);
-    ConstrainedEdge mandatoryEdges [2];
-
-    mandatoryEdges[0].src = graph.edges[0].src;
-    mandatoryEdges[0].dest = graph.edges[0].dest;
-    mandatoryEdges[1].dest = graph.edges[3].dest;
-    mandatoryEdges[1].src = graph.edges[3].src;
-
-    ConstrainedEdge forbiddenEdges [2];
-    forbiddenEdges[0].src = graph.edges[4].src;
-    forbiddenEdges[0].dest = graph.edges[4].dest;
-    forbiddenEdges[1].src = graph.edges[8].src;
-    forbiddenEdges[1].dest = graph.edges[8].dest;
-
-    printf("\nMST without Constrained\n");
-
-    MST mst;
-    kruskal(&graph, &mst);
-    print_mst(&mst);
-
-    printf("\nMinimum Spanning Tree Constrained\n");
-    MST constrainedMST;
-    kruskal_constrained(&graph, &constrainedMST, 0, forbiddenEdges, 2, mandatoryEdges, 2);
-    print_mst(&constrainedMST);
-    printf("\n------------------------------ END TEST KRUSKAL CONSTRAINED ------------------------------\n\n");
-}

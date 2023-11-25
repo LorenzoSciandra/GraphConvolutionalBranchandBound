@@ -20,9 +20,7 @@
 typedef struct ConstrainedEdge{
     unsigned short src; ///< The source Node of the Edge.
     unsigned short dest; ///< The destination Node of the Edge.
-    float prob; ///< Probability of the Edge to be in an optimal tour.
 }ConstrainedEdge;
-
 
 //! Minimum Spanning Tree, or MST, and also a 1-Tree.
 typedef struct MST{
@@ -33,6 +31,7 @@ typedef struct MST{
     unsigned short num_edges; ///< The number of Edges in the MST.
     Node nodes [MAX_VERTEX_NUM]; ///< The set of Nodes in the MST.
     Edge edges [MAX_VERTEX_NUM]; ///< The set of Edges in the MST, these are |V| because the MST can be a 1-Tree.
+    short edges_matrix [MAX_VERTEX_NUM][MAX_VERTEX_NUM]; ///< -1 if there is no Edge between the two Nodes, otherwise the index of the Edge in the MST.
 }MST;
 
 

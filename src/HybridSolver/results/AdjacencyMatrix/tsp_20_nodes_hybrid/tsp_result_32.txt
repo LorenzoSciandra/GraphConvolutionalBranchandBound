@@ -1,13 +1,15 @@
 
-Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_32.csv'
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_32.csv'
 
-Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_hybrid/tsp_result_32.txt'
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_20_nodes_hybrid/tsp_result_32.txt'
 
-Optimal tour found with candidate node = 7, elapsed time = 0.008485s and interrupted = FALSE
+Optimal tour found with candidate node = 0, elapsed time = 0.004337s and interrupted = FALSE
 
-B-&-B tree with generated BBNodes = 43,  explored BBNodes = 43 and max tree level = 4
+B-&-B tree with generated BBNodes = 19,  explored BBNodes = 11 and max tree level = 2
 
-SUBPROBLEM with cost = 4.439021, type = CLOSED_HAMILTONIAN, level of the BB tree = 0, prob = 0.999983, BBNode number = 0 and time to obtain = 0.000000s
+Number of fixed edges = 368
+
+SUBPROBLEM with cost = 4.439021, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob = 0.999983, BBNode number = 0 and time to obtain = 0.000000s
 MST or 1-Tree with cost: 4.439021 and validity = TRUE
 Edge51: 2 <--> 16 weight = 0.106039 prob = 1.000000
 Edge132: 8 <--> 16 weight = 0.314957 prob = 1.000000
@@ -31,6 +33,6 @@ Edge167: 12 <--> 17 weight = 0.162857 prob = 1.000000
 Edge52: 2 <--> 17 weight = 0.442218 prob = 1.000000
 
 Cycle with 20 edges:  2 <-> 16   16 <-> 8   8 <-> 10   10 <-> 19   19 <-> 7   7 <-> 18   18 <-> 4   4 <-> 6   6 <-> 14   14 <-> 0   0 <-> 3   3 <-> 13   13 <-> 11   11 <-> 1   1 <-> 9   9 <-> 15   15 <-> 5   5 <-> 12   12 <-> 17   17 <-> 2 
-0 Mandatory edges:
-0 Forbidden edges:
-Time taken: 1.4866914749145508s
+0 Mandatory edges
+0 Forbidden edges
+Time taken: 2.113067150115967s

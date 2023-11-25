@@ -32,10 +32,4 @@ void test_quick_sort(void);
 void test_kruskal(void);
 
 
-/**
- * @brief Test the Constrained Kruskal algorithm. It creates a Graph, some constraints and then computes its MST.
- *
- */
-void test_kruskal_constrained(void);
-
 #endif //BRANCHANDBOUND1TREE_TEST_KRUSKAL_H

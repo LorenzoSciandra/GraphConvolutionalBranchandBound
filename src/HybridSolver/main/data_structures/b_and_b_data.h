@@ -21,8 +21,9 @@
 //! The labels used to identify the type of a SubProblem.
 typedef enum BBNodeType{
     OPEN, ///< The SubProblem is a feasible 1Tree, with a value lower than the best solution found so far.
+    CLOSED_NN, ///< The SubProblem is a feasible 1Tree founded with the Nearest Neighbor algorithm, it is the first feasible solution found.
+    CLOSED_NN_HYBRID, ///< The SubProblem is a feasible 1Tree founded with the Hybrid version of Nearest Neighbor algorithm, it is the first feasible solution found.
     CLOSED_BOUND, ///< The SubProblem is a feasible 1Tree, with a value greater than the best solution found so far.
-    CLOSED_HAMILTONIAN, ///< The SubProblem is a feasible Hamiltonian cycle, with a value grater than the best solution found so far, and so discarded.
     CLOSED_UNFEASIBLE, ///< The SubProblem is not a feasible 1Tree, and so discarded.
     CLOSED_NEW_BEST ///< The SubProblem is a feasible tour, with a value lower than the best solution found so far, new best solution found.
 }BBNodeType;
@@ -48,9 +49,8 @@ typedef struct SubProblem{
     float prob; ///< The probability of the SubProblem to be the best tour.
     ConstrainedEdge cycleEdges [MAX_VERTEX_NUM]; ///< The edges in the cycle of the SubProblem.
     unsigned short num_forbidden_edges; ///< The number of forbidden edges in the SubProblem.
-    ConstrainedEdge forbiddenEdges [MAX_EDGES_NUM]; ///< The forbidden edges in the SubProblem.
     unsigned short num_mandatory_edges; ///< The number of mandatory edges in the SubProblem.
-    ConstrainedEdge mandatoryEdges [MAX_EDGES_NUM]; ///< The mandatory edges in the SubProblem.
+    ConstrainedEdge mandatoryEdges [MAX_VERTEX_NUM]; ///< The mandatory edges in the SubProblem.
     ConstraintType constraints [MAX_VERTEX_NUM][MAX_VERTEX_NUM]; ///< The constraints of the edges in the SubProblem.
 }SubProblem;
 
@@ -65,6 +65,7 @@ typedef struct Problem{
     float bestValue; ///< The cost of the best solution found so far.
     unsigned int generatedBBNodes; ///< The number of nodes generated in the Branch and Bound tree.
     unsigned int exploredBBNodes; ///< The number of nodes explored in the Branch and Bound tree.
+    unsigned int num_fixed_edges; ///< The number of fixed edges in the Branch and Bound tree.
     bool interrupted; ///< True if the algorithm has been interrupted by timeout.
     clock_t start; ///< The time when the algorithm started.
     clock_t end; ///< The time when the algorithm ended.

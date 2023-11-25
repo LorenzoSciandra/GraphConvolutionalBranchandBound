@@ -29,8 +29,6 @@ static Problem * problem;
 void dfs(SubProblem *subProblem);
 
 
-void hyb_branch_ordering(SubProblem *subProblem);
-
 //!This function is used to check if the 1Tree of a SubProblem is a tour.
 /**
  * @brief This is done by simply check if all the edges are in the cycle passing through the candidate Node.
@@ -75,13 +73,33 @@ void copy_constraints(SubProblem *subProblem, const SubProblem *otherSubProblem)
 bool compare_subproblems(const SubProblem *a, const SubProblem *b);
 
 
+//!Ordering the cycle edges in the 1Tree of a SubProblem.
+/**
+ * @brief This function is used to order the edges in the cycle of the 1Tree of a SubProblem, accordingly to the probability of the edges.
+ * @param subProblem The SubProblem to order.
+ */
+
+void hyb_branch_ordering(SubProblem *subProblem);
+
+
 //!This function is used to branch a SubProblem into n new SubProblems.
 /**
  * @brief The number of new SubProblems is equal to the number of edges in the cycle passing through the candidate Node in the 1Tree.
  * @param openSubProblems The list of open SubProblems, to which the new SubProblems will be added.
  * @param subProblem The SubProblem to branch.
  */
-void branch(SubProblemsList *openSubProblems, const SubProblem *subProblem);
+void branch(SubProblemsList *openSubProblems, SubProblem *subProblem);
+
+
+//! The constrained Kruskal algorithm to find the Constrained Minimum Spanning Tree O(|E| log |V|)
+/**
+ * @brief The mandatory edges are first added to the MST and then the algorithm continues as the classic Kruskal, but
+ * the forbidden edges are not considered.
+ * @param graph The Graph considered.
+ * @param subProblem The SubProblem to which we want to find the constrained MST.
+ * @param candidateId The id of the candidate Node.
+ */
+void constrained_kruskal(Graph * graph, SubProblem * subProblem, unsigned short candidateId);
 
 
 //!The bound function used to calculate lower and upper bounds.
@@ -148,6 +166,10 @@ void set_problem(Problem * current_problem);
  * @param subProblem The SubProblem to print.
  */
 void print_subProblem(const SubProblem *subProblem);
+
+
+
+void print_problem(void);
 
 
 #endif //BRANCHANDBOUND1TREE_BRANCH_AND_BOUND_H

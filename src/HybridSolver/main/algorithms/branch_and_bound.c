@@ -71,7 +71,6 @@ void dfs(SubProblem *subProblem) {
             Edge current_in_cycle = problem->graph.edges_matrix[fromNode][toNode];
             subProblem->cycleEdges[subProblem->num_edges_in_cycle].src = current_in_cycle.src;
             subProblem->cycleEdges[subProblem->num_edges_in_cycle].dest = current_in_cycle.dest;
-            subProblem->cycleEdges[subProblem->num_edges_in_cycle].prob = current_in_cycle.prob;
             subProblem->num_edges_in_cycle++;
             toNode = fromNode;
         }
@@ -79,99 +78,84 @@ void dfs(SubProblem *subProblem) {
 
 }
 
-int compare_func (const void * a, const void * b){
-    ConstrainedEdge *edge_a = (ConstrainedEdge *) a;
-    ConstrainedEdge *edge_b = (ConstrainedEdge *) b;
-
-    if(edge_a->prob > edge_b->prob){
-        return +1;
-    }else if(edge_a->prob < edge_b->prob){
-        return 1;
-    }
-    return 0;
-}
-
-void hyb_branch_ordering(SubProblem *subProblem){
-    // order edges in the cycle by probability decreasing
-    qsort(subProblem->cycleEdges, subProblem->num_edges_in_cycle, sizeof(ConstrainedEdge), compare_func);
-}
-
 
 bool check_hamiltonian(SubProblem *subProblem) {
     dfs(subProblem);
-    if(HYBRID){
-        hyb_branch_ordering(subProblem);
-    }
     return subProblem->num_edges_in_cycle == subProblem->oneTree.num_edges;
 }
 
 
 BBNodeType mst_to_one_tree(SubProblem *currentSubproblem, Graph *graph) {
+
     Node candidate = graph->nodes[problem->candidateNodeId];
-    int bestEdgePos[candidate.num_neighbours];
-    float bestNewEdgeWeight[candidate.num_neighbours];
+    int bestEdgesPos[2];
+    float bestEdgesWeight[2];
     unsigned short src = candidate.positionInGraph;
-    unsigned short others[candidate.num_neighbours];
+    unsigned short others [candidate.num_neighbours];
     unsigned short num_others = 0;
-    unsigned short add = 0;
-    for (unsigned short i = 0; i < candidate.num_neighbours; i++) {
+    unsigned short toAdd = 0;
+
+    for (unsigned short i = 0; i < candidate.num_neighbours && toAdd<=2; i++) {
         unsigned short dest = candidate.neighbours[i];
 
         if (currentSubproblem->constraints[src][dest] == MANDATORY) {
-            Edge mandatoryEdge = graph->edges_matrix[src][dest];
-            bestEdgePos[add] = mandatoryEdge.positionInGraph;
-            bestNewEdgeWeight[add] = mandatoryEdge.weight;
-            add++;
+            bestEdgesWeight[toAdd] = graph->edges_matrix[src][dest].weight;
+            bestEdgesPos[toAdd] = graph->edges_matrix[src][dest].positionInGraph;
+            toAdd++;
         } else if (currentSubproblem->constraints[src][dest] == NOTHING) {
             others[num_others] = dest;
             num_others++;
         }
     }
-    if (add > 2) {
+    if (toAdd > 2 || (toAdd + num_others) < 2) {
         return CLOSED_UNFEASIBLE;
-    } else {
-        if (add < 2) {
-            if (add == 0) {
-                bestNewEdgeWeight[0] = INFINITE;
-                bestEdgePos[0] = -1;
-            }
-            bestNewEdgeWeight[1] = INFINITE;
-            bestEdgePos[1] = -1;
+    } else if (toAdd == 2){
+        add_edge(&currentSubproblem->oneTree, &graph->edges[bestEdgesPos[0]]);
+        add_edge(&currentSubproblem->oneTree, &graph->edges[bestEdgesPos[1]]);
+        return OPEN;
+    } else if(toAdd == 1){
+        add_edge(&currentSubproblem->oneTree, &graph->edges[bestEdgesPos[0]]);
 
-            for (unsigned short j = 0; j < num_others; j++) {
-                unsigned short dest = others[j];
-                Edge candidateEdge = graph->edges_matrix[src][dest];
+        float bestFoundWeight = INFINITE;
+        int bestFoundPos = -1;
 
-                if (add == 0) {
-                    if ((bestNewEdgeWeight[0] - candidateEdge.weight) > APPROXIMATION) {
-                        unsigned short temp_pos = bestEdgePos[0];
-                        float temp_weight = bestNewEdgeWeight[0];
-                        bestEdgePos[0] = candidateEdge.positionInGraph;
-                        bestNewEdgeWeight[0] = candidateEdge.weight;
-                        bestEdgePos[1] = temp_pos;
-                        bestNewEdgeWeight[1] = temp_weight;
+        for (unsigned short j = 0; j < num_others; j++) {
+            unsigned short dest = others[j];
+            Edge candidateEdge = graph->edges_matrix[src][dest];
 
-                    } else if ((bestNewEdgeWeight[1] - candidateEdge.weight) > APPROXIMATION) {
-                        bestEdgePos[1] = candidateEdge.positionInGraph;
-                        bestNewEdgeWeight[1] = candidateEdge.weight;
-                    }
-                } else if (add == 1) {
-                    if ((bestNewEdgeWeight[1] - candidateEdge.weight) > APPROXIMATION) {
-                        bestEdgePos[1] = candidateEdge.positionInGraph;
-                        bestNewEdgeWeight[1] = candidateEdge.weight;
-                    }
-                }
-            }
-            if (bestNewEdgeWeight[0] == INFINITE || bestNewEdgeWeight[1] == INFINITE) {
-                return CLOSED_UNFEASIBLE;
+            if ((bestFoundWeight - candidateEdge.weight) > APPROXIMATION) {
+                bestFoundPos = candidateEdge.positionInGraph;
+                bestFoundWeight = candidateEdge.weight;
             }
         }
 
-        Edge best_first = graph->edges[bestEdgePos[0]];
-        add_edge(&currentSubproblem->oneTree, &best_first);
+        add_edge(&currentSubproblem->oneTree, &graph->edges[bestFoundPos]);
 
-        Edge best_second = graph->edges[bestEdgePos[1]];
-        add_edge(&currentSubproblem->oneTree, &best_second);
+        return OPEN;
+    } else{
+
+        bestEdgesPos[0] = -1;
+        bestEdgesPos[1] = -1;
+        bestEdgesWeight[0] = INFINITE;
+        bestEdgesWeight[1] = INFINITE;
+
+        for (unsigned short j = 0; j < num_others; j++) {
+            unsigned short dest = others[j];
+            Edge candidateEdge = graph->edges_matrix[src][dest];
+
+            if ((bestEdgesWeight[0] - candidateEdge.weight) > APPROXIMATION) {
+                bestEdgesPos[1] = bestEdgesPos[0];
+                bestEdgesWeight[1] = bestEdgesWeight[0];
+                bestEdgesPos[0] = candidateEdge.positionInGraph;
+                bestEdgesWeight[0] = candidateEdge.weight;
+            } else if ((bestEdgesWeight[1] - candidateEdge.weight) > APPROXIMATION) {
+                bestEdgesPos[1] = candidateEdge.positionInGraph;
+                bestEdgesWeight[1] = candidateEdge.weight;
+            }
+        }
+
+        add_edge(&currentSubproblem->oneTree, &graph->edges[bestEdgesPos[0]]);
+        add_edge(&currentSubproblem->oneTree, &graph->edges[bestEdgesPos[1]]);
 
         return OPEN;
     }
@@ -179,54 +163,157 @@ BBNodeType mst_to_one_tree(SubProblem *currentSubproblem, Graph *graph) {
 
 
 void clean_matrix(SubProblem *subProblem) {
+    subProblem->num_mandatory_edges = 0;
+    subProblem->num_forbidden_edges = 0;
     for (short i = 0; i < MAX_VERTEX_NUM; i++) {
         for (short j = i; j < MAX_VERTEX_NUM; j++) {
-            subProblem->constraints[i][j] = NOTHING;
-            subProblem->constraints[j][i] = NOTHING;
+            if(j == i){
+                subProblem->constraints[i][j] = FORBIDDEN;
+                subProblem->constraints[j][i] = FORBIDDEN;
+
+            } else{
+                subProblem->constraints[i][j] = NOTHING;
+                subProblem->constraints[j][i] = NOTHING;
+            }
         }
     }
+}
+
+
+bool infer_constraints(SubProblem * subProblem){
+
+    bool valid = true;
+
+    for (short i = 0; i < MAX_VERTEX_NUM && valid; i++) {
+
+        short num_nothing_node = 0;
+        short nothing_nodes [MAX_VERTEX_NUM];
+        short num_mandatory_node = 0;
+        short num_forbidden_node = 0;
+
+        for (short j = 0; j < MAX_VERTEX_NUM; j++) {
+            if(subProblem->constraints[i][j] == NOTHING){
+                nothing_nodes[num_nothing_node] = j;
+                num_nothing_node++;
+            }
+            else if(subProblem->constraints[i][j] == MANDATORY){
+                num_mandatory_node++;
+            }
+            else{
+                num_forbidden_node++;
+            }
+        }
+
+        if(num_mandatory_node == 2){
+            for (short j = 0; j < num_nothing_node; j++){
+                subProblem->constraints[i][nothing_nodes[j]] = FORBIDDEN;
+                subProblem->constraints[nothing_nodes[j]][i] = FORBIDDEN;
+                subProblem->num_forbidden_edges++;
+                problem->num_fixed_edges++;
+            }
+        }
+
+        if(MAX_VERTEX_NUM - num_forbidden_node == 2) {
+            for (short j = 0; j < num_nothing_node; j++) {
+                subProblem->constraints[i][nothing_nodes[j]] = MANDATORY;
+                subProblem->constraints[nothing_nodes[j]][i] = MANDATORY;
+                subProblem->mandatoryEdges[subProblem->num_mandatory_edges].src = i;
+                subProblem->mandatoryEdges[subProblem->num_mandatory_edges].dest = nothing_nodes[j];
+                subProblem->num_mandatory_edges++;
+                problem->num_fixed_edges++;
+            }
+        }
+
+        if(num_mandatory_node > 2 || MAX_VERTEX_NUM - num_forbidden_node < 2){
+            valid = false;
+        }
+    }
+
+    return valid;
 }
 
 
 void copy_constraints(SubProblem *subProblem, const SubProblem *otherSubProblem) {
+    subProblem->num_mandatory_edges = 0;
+    subProblem->num_forbidden_edges = 0;
     for (short i = 0; i < MAX_VERTEX_NUM; i++) {
+
         for (short j = i; j < MAX_VERTEX_NUM; j++) {
             subProblem->constraints[i][j] = otherSubProblem->constraints[i][j];
             subProblem->constraints[j][i] = otherSubProblem->constraints[j][i];
+
+            if(subProblem->constraints[i][j] == MANDATORY){
+                subProblem->mandatoryEdges[subProblem->num_mandatory_edges].src = i;
+                subProblem->mandatoryEdges[subProblem->num_mandatory_edges].dest = j;
+                subProblem->num_mandatory_edges++;
+            }
+            else if(subProblem->constraints[i][j] == FORBIDDEN){
+                subProblem->num_forbidden_edges++;
+            }
         }
     }
-
-    for (short j = 0; j < otherSubProblem->num_forbidden_edges; j++) {
-        subProblem->forbiddenEdges[j] = otherSubProblem->forbiddenEdges[j];
-    }
-
-    for (short k = 0; k < otherSubProblem->num_mandatory_edges; k++) {
-        subProblem->mandatoryEdges[k] = otherSubProblem->mandatoryEdges[k];
-    }
 }
 
-
-bool better_than_best(SubProblem *subProblem) {
-    return problem->bestValue - subProblem->value > EPSILON;
-}
 
 // a better than b?
 bool compare_subproblems(const SubProblem *a, const SubProblem *b) {
     if (HYBRID) {
         return ((b->value - a->value) > EPSILON) ||
-                ((b->value - a->value >= EPSILON2) && ((a->prob - b->prob) >= BETTER_PROB));
+               ((b->value - a->value > EPSILON2) && ((a->prob - b->prob) >= BETTER_PROB));
     } else {
         return (b->value - a->value) > EPSILON;
     }
 }
 
 
-void branch(SubProblemsList *openSubProblems, const SubProblem *currentSubProblem) {
+
+// +1, -1, 0 increasing order
+// -1, +1, 0 decreasing order
+/*
+int compare_func (const void * a, const void * b){
+    const ConstrainedEdge *edge_a = (const ConstrainedEdge *) a;
+    float prob_a = problem->graph.edges_matrix[edge_a->src][edge_a->dest].prob;
+    const ConstrainedEdge *edge_b = (const ConstrainedEdge *) b;
+    float prob_b = problem->graph.edges_matrix[edge_b->src][edge_b->dest].prob;
+
+    if(prob_a > prob_b){
+        return +1;
+    }else if(prob_a < prob_b){
+        return -1;
+    }
+    return 0;
+}*/
+
+
+void hyb_branch_ordering(SubProblem *subProblem){
+    ConstrainedEdge first_edge = subProblem->cycleEdges[0];
+    float first_edge_prob = problem->graph.edges_matrix[first_edge.src][first_edge.dest].prob;
+    ConstrainedEdge last_edge = subProblem->cycleEdges[subProblem->num_edges_in_cycle - 1];
+    float last_edge_prob = problem->graph.edges_matrix[last_edge.src][last_edge.dest].prob;
+
+    if (last_edge_prob - first_edge_prob >= BETTER_PROB){
+        // reverse the cycle
+        ConstrainedEdge temp;
+        for (int i = 0; i < subProblem->num_edges_in_cycle / 2; i++){
+            temp = subProblem->cycleEdges[i];
+            subProblem->cycleEdges[i] = subProblem->cycleEdges[subProblem->num_edges_in_cycle - i - 1];
+            subProblem->cycleEdges[subProblem->num_edges_in_cycle - i - 1] = temp;
+        }
+    }
+}
+
+
+void branch(SubProblemsList *openSubProblems, SubProblem *currentSubProblem) {
+
+    unsigned int num_nodes = problem->generatedBBNodes;
 
     if (currentSubProblem->treeLevel + 1 > problem->totTreeLevels) {
         problem->totTreeLevels = currentSubProblem->treeLevel + 1;
     }
 
+    if(HYBRID){
+        hyb_branch_ordering(currentSubProblem);
+    }
     for (unsigned short i = 0; i < currentSubProblem->num_edges_in_cycle; i++) {
 
         ConstrainedEdge current_cycle_edge = currentSubProblem->cycleEdges[i];
@@ -240,15 +327,10 @@ void branch(SubProblemsList *openSubProblems, const SubProblem *currentSubProble
             child.id = problem->generatedBBNodes;
             child.value = currentSubProblem->value;
             child.treeLevel = currentSubProblem->treeLevel + 1;
-            child.num_forbidden_edges = currentSubProblem->num_forbidden_edges;
-            child.num_mandatory_edges = currentSubProblem->num_mandatory_edges;
             copy_constraints(&child, currentSubProblem);
 
-            child.forbiddenEdges[currentSubProblem->num_forbidden_edges].src = current_cycle_edge.src;
-            child.forbiddenEdges[currentSubProblem->num_forbidden_edges].dest = current_cycle_edge.dest;
             child.constraints[current_cycle_edge.src][current_cycle_edge.dest] = FORBIDDEN;
             child.constraints[current_cycle_edge.dest][current_cycle_edge.src] = FORBIDDEN;
-
             child.num_forbidden_edges++;
 
             for (unsigned short z = 0; z < i; z++) {
@@ -263,32 +345,245 @@ void branch(SubProblemsList *openSubProblems, const SubProblem *currentSubProble
                 }
             }
 
-            long position = -1;
+            if(infer_constraints(&child)){
+                long position = -1;
 
-            SubProblemsListIterator *subProblem_iterators = create_SubProblemList_iterator(
-                    openSubProblems);
-            for (size_t j = 0; j < openSubProblems->size && position == -1; j++) {
-                SubProblem *open_subProblem = SubProblemList_iterator_get_next(subProblem_iterators);
-                if (compare_subproblems(&child, open_subProblem)) {
-                    position = (long) j;
+                SubProblemsListIterator *subProblem_iterators = create_SubProblemList_iterator(
+                        openSubProblems);
+                for (size_t j = 0; j < openSubProblems->size && position == -1; j++) {
+                    SubProblem *open_subProblem = SubProblemList_iterator_get_next(subProblem_iterators);
+                    if (compare_subproblems(&child, open_subProblem)) {
+                        position = (long) j;
+                    }
                 }
-            }
-            delete_SubProblemList_iterator(subProblem_iterators);
-            if (position == -1) {
-                add_elem_SubProblemList_bottom(openSubProblems, &child);
-            } else {
-                add_elem_SubProblemList_index(openSubProblems, &child, position);
+                delete_SubProblemList_iterator(subProblem_iterators);
+                if (position == -1) {
+                    add_elem_SubProblemList_bottom(openSubProblems, &child);
+                } else {
+                    add_elem_SubProblemList_index(openSubProblems, &child, position);
+                }
             }
 
         }
     }
-
 }
+
+
+float max_edge_path_1Tree(SubProblem *currentSubProb, float *replacement_costs,
+                          unsigned short start_node, unsigned short end_node){
+    List *stack = new_list();
+    unsigned short num_nodes = currentSubProb->oneTree.num_nodes;
+    Node start;
+
+    bool visited[num_nodes];
+    int parentId[num_nodes];
+
+    for (unsigned short i = 0; i < num_nodes; i++) {
+        Node current = currentSubProb->oneTree.nodes[i];
+        if (current.positionInGraph == start_node) {
+            start = current;
+        }
+        visited[i] = false;
+        parentId[i] = -1;
+    }
+
+    add_elem_list_bottom(stack, &start);
+
+    while (stack->size > 0 && parentId[end_node] == -1) {
+        Node *currentNode = get_list_elem_index(stack, 0);
+        delete_list_elem_index(stack, 0);
+        if (!visited[currentNode->positionInGraph]) {
+            visited[currentNode->positionInGraph] = true;
+            for (unsigned short i = 0; i < currentNode->num_neighbours; i++) {
+                unsigned short dest = currentNode->neighbours[i];
+                if (!visited[dest] && problem->candidateNodeId != dest) {
+                    parentId[dest] = currentNode->positionInGraph;
+                    Node *neighbour = &currentSubProb->oneTree.nodes[dest];
+                    add_elem_list_index(stack, neighbour, 0);
+                }
+            }
+        }
+    }
+    del_list(stack);
+
+
+    unsigned short fromNode = -1;
+    unsigned short toNode = end_node;
+    float max_edge_weight = -1;
+    float edge_nin_1tree_weight = problem->graph.edges_matrix[start_node][end_node].weight;
+
+    while (fromNode != start_node) {
+        fromNode = parentId[toNode];
+
+        short position_in_1_tree = -1;
+
+        if(currentSubProb->oneTree.edges_matrix[fromNode][toNode] != -1){
+            position_in_1_tree = currentSubProb->oneTree.edges_matrix[fromNode][toNode];
+
+            Edge current_in_path = currentSubProb->oneTree.edges[position_in_1_tree];
+
+            if(current_in_path.weight > max_edge_weight){
+                max_edge_weight = current_in_path.weight;
+            }
+
+            if(edge_nin_1tree_weight - current_in_path.weight - replacement_costs[current_in_path.positionInGraph] < APPROXIMATION){
+                replacement_costs[current_in_path.positionInGraph] = edge_nin_1tree_weight - current_in_path.weight;
+            }
+
+            toNode = fromNode;
+
+        } else{
+            printf("ERROR: Edge not found in 1-tree\n");
+            exit(1);
+        }
+    }
+
+
+    return max_edge_weight;
+}
+
+
+int variable_fixing(SubProblem *currentSubProb){
+    int num_fixed = 0;
+    float replacement_costs [MAX_VERTEX_NUM - 2];
+    float best_candidate_replacement = INFINITE;
+
+    for (int i = 0; i < MAX_VERTEX_NUM - 2; i++){
+        replacement_costs[i] = INFINITE;
+    }
+
+    for (unsigned int i = 0; i < problem->graph.num_edges; i++){
+        Edge current_edge = problem->graph.edges[i];
+
+        if(currentSubProb->constraints[current_edge.src][current_edge.dest] == NOTHING){
+            if(currentSubProb->oneTree.edges_matrix[current_edge.src][current_edge.dest] == -1){
+
+                float max_edge_path = 0;
+
+                if(current_edge.dest != problem->candidateNodeId && current_edge.src != problem->candidateNodeId){
+                    max_edge_path = max_edge_path_1Tree(currentSubProb, replacement_costs,current_edge.src, current_edge.dest);
+                }
+
+                else{
+                    if (problem->graph.edges_matrix[problem->candidateNodeId][currentSubProb->oneTree.nodes[problem->candidateNodeId].neighbours[0]].weight >
+                        problem->graph.edges_matrix[problem->candidateNodeId][currentSubProb->oneTree.nodes[problem->candidateNodeId].neighbours[1]].weight
+                            ){
+                        max_edge_path = problem->graph.edges_matrix[problem->candidateNodeId][currentSubProb->oneTree.nodes[problem->candidateNodeId].neighbours[0]].weight;
+                    } else{
+                        max_edge_path = problem->graph.edges_matrix[problem->candidateNodeId][currentSubProb->oneTree.nodes[problem->candidateNodeId].neighbours[1]].weight;
+                    }
+                }
+
+                if (currentSubProb->value + current_edge.weight - max_edge_path >= problem->bestValue){
+                    currentSubProb->constraints[current_edge.src][current_edge.dest] = FORBIDDEN;
+                    currentSubProb->constraints[current_edge.dest][current_edge.src] = FORBIDDEN;
+                    currentSubProb->num_forbidden_edges++;
+                    num_fixed++;
+                }
+
+            }
+
+            if(current_edge.src == problem->candidateNodeId || current_edge.dest == problem->candidateNodeId){
+                if(current_edge.weight < best_candidate_replacement){
+                    best_candidate_replacement = current_edge.weight;
+                }
+            }
+        }
+    }
+
+
+    for (int i = 0; i < MAX_VERTEX_NUM; i++){
+        Edge edge_in_1tree = currentSubProb->oneTree.edges[i];
+
+        if(currentSubProb->constraints[edge_in_1tree.src][edge_in_1tree.dest] == NOTHING) {
+            if (edge_in_1tree.src != problem->candidateNodeId && edge_in_1tree.dest != problem->candidateNodeId) {
+                if (currentSubProb->value + replacement_costs[i] - edge_in_1tree.weight >= problem->bestValue) {
+                    currentSubProb->constraints[edge_in_1tree.src][edge_in_1tree.dest] = MANDATORY;
+                    currentSubProb->constraints[edge_in_1tree.dest][edge_in_1tree.src] = MANDATORY;
+                    currentSubProb->mandatoryEdges[currentSubProb->num_mandatory_edges].src = edge_in_1tree.src;
+                    currentSubProb->mandatoryEdges[currentSubProb->num_mandatory_edges].dest = edge_in_1tree.dest;
+                    currentSubProb->num_mandatory_edges++;
+                    num_fixed++;
+                }
+            } else {
+                if(currentSubProb->value + best_candidate_replacement - edge_in_1tree.weight >= problem->bestValue){
+                    currentSubProb->constraints[edge_in_1tree.src][edge_in_1tree.dest] = MANDATORY;
+                    currentSubProb->constraints[edge_in_1tree.dest][edge_in_1tree.src] = MANDATORY;
+                    currentSubProb->mandatoryEdges[currentSubProb->num_mandatory_edges].src = edge_in_1tree.src;
+                    currentSubProb->mandatoryEdges[currentSubProb->num_mandatory_edges].dest = edge_in_1tree.dest;
+                    currentSubProb->num_mandatory_edges++;
+                    num_fixed++;
+                }
+            }
+        }
+    }
+
+    return num_fixed;
+}
+
+void constrained_kruskal(Graph * graph, SubProblem * subProblem, unsigned short candidateId) {
+    create_mst(&subProblem->oneTree,graph->nodes, graph->num_nodes);
+    Forest forest;
+    create_forest_constrained(&forest, graph->nodes, graph->num_nodes, candidateId);
+    wrap_quick_sort(graph);
+
+    unsigned short num_edges_inMST = 0;
+    for (unsigned short i = 0; i < subProblem->num_mandatory_edges; i++) {
+        ConstrainedEdge current_mandatory = subProblem->mandatoryEdges[i];
+        Edge mandatory_edge = graph->edges_matrix[current_mandatory.src][current_mandatory.dest];
+        unsigned short src = mandatory_edge.src;
+        unsigned short dest = mandatory_edge.dest;
+
+        if (src != candidateId && dest != candidateId) {
+
+            Set *set1_root = find(&forest.sets[src]);
+            Set *set2_root = find(&forest.sets[dest]);
+            if (set1_root->num_in_forest != set2_root->num_in_forest) {
+                merge(set1_root, set2_root);
+                // add the edge to the MST
+                add_edge(&subProblem->oneTree, &mandatory_edge);
+                num_edges_inMST++;
+            }
+        }
+    }
+
+    unsigned short num_edges_inG = 0;
+
+    while (num_edges_inG < graph->num_edges && num_edges_inMST < graph->num_nodes - 2) {
+
+        Edge current_edge = graph->edges[num_edges_inG];
+
+        unsigned short src = current_edge.src;
+        unsigned short dest = current_edge.dest;
+
+        if (src != candidateId && dest != candidateId && subProblem->constraints[src][dest] != FORBIDDEN) {
+
+            Set *set1_root = find(&forest.sets[src]);
+            Set *set2_root = find(&forest.sets[dest]);
+
+            if (set1_root->num_in_forest != set2_root->num_in_forest) {
+                merge(set1_root, set2_root);
+                // add the edge to the MST
+                add_edge(&subProblem->oneTree, &current_edge);
+                num_edges_inMST++;
+            }
+        }
+
+        num_edges_inG++;
+    }
+
+    if (num_edges_inMST == graph->num_nodes - 2) {
+        subProblem->oneTree.isValid = true;
+    } else {
+        subProblem->oneTree.isValid = false;
+    }
+}
+
 
 
 void held_karp_bound(SubProblem *currentSubProb) {
 
-    if (better_than_best(currentSubProb) || currentSubProb->treeLevel == 0) {
+    if (compare_subproblems(currentSubProb, &problem->bestSolution) || currentSubProb->treeLevel == 0) {
         problem->exploredBBNodes++;
         float pi[MAX_VERTEX_NUM] = {0};
         float v[MAX_VERTEX_NUM] = {0};
@@ -319,9 +614,7 @@ void held_karp_bound(SubProblem *currentSubProb) {
                 }
             }
 
-            kruskal_constrained(used_graph, &analyzedSubProblem.oneTree, problem->candidateNodeId,
-                                analyzedSubProblem.forbiddenEdges, analyzedSubProblem.num_forbidden_edges,
-                                analyzedSubProblem.mandatoryEdges, analyzedSubProblem.num_mandatory_edges);
+            constrained_kruskal(used_graph, &analyzedSubProblem, problem->candidateNodeId);
 
             if (analyzedSubProblem.oneTree.isValid) {
                 type = mst_to_one_tree(&analyzedSubProblem, used_graph);
@@ -337,8 +630,7 @@ void held_karp_bound(SubProblem *currentSubProb) {
                         analyzedSubProblem.value += problem->graph.edges_matrix[edge->src][edge->dest].weight;
                     }
 
-                    bool better_value = better_than_best(&analyzedSubProblem);
-                    if (!better_value) {
+                    if (!compare_subproblems(&analyzedSubProblem, &problem->bestSolution)) {
                         analyzedSubProblem.type = CLOSED_BOUND;
                     } else {
                         analyzedSubProblem.num_edges_in_cycle = 0;
@@ -386,9 +678,17 @@ void held_karp_bound(SubProblem *currentSubProb) {
                         total_pi += pi[j];
                     }
                 }
+
+                else{
+                    currentSubProb->type = CLOSED_UNFEASIBLE;
+                    type = CLOSED_UNFEASIBLE;
+                    return;
+                }
             } else {
-                analyzedSubProblem.type = CLOSED_UNFEASIBLE;
+
+                currentSubProb->type = CLOSED_UNFEASIBLE;
                 type = CLOSED_UNFEASIBLE;
+                return;
             }
 
         }
@@ -399,8 +699,7 @@ void held_karp_bound(SubProblem *currentSubProb) {
         for (size_t j = 0; j < generatedSubProblems.size; j++) {
             SubProblem *generatedSubProblem = SubProblemList_iterator_get_next(subProblem_iterators);
             if (generatedSubProblem->value > best_value &&
-                generatedSubProblem->value <= best_lower_bound &&
-                generatedSubProblem->type != CLOSED_UNFEASIBLE) {
+                generatedSubProblem->value <= best_lower_bound) {
                 best_value = generatedSubProblem->value;
                 best_found = generatedSubProblem;
             }
@@ -461,7 +760,7 @@ void nearest_prob_neighbour(unsigned short start_node) {
     }
     nn_subProblem.value = nn_subProblem.oneTree.cost;
     nn_subProblem.oneTree.isValid = true;
-    nn_subProblem.type = CLOSED_HAMILTONIAN;
+    nn_subProblem.type = CLOSED_NN;
     nn_subProblem.prob = nn_subProblem.oneTree.prob;
 
     if (HYBRID) {
@@ -504,7 +803,7 @@ void nearest_prob_neighbour(unsigned short start_node) {
         }
         prob_nn_subProblem.value = prob_nn_subProblem.oneTree.cost;
         prob_nn_subProblem.oneTree.isValid = true;
-        prob_nn_subProblem.type = CLOSED_HAMILTONIAN;
+        prob_nn_subProblem.type = CLOSED_NN_HYBRID;
         prob_nn_subProblem.prob = prob_nn_subProblem.oneTree.prob;
 
         bool better_prob = prob_nn_subProblem.value < nn_subProblem.value;
@@ -526,34 +825,27 @@ void nearest_prob_neighbour(unsigned short start_node) {
 
 
 unsigned short find_candidate_node(void) {
-    SubProblemsList findCandidateSubProblems;
-    new_SubProblemList(&findCandidateSubProblems);
-    ConstrainedEdge *forbiddenEdges = NULL;
-    ConstrainedEdge *mandatoryEdges = NULL;
+
+    unsigned short best_candidate = 0;
+    SubProblem best_subProblem;
+    best_subProblem.value = INFINITE;
+    best_subProblem.prob = 0;
 
     for (unsigned short i = 0; i < problem->graph.num_nodes; i++) {
         SubProblem currentCandidate;
         clean_matrix(&currentCandidate);
         nearest_prob_neighbour(i);
-        kruskal_constrained(&problem->graph, &currentCandidate.oneTree, i, forbiddenEdges, 0, mandatoryEdges, 0);
+        constrained_kruskal(&problem->graph, &currentCandidate, i);
         mst_to_one_tree(&currentCandidate, &problem->graph);
         currentCandidate.value = currentCandidate.oneTree.cost;
         currentCandidate.prob = currentCandidate.oneTree.prob;
-        add_elem_SubProblemList_bottom(&findCandidateSubProblems, &currentCandidate);
-    }
-
-    unsigned short best_candidate = 0;
-    SubProblem *best_subProblem = NULL;
-    SubProblemsListIterator *subProblems_iterators = create_SubProblemList_iterator(&findCandidateSubProblems);
-    for (unsigned short j = 0; j < problem->graph.num_nodes; j++) {
-        SubProblem *current_subProblem = SubProblemList_iterator_get_next(subProblems_iterators);
-        if (best_subProblem == NULL || compare_subproblems(best_subProblem, current_subProblem)) {
-            best_candidate = j;
-            best_subProblem = current_subProblem;
+        if (compare_subproblems(&currentCandidate, &best_subProblem)) {
+            best_candidate = i;
+            best_subProblem.value = currentCandidate.value;
+            best_subProblem.prob = currentCandidate.prob;
         }
+
     }
-    delete_SubProblemList_iterator(subProblems_iterators);
-    delete_SubProblemList(&findCandidateSubProblems);
     return best_candidate;
 }
 
@@ -586,6 +878,9 @@ void branch_and_bound(Problem *current_problem) {
         problem->totTreeLevels = 0;
         problem->interrupted = false;
         problem->reformulationGraph = problem->graph;
+        problem->generatedBBNodes++;
+        problem->num_fixed_edges = 0;
+
 
         SubProblem subProblem;
         subProblem.treeLevel = 0;
@@ -594,9 +889,6 @@ void branch_and_bound(Problem *current_problem) {
         subProblem.prob = 0;
         subProblem.value = INFINITE;
         subProblem.num_edges_in_cycle = 0;
-        subProblem.num_forbidden_edges = 0;
-        subProblem.num_mandatory_edges = 0;
-        problem->generatedBBNodes++;
         clean_matrix(&subProblem);
 
         SubProblemsList subProblems;
@@ -608,6 +900,7 @@ void branch_and_bound(Problem *current_problem) {
             delete_SubProblemList_elem_index(&subProblems, 0);
             held_karp_bound(&current_sub_problem);
             if (current_sub_problem.type == OPEN) {
+                problem->num_fixed_edges += variable_fixing(&current_sub_problem);
                 branch(&subProblems, &current_sub_problem);
             }
         }
@@ -636,8 +929,10 @@ void print_subProblem(const SubProblem *subProblem) {
         type = "CLOSED_UNFEASIBLE";
     } else if (subProblem->type == CLOSED_BOUND) {
         type = "CLOSED_BOUND";
-    } else if (subProblem->type == CLOSED_HAMILTONIAN) {
-        type = "CLOSED_HAMILTONIAN";
+    } else if (subProblem->type == CLOSED_NN) {
+        type = "CLOSED_NEAREST_NEIGHBOR";
+    } else if (subProblem->type == CLOSED_NN_HYBRID) {
+        type = "CLOSED_NEAREST_NEIGHBOR_HYBRID";
     } else {
         type = "CLOSED_NEW_BEST";
     }
@@ -656,16 +951,21 @@ void print_subProblem(const SubProblem *subProblem) {
                subProblem->oneTree.nodes[dest].positionInGraph);
     }
 
-    printf("\n%i Mandatory edges:", subProblem->num_mandatory_edges);
-    for (unsigned short j = 0; j < subProblem->num_mandatory_edges; j++) {
-        ConstrainedEdge mandatory = subProblem->mandatoryEdges[j];
-        printf("  %i <-> %i ", mandatory.src, mandatory.dest);
-    }
+    printf("\n%i Mandatory edges", subProblem->num_mandatory_edges);
 
-    printf("\n%i Forbidden edges:", subProblem->num_forbidden_edges);
-    for (unsigned short z = 0; z < subProblem->num_forbidden_edges; z++) {
-        ConstrainedEdge forbidden = subProblem->forbiddenEdges[z];
-        printf("  %i <-> %i ", forbidden.src, forbidden.dest);
-    }
+    printf("\n%i Forbidden edges", subProblem->num_forbidden_edges);
     printf("\n");
+}
+
+void print_problem(void) {
+    printf("\nOptimal tour found with candidate node = %i, elapsed time = %lfs and interrupted = %s\n",
+           problem->candidateNodeId,  ((double) (problem->end - problem->start)) / CLOCKS_PER_SEC,
+           problem->interrupted ? "TRUE" : "FALSE");
+
+    printf("\nB-&-B tree with generated BBNodes = %u,  explored BBNodes = %u and max tree level = %u\n",
+           problem->generatedBBNodes, problem->exploredBBNodes, problem->totTreeLevels);
+
+    printf("\nNumber of fixed edges = %i\n", problem->num_fixed_edges);
+
+    print_subProblem(&problem->bestSolution);
 }

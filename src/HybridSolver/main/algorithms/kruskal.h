@@ -64,20 +64,4 @@ void wrap_quick_sort(Graph * graph);
 void kruskal(Graph * graph, MST * mst);
 
 
-//! The constrained Kruskal algorithm to find the Constrained Minimum Spanning Tree O(|E| log |V|)
-/**
- * @brief The mandatory edges are first added to the MST and then the algorithm continues as the classic Kruskal, but
- * the forbidden edges are not considered.
- * @param graph The Graph from which we want to find the Constrained MST.
- * @param oneTree The Constrained Minimum Spanning Tree.
- * @param candidateId The id of the candidate Node.
- * @param forbiddenEdges The list of forbidden edges.
- * @param numForbidden The number of forbidden edges.
- * @param mandatoryEdges The list of mandatory edges.
- * @param numMandatory The number of mandatory edges.
- */
-void kruskal_constrained(Graph * graph, MST * oneTree, unsigned short candidateId, const ConstrainedEdge * forbiddenEdges,
-                         unsigned short numForbidden, const ConstrainedEdge * mandatoryEdges, unsigned short numMandatory);
-
-
 #endif //BRANCHANDBOUND1TREE_KRUSKAL_H
