@@ -25,7 +25,8 @@ typedef enum BBNodeType{
     CLOSED_NN_HYBRID, ///< The SubProblem is a feasible 1Tree founded with the Hybrid version of Nearest Neighbor algorithm, it is the first feasible solution found.
     CLOSED_BOUND, ///< The SubProblem is a feasible 1Tree, with a value greater than the best solution found so far.
     CLOSED_UNFEASIBLE, ///< The SubProblem is not a feasible 1Tree, and so discarded.
-    CLOSED_NEW_BEST ///< The SubProblem is a feasible tour, with a value lower than the best solution found so far, new best solution found.
+    CLOSED_1TREE, ///< The SubProblem is closed by calculating the 1Tree.
+    CLOSED_SUBGRADIENT ///< The SubProblem is closed in the subgradient algorithm, the ascending dual.
 }BBNodeType;
 
 
@@ -50,6 +51,7 @@ typedef struct SubProblem{
     ConstrainedEdge cycleEdges [MAX_VERTEX_NUM]; ///< The edges in the cycle of the SubProblem.
     unsigned short num_forbidden_edges; ///< The number of forbidden edges in the SubProblem.
     unsigned short num_mandatory_edges; ///< The number of mandatory edges in the SubProblem.
+    unsigned short edge_to_branch; ///< The id of the edge to branch in the SubProblem.
     ConstrainedEdge mandatoryEdges [MAX_VERTEX_NUM]; ///< The mandatory edges in the SubProblem.
     ConstraintType constraints [MAX_VERTEX_NUM][MAX_VERTEX_NUM]; ///< The constraints of the edges in the SubProblem.
 }SubProblem;

@@ -168,7 +168,10 @@ void set_problem(Problem * current_problem);
 void print_subProblem(const SubProblem *subProblem);
 
 
-
+//!This function is used to print all the information of the TSP problem that we resolved.
+/**
+ * @brief It is used at the end of the algorithm to print the solution obtained. It calls the print_subProblem() function on the best SubProblem found.
+ */
 void print_problem(void);
 
 

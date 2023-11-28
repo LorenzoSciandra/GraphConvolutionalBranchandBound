@@ -3,11 +3,11 @@ Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSP
 
 Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_50_nodes_hybrid/tsp_result_88.txt'
 
-Optimal tour found with candidate node = 34, elapsed time = 0.026069s and interrupted = FALSE
+Optimal tour found with candidate node = 34, elapsed time = 0.042703s and interrupted = FALSE
 
-B-&-B tree with generated BBNodes = 35,  explored BBNodes = 1 and max tree level = 1
+B-&-B tree with generated BBNodes = 3,  explored BBNodes = 1 and max tree level = 1
 
-Number of fixed edges = 1466
+Number of fixed edges = 1172
 
 SUBPROBLEM with cost = 5.450160, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob = 0.997736, BBNode number = 0 and time to obtain = 0.000000s
 MST or 1-Tree with cost: 5.450160 and validity = TRUE
@@ -65,4 +65,4 @@ Edge275: 5 <--> 45 weight = 0.140089 prob = 1.000000
 Cycle with 50 edges:  5 <-> 35   35 <-> 17   17 <-> 28   28 <-> 33   33 <-> 43   43 <-> 41   41 <-> 36   36 <-> 37   37 <-> 1   1 <-> 26   26 <-> 40   40 <-> 6   6 <-> 30   30 <-> 21   21 <-> 39   39 <-> 44   44 <-> 14   14 <-> 15   15 <-> 10   10 <-> 32   32 <-> 42   42 <-> 11   11 <-> 4   4 <-> 18   18 <-> 20   20 <-> 23   23 <-> 13   13 <-> 48   48 <-> 22   22 <-> 25   25 <-> 34   34 <-> 2   2 <-> 3   3 <-> 47   47 <-> 24   24 <-> 38   38 <-> 31   31 <-> 7   7 <-> 8   8 <-> 9   9 <-> 46   46 <-> 12   12 <-> 19   19 <-> 49   49 <-> 29   29 <-> 16   16 <-> 27   27 <-> 0   0 <-> 45   45 <-> 5 
 0 Mandatory edges
 0 Forbidden edges
-Time taken: 2.64347767829895s
+Time taken: 3.24931263923645s

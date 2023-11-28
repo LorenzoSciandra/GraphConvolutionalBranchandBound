@@ -3,7 +3,7 @@ Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSP
 
 Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_50_nodes_hybrid/tsp_result_3.txt'
 
-Optimal tour found with candidate node = 7, elapsed time = 0.014220s and interrupted = FALSE
+Optimal tour found with candidate node = 7, elapsed time = 0.039068s and interrupted = FALSE
 
 B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
 
@@ -65,4 +65,4 @@ Edge701: 17 <--> 21 weight = 0.208428 prob = 1.000000
 Cycle with 50 edges:  17 <-> 19   19 <-> 28   28 <-> 9   9 <-> 1   1 <-> 31   31 <-> 2   2 <-> 46   46 <-> 34   34 <-> 7   7 <-> 41   41 <-> 20   20 <-> 4   4 <-> 5   5 <-> 16   16 <-> 44   44 <-> 12   12 <-> 47   47 <-> 14   14 <-> 27   27 <-> 0   0 <-> 29   29 <-> 45   45 <-> 22   22 <-> 42   42 <-> 8   8 <-> 15   15 <-> 3   3 <-> 25   25 <-> 36   36 <-> 30   30 <-> 37   37 <-> 18   18 <-> 48   48 <-> 40   40 <-> 24   24 <-> 33   33 <-> 26   26 <-> 23   23 <-> 6   6 <-> 32   32 <-> 11   11 <-> 38   38 <-> 10   10 <-> 43   43 <-> 13   13 <-> 49   49 <-> 39   39 <-> 35   35 <-> 21   21 <-> 17 
 0 Mandatory edges
 0 Forbidden edges
-Time taken: 2.0473711490631104s
+Time taken: 3.793203592300415s

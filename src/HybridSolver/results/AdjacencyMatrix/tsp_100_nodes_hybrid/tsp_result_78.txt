@@ -2,12 +2,12 @@
 Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_100_nodes/tsp_test_78.csv'
 
 Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_100_nodes_hybrid/tsp_result_78.txt'
+CAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsi
+Optimal tour found with candidate node = 47, elapsed time = 1.176315s and interrupted = FALSE
 
-Optimal tour found with candidate node = 47, elapsed time = 7.913677s and interrupted = FALSE
+B-&-B tree with generated BBNodes = 29,  explored BBNodes = 24 and max tree level = 7
 
-B-&-B tree with generated BBNodes = 2726,  explored BBNodes = 893 and max tree level = 6
-
-Number of fixed edges = 125786
+Number of fixed edges = 5549
 
 SUBPROBLEM with cost = 7.666615, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob = 0.999823, BBNode number = 0 and time to obtain = 0.000000s
 MST or 1-Tree with cost: 7.666615 and validity = TRUE
@@ -115,4 +115,4 @@ Edge408: 4 <--> 22 weight = 0.043416 prob = 1.000000
 Cycle with 100 edges:  4 <-> 12   12 <-> 34   34 <-> 41   41 <-> 20   20 <-> 53   53 <-> 63   63 <-> 25   25 <-> 71   71 <-> 65   65 <-> 24   24 <-> 69   69 <-> 52   52 <-> 30   30 <-> 78   78 <-> 76   76 <-> 91   91 <-> 60   60 <-> 61   61 <-> 8   8 <-> 88   88 <-> 42   42 <-> 80   80 <-> 66   66 <-> 28   28 <-> 14   14 <-> 31   31 <-> 48   48 <-> 57   57 <-> 93   93 <-> 35   35 <-> 59   59 <-> 84   84 <-> 79   79 <-> 89   89 <-> 82   82 <-> 17   17 <-> 95   95 <-> 10   10 <-> 37   37 <-> 39   39 <-> 50   50 <-> 51   51 <-> 49   49 <-> 19   19 <-> 83   83 <-> 81   81 <-> 58   58 <-> 38   38 <-> 92   92 <-> 64   64 <-> 86   86 <-> 6   6 <-> 18   18 <-> 5   5 <-> 26   26 <-> 77   77 <-> 33   33 <-> 36   36 <-> 11   11 <-> 40   40 <-> 23   23 <-> 27   27 <-> 99   99 <-> 68   68 <-> 44   44 <-> 9   9 <-> 98   98 <-> 0   0 <-> 96   96 <-> 73   73 <-> 29   29 <-> 13   13 <-> 16   16 <-> 75   75 <-> 45   45 <-> 97   97 <-> 15   15 <-> 7   7 <-> 85   85 <-> 3   3 <-> 56   56 <-> 70   70 <-> 46   46 <-> 55   55 <-> 90   90 <-> 2   2 <-> 54   54 <-> 47   47 <-> 32   32 <-> 21   21 <-> 67   67 <-> 43   43 <-> 72   72 <-> 62   62 <-> 74   74 <-> 94   94 <-> 1   1 <-> 87   87 <-> 22   22 <-> 4 
 0 Mandatory edges
 0 Forbidden edges
-Time taken: 11.783284425735474s
+Time taken: 6.593261480331421s

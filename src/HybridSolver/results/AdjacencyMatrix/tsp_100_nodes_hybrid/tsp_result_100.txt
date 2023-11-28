@@ -2,8 +2,8 @@
 Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_100_nodes/tsp_test_100.csv'
 
 Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_100_nodes_hybrid/tsp_result_100.txt'
-
-Optimal tour found with candidate node = 89, elapsed time = 0.180242s and interrupted = FALSE
+CAsi
+Optimal tour found with candidate node = 89, elapsed time = 0.370224s and interrupted = FALSE
 
 B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
 
@@ -115,4 +115,4 @@ Edge911: 9 <--> 65 weight = 0.079105 prob = 0.997460
 Cycle with 100 edges:  9 <-> 3   3 <-> 40   40 <-> 52   52 <-> 69   69 <-> 57   57 <-> 21   21 <-> 35   35 <-> 74   74 <-> 56   56 <-> 12   12 <-> 8   8 <-> 6   6 <-> 48   48 <-> 98   98 <-> 53   53 <-> 81   81 <-> 88   88 <-> 58   58 <-> 19   19 <-> 25   25 <-> 55   55 <-> 33   33 <-> 99   99 <-> 45   45 <-> 22   22 <-> 2   2 <-> 23   23 <-> 78   78 <-> 63   63 <-> 85   85 <-> 4   4 <-> 61   61 <-> 16   16 <-> 75   75 <-> 71   71 <-> 13   13 <-> 60   60 <-> 31   31 <-> 43   43 <-> 97   97 <-> 89   89 <-> 62   62 <-> 86   86 <-> 73   73 <-> 47   47 <-> 68   68 <-> 66   66 <-> 1   1 <-> 24   24 <-> 83   83 <-> 11   11 <-> 79   79 <-> 50   50 <-> 92   92 <-> 76   76 <-> 77   77 <-> 15   15 <-> 5   5 <-> 90   90 <-> 46   46 <-> 18   18 <-> 17   17 <-> 10   10 <-> 27   27 <-> 30   30 <-> 26   26 <-> 84   84 <-> 34   34 <-> 37   37 <-> 82   82 <-> 87   87 <-> 7   7 <-> 91   91 <-> 70   70 <-> 42   42 <-> 96   96 <-> 94   94 <-> 59   59 <-> 29   29 <-> 28   28 <-> 39   39 <-> 93   93 <-> 0   0 <-> 38   38 <-> 51   51 <-> 32   32 <-> 67   67 <-> 64   64 <-> 36   36 <-> 20   20 <-> 72   72 <-> 80   80 <-> 44   44 <-> 49   49 <-> 54   54 <-> 14   14 <-> 95   95 <-> 41   41 <-> 65   65 <-> 9 
 0 Mandatory edges
 0 Forbidden edges
-Time taken: 7.094125747680664s
+Time taken: 5.887458086013794s

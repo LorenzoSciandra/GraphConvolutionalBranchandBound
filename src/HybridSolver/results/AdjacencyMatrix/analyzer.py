@@ -37,9 +37,10 @@ def analyze(abs_dir):
     forbidden_edges_list = []
     resolved_list = []
     num_fixed_edges_list = []
-    num_closed_nn_list = 0
-    num_closed_nnHybrid_list = 0
-    num_closed_best_list = 0
+    num_closed_nn = 0
+    num_closed_nnHybrid = 0
+    num_closed_1Tree = 0
+    num_closed_subgradient = 0
     all_files = os.listdir(abs_dir)
     for file in all_files:
         if file.endswith('.txt') and file != 'mean_results.txt':
@@ -65,11 +66,13 @@ def analyze(abs_dir):
                 num_forbidden_edges = re.search(r"(.+?) Forbidden edges", text).group(1)
 
                 if(re.search(r"type = CLOSED_NEAREST_NEIGHBOR_HYBRID", text) is not None):
-                    num_closed_nnHybrid_list += 1
+                    num_closed_nnHybrid += 1
                 elif(re.search(r"type = CLOSED_NEAREST_NEIGHBOR", text) is not None):
-                    num_closed_nn_list += 1
+                    num_closed_nn += 1
+                elif(re.search(r"type = CLOSED_1TREE", text) is not None):
+                    num_closed_1Tree += 1
                 else:
-                    num_closed_best_list += 1
+                    num_closed_subgradient += 1
 
                 time_bb_list.append(elapsed_time)
                 total_time_list.append(time_taken)
@@ -106,15 +109,17 @@ def analyze(abs_dir):
     mean_mandatory_edges = sum(map(float, mandatory_edges_list)) / num_resolved
     mean_forbidden_edges = sum(map(float, forbidden_edges_list)) / num_resolved
     mean_fixed_edges = sum(map(float, num_fixed_edges_list)) / num_resolved
-    mean_closed_nn = num_closed_nn_list / num_resolved
-    mean_closed_nnHybrid = num_closed_nnHybrid_list / num_resolved
-    mean_closed_best = num_closed_best_list / num_resolved
+    mean_closed_nn = num_closed_nn / num_resolved
+    mean_closed_nnHybrid = num_closed_nnHybrid / num_resolved
+    mean_closed_1Tree = num_closed_1Tree / num_resolved
+    mean_closed_subgradient = num_closed_subgradient / num_resolved
 
     output_filename = absolute_dir + '/mean_results.txt'
     with open(output_filename, 'w') as f:
         f.write("MEAN RESULTS for " + str(len(total_time_list)) + " instances\n")
         f.write("Percentage of resolved instances: " + str(mean_resolved * 100)+ "%\n")
-        f.write("\tof which NN = " + str(mean_closed_nn * 100)+ "%" + "\t\tNN Hybrid = " + str(mean_closed_nnHybrid * 100)+ "%" + "\t\tNew Best = " + str(mean_closed_best * 100)+ "%" + "\n\n")
+        f.write("\tof which NN = " + str(mean_closed_nn * 100)+ "%" + "\t\tNN Hybrid = " + str(mean_closed_nnHybrid * 100)+ "%" + "\t\t1Tree = "
+                + str(mean_closed_1Tree * 100)+ "%" + "\t\tSubgradient = " + str(mean_closed_subgradient * 100)+ "%" + "\n\n")
 
         f.write("Mean total time: " + str(mean_total_time) + "s\n")
         f.write("Mean BB time: " + str(mean_time_bb)+ "s\n")

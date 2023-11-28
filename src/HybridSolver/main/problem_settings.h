@@ -32,7 +32,7 @@
 //! The maximum number to set the initial value of Problem and SubProblem.
 #define INFINITE FLT_MAX
 
-//#define MAX_VERTEX_NUM 50 //-- no longer in this file, but in the CMakeLists.txt to be able to change it from the command line.
+//#define MAX_VERTEX_NUM 20 //-- no longer in this file, but in the CMakeLists.txt to be able to change it from the command line.
 //#define HYBRID 1 //-- no longer in this file, but in the CMakeLists.txt to be able to change it from the command line.
 
 
