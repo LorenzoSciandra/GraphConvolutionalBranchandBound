@@ -68,7 +68,7 @@ void add_edge(MST * tree, const Edge * edge){
 
 
 void print_mst(const MST * tree){
-    printf("\nMST or 1-Tree with cost: %.2lf and validity = %s\n", tree->cost, tree->isValid ? "TRUE" : "FALSE");
+    printf("\nMST or 1-Tree with cost: %lf and validity = %s\n", tree->cost, tree->isValid ? "TRUE" : "FALSE");
 
     double dim = (log(tree->num_nodes) / log(10) + 1) * 2 + 7;
     for (unsigned short i = 0; i < tree->num_edges; i++) {
@@ -79,7 +79,7 @@ void print_mst(const MST * tree){
         strcat(edge_print, " <--> ");
         sprintf(edge_print_dest, "%i", curr->dest);
         strcat(edge_print, edge_print_dest);
-        printf("Edge%i:\t%s\tweight = %.2lf\tprob = %lf\n",
+        printf("Edge%i:\t%s\tweight = %lf\tprob = %lf\n",
                curr->symbol,
                edge_print,
                curr->weight,

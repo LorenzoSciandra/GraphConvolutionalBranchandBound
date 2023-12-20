@@ -42,6 +42,7 @@ typedef enum ConstraintType{
 typedef struct SubProblem{
     BBNodeType type; ///< The label of the SubProblem.
     unsigned int id; ///< The id of the SubProblem, an incremental number.
+    unsigned int fatherId; ///< The id of the father of the SubProblem.
     float value; ///< The cost of the SubProblem.
     unsigned short treeLevel; ///< The level of the SubProblem in the Branch and Bound tree.
     float timeToReach; ///< The time needed to reach the SubProblem, in seconds.
@@ -51,7 +52,7 @@ typedef struct SubProblem{
     ConstrainedEdge cycleEdges [MAX_VERTEX_NUM]; ///< The edges in the cycle of the SubProblem.
     unsigned short num_forbidden_edges; ///< The number of forbidden edges in the SubProblem.
     unsigned short num_mandatory_edges; ///< The number of mandatory edges in the SubProblem.
-    unsigned short edge_to_branch; ///< The id of the edge to branch in the SubProblem.
+    int edge_to_branch; ///< The id of the edge to branch in the SubProblem.
     ConstrainedEdge mandatoryEdges [MAX_VERTEX_NUM]; ///< The mandatory edges in the SubProblem.
     ConstraintType constraints [MAX_VERTEX_NUM][MAX_VERTEX_NUM]; ///< The constraints of the edges in the SubProblem.
 }SubProblem;

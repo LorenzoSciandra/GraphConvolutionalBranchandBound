@@ -50,7 +50,7 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         raise Exception("Build failed")
 
 
-def hybrid_solver(num_instances, num_nodes, hyb_mode):
+def hybrid_solver(num_instances, num_nodes, hyb_mode, skip_nn):
     """
     Args:
         num_instances: The range of instances to run on the Solver.
@@ -79,7 +79,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode):
         result_mode = "hybrid" if hyb_mode else "classic"
         output_file = "../results/AdjacencyMatrix/tsp_" + str(num_nodes) + "_nodes_" + result_mode \
                       + "/tsp_result_" + str(i) + ".txt"
-        if hyb_mode:
+        if hyb_mode and not skip_nn:
             absolute_python_path = os.path.abspath("./graph-convnet-tsp/main.py")
             result = subprocess.run(['python3', absolute_python_path, absolute_input_path, str(num_nodes), str(i)], cwd="./graph-convnet-tsp",
                                     check=True)
@@ -107,14 +107,16 @@ if __name__ == "__main__":
     Args:
         sys.argv[1]: The range of instances to run on the Solver.
         sys.argv[2]: The number of nodes to use in the C program.
-        sys.argv[3]: "y" if the program is in hybrid mode, "n" otherwise.
+        sys.argv[3]: "h" if the program is in hybrid mode, "n" normal.
+        sys.argv[4]: "y" if the adjacency matrix is already generated, "n" otherwise. (optional)
     """
 
-    if len(sys.argv) != 4:
+    if len(sys.argv) < 4:
         print("\nERROR: Please provide the number of instances to run on the Solver, the number of nodes to select the "
-              "correct Neural Network and yes or no to run on hybrid mode or not.\nUsage: "
-              "python3 HybridSolver.py <num instances> <num nodes> <y/n>  or\n"
-              "python3 HybridSolver.py <num start instance>-<num end instance> <num nodes> <y/n>\n")
+              "correct Neural Network, yes or no to run on hybrid mode or not and optionally yes or no to skip the Neural Network.\n"
+              ".Usage: python3 HybridSolver.py <num instances> <num nodes> <y/n> (<y/n>) or\n"
+              "python3 HybridSolver.py <num start instance>-<num end instance> <num nodes> <y/n> (<y/n>)\n"
+              )
         sys.exit(1)
 
     if not isinstance(sys.argv[1], str) or not isinstance(sys.argv[2], str) or not isinstance(sys.argv[3], str):
@@ -123,6 +125,10 @@ if __name__ == "__main__":
 
     num_instances = sys.argv[1]
     num_nodes = int(sys.argv[2])
-    hyb_mode = (sys.argv[3] == "y" or sys.argv[3] == "Y" or sys.argv[3] == "yes" or sys.argv[3] == "Yes")
+    hyb_mode = (sys.argv[3] == "h" or sys.argv[3] == "H")
+    skip_nn = False
 
-    hybrid_solver(num_instances, num_nodes, hyb_mode)
+    if len(sys.argv) == 5:
+        skip_nn = (sys.argv[4] == "y" or sys.argv[4] == "Y" or sys.argv[4] == "yes" or sys.argv[4] == "Yes")
+
+    hybrid_solver(num_instances, num_nodes, hyb_mode, skip_nn)

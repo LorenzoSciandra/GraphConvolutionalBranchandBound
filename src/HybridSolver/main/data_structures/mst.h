@@ -10,10 +10,11 @@
  *
  */
 
-
+#pragma once
 #ifndef BRANCHANDBOUND1TREE_MST_H
 #define BRANCHANDBOUND1TREE_MST_H
 #include "mfset.h"
+#include "fibonacci_heap.h"
 
 
 //! A reduced form of an Edge in the Graph, with only the source and destination Nodes.

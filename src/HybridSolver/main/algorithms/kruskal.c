@@ -42,25 +42,35 @@ static int pivot_quicksort(Graph * graph, unsigned short first, unsigned short l
     Edge first_edge = edges[first];
     unsigned short middle = (first + last) / 2;
     Edge middle_edge = edges[middle];
-    float pivot = first_edge.weight;
+    float pivot_weight = first_edge.weight;
+    float pivot_prob = first_edge.prob;
 
-    if ((last_edge.weight - first_edge.weight) > APPROXIMATION) {
-        if ((last_edge.weight - middle_edge.weight) > APPROXIMATION) {
-            if ((middle_edge.weight - first_edge.weight) > APPROXIMATION) {
-                pivot = middle_edge.weight;
+    if (last_edge.weight > first_edge.weight ||
+            (HYBRID && last_edge.weight == first_edge.weight && last_edge.prob < first_edge.prob)){
+        if ((last_edge.weight > middle_edge.weight) ||
+                (HYBRID && last_edge.weight == middle_edge.weight && last_edge.prob < middle_edge.prob)) {
+            if ((middle_edge.weight > first_edge.weight) ||
+                    (HYBRID && middle_edge.weight == first_edge.weight && middle_edge.prob < first_edge.prob)){
+                pivot_weight = middle_edge.weight;
+                pivot_prob = middle_edge.prob;
                 swap(graph, first, middle);
             }
         } else {
-            pivot = last_edge.weight;
+            pivot_weight = last_edge.weight;
+            pivot_prob = last_edge.prob;
             swap(graph, first, last);
         }
     } else {
-        if ((last_edge.weight - middle_edge.weight ) > APPROXIMATION) {
-            pivot = last_edge.weight;
+        if (last_edge.weight > middle_edge.weight ||
+                (HYBRID && last_edge.weight == middle_edge.weight && last_edge.prob < middle_edge.prob)) {
+            pivot_weight = last_edge.weight;
+            pivot_prob = last_edge.prob;
             swap(graph, first, last);
 
-        } else if ((first_edge.weight - middle_edge.weight) > APPROXIMATION) {
-            pivot = middle_edge.weight;
+        } else if ((first_edge.weight > middle_edge.weight) ||
+                (HYBRID && first_edge.weight == middle_edge.weight && first_edge.prob < middle_edge.prob)) {
+            pivot_weight = middle_edge.weight;
+            pivot_prob = middle_edge.prob;
             swap(graph, first, middle);
         }
     }
@@ -69,12 +79,14 @@ static int pivot_quicksort(Graph * graph, unsigned short first, unsigned short l
     bool condition = true;
     while (condition) {
         Edge i_edge = edges[i];
-        while (i <= j && (pivot - i_edge.weight) >= -APPROXIMATION) {
+        while (i <= j && ((!HYBRID && pivot_weight >= i_edge.weight) ||
+                          (HYBRID && (pivot_weight > i_edge.weight || (pivot_weight == i_edge.weight && pivot_prob <= i_edge.prob))))){
             i += 1;
             i_edge = edges[i];
         }
         Edge j_edge = edges[j];
-        while (i <= j && (j_edge.weight - pivot) > APPROXIMATION) {
+        while (i <= j && (j_edge.weight > pivot_weight
+                          || (HYBRID && (j_edge.weight == pivot_weight && j_edge.prob < pivot_prob)))) {
             j -= 1;
             j_edge = edges[j];
         }

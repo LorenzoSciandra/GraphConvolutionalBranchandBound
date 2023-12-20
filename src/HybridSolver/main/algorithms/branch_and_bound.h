@@ -14,6 +14,7 @@
 #ifndef BRANCHANDBOUND1TREE_BRANCH_AND_BOUND_H
 #define BRANCHANDBOUND1TREE_BRANCH_AND_BOUND_H
 #include "kruskal.h"
+#include "prim.h"
 #include "../data_structures/b_and_b_data.h"
 
 
@@ -73,41 +74,43 @@ void copy_constraints(SubProblem *subProblem, const SubProblem *otherSubProblem)
 bool compare_subproblems(const SubProblem *a, const SubProblem *b);
 
 
-//!Ordering the cycle edges in the 1Tree of a SubProblem.
+//!This function is used to branch a SubProblem into 2 new SubProblems.
 /**
- * @brief This function is used to order the edges in the cycle of the 1Tree of a SubProblem, accordingly to the probability of the edges.
- * @param subProblem The SubProblem to order.
- */
-
-void hyb_branch_ordering(SubProblem *subProblem);
-
-
-//!This function is used to branch a SubProblem into n new SubProblems.
-/**
- * @brief The number of new SubProblems is equal to the number of edges in the cycle passing through the candidate Node in the 1Tree.
+ * @brief Every SubProblem is branched into 2 new SubProblems, one including the "edge_to_branch" and the other not.
+ * More details at http://www.jstor.org/stable/254144.
  * @param openSubProblems The list of open SubProblems, to which the new SubProblems will be added.
  * @param subProblem The SubProblem to branch.
  */
 void branch(SubProblemsList *openSubProblems, SubProblem *subProblem);
 
 
-//! The constrained Kruskal algorithm to find the Constrained Minimum Spanning Tree O(|E| log |V|)
+//!This function is used to fix the edge variables to be mandatory or forbidden.
 /**
- * @brief The mandatory edges are first added to the MST and then the algorithm continues as the classic Kruskal, but
- * the forbidden edges are not considered.
- * @param graph The Graph considered.
- * @param subProblem The SubProblem to which we want to find the constrained MST.
- * @param candidateId The id of the candidate Node.
+ * @brief By calculating the calculating of marginal and replacement costs, the edge variables are fixed to be, respectively, forbidden or mandatory.
+ * More details at https://link.springer.com/chapter/10.1007/978-3-642-13520-0_6.
+ * @param subProblem The SubProblem that we want to add the constraints to.
+ * @return the num of variables fixed.
  */
-void constrained_kruskal(Graph * graph, SubProblem * subProblem, unsigned short candidateId);
+int variable_fixing (SubProblem * subProblem);
+
+
+//!This function is used to infer variables values from the constraints.
+/**
+ * @brief According to the constraints of the father SubProblem and the one added to the son, we can infer new variables values
+ * in order to check, without the need of a new 1Tree, if the SubProblem is still feasible or not.
+ * @param subProblem The SubProblem to which we want to infer the variables values.
+ * @return true if the subproblem remains feasible, false otherwise.
+ */
+bool infer_constraints(SubProblem * subProblem);
 
 
 //!The bound function used to calculate lower and upper bounds.
 /**
- * @brief This function has a primal and dual behaviour. More details at https://www.sciencedirect.com/science/article/abs/pii/S0377221796002147?via%3Dihub.
+ * @brief This function has a primal and dual behaviour: after the minimal 1Tree is found, a subgradient algorithm is used to do a dual ascent of the Lagrangian relaxation.
+ * More details at https://www.sciencedirect.com/science/article/abs/pii/S0377221796002147?via%3Dihub.
  * @param current_problem The pointer to the SubProblem or branch-and-bound Node in the tree.
  */
-void held_karp_bound(SubProblem *currentSubProb);
+void bound(SubProblem *currentSubProb);
 
 
 /**

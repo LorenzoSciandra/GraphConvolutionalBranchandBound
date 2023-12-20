@@ -13,9 +13,9 @@
 
 #ifndef BRANCHANDBOUND_1TREE_GRAPH_H
 #define BRANCHANDBOUND_1TREE_GRAPH_H
-#include "./linked_list/linked_list.h"
-#include "./linked_list/list_iterator.h"
-#include "./linked_list/list_functions.h"
+#include "./doubly_linked_list//linked_list.h"
+#include "./doubly_linked_list/list_iterator.h"
+#include "./doubly_linked_list/list_functions.h"
 #include "../problem_settings.h"
 
 

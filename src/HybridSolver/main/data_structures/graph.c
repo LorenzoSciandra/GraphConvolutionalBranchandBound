@@ -12,8 +12,8 @@
 
 
 #include "graph.h"
-#include "linked_list/list_functions.h"
-#include "linked_list/list_iterator.h"
+#include "doubly_linked_list//list_functions.h"
+#include "doubly_linked_list/list_iterator.h"
 
 
 void create_graph(Graph * graph, List *nodes_list, List *edges_list, GraphKind kind) {
