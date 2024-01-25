@@ -177,6 +177,30 @@ main/algorithms/kruskal.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.s
 .PHONY : main/algorithms/kruskal.c.s
 
+main/algorithms/prim.o: main/algorithms/prim.c.o
+.PHONY : main/algorithms/prim.o
+
+# target to build an object file
+main/algorithms/prim.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o
+.PHONY : main/algorithms/prim.c.o
+
+main/algorithms/prim.i: main/algorithms/prim.c.i
+.PHONY : main/algorithms/prim.i
+
+# target to preprocess a source file
+main/algorithms/prim.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.i
+.PHONY : main/algorithms/prim.c.i
+
+main/algorithms/prim.s: main/algorithms/prim.c.s
+.PHONY : main/algorithms/prim.s
+
+# target to generate assembly for a file
+main/algorithms/prim.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.s
+.PHONY : main/algorithms/prim.c.s
+
 main/data_structures/b_and_b_data.o: main/data_structures/b_and_b_data.c.o
 .PHONY : main/data_structures/b_and_b_data.o
 
@@ -201,6 +225,78 @@ main/data_structures/b_and_b_data.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.s
 .PHONY : main/data_structures/b_and_b_data.c.s
 
+main/data_structures/doubly_linked_list/list_functions.o: main/data_structures/doubly_linked_list/list_functions.c.o
+.PHONY : main/data_structures/doubly_linked_list/list_functions.o
+
+# target to build an object file
+main/data_structures/doubly_linked_list/list_functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o
+.PHONY : main/data_structures/doubly_linked_list/list_functions.c.o
+
+main/data_structures/doubly_linked_list/list_functions.i: main/data_structures/doubly_linked_list/list_functions.c.i
+.PHONY : main/data_structures/doubly_linked_list/list_functions.i
+
+# target to preprocess a source file
+main/data_structures/doubly_linked_list/list_functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.i
+.PHONY : main/data_structures/doubly_linked_list/list_functions.c.i
+
+main/data_structures/doubly_linked_list/list_functions.s: main/data_structures/doubly_linked_list/list_functions.c.s
+.PHONY : main/data_structures/doubly_linked_list/list_functions.s
+
+# target to generate assembly for a file
+main/data_structures/doubly_linked_list/list_functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.s
+.PHONY : main/data_structures/doubly_linked_list/list_functions.c.s
+
+main/data_structures/doubly_linked_list/list_iterator.o: main/data_structures/doubly_linked_list/list_iterator.c.o
+.PHONY : main/data_structures/doubly_linked_list/list_iterator.o
+
+# target to build an object file
+main/data_structures/doubly_linked_list/list_iterator.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o
+.PHONY : main/data_structures/doubly_linked_list/list_iterator.c.o
+
+main/data_structures/doubly_linked_list/list_iterator.i: main/data_structures/doubly_linked_list/list_iterator.c.i
+.PHONY : main/data_structures/doubly_linked_list/list_iterator.i
+
+# target to preprocess a source file
+main/data_structures/doubly_linked_list/list_iterator.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.i
+.PHONY : main/data_structures/doubly_linked_list/list_iterator.c.i
+
+main/data_structures/doubly_linked_list/list_iterator.s: main/data_structures/doubly_linked_list/list_iterator.c.s
+.PHONY : main/data_structures/doubly_linked_list/list_iterator.s
+
+# target to generate assembly for a file
+main/data_structures/doubly_linked_list/list_iterator.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.s
+.PHONY : main/data_structures/doubly_linked_list/list_iterator.c.s
+
+main/data_structures/fibonacci_heap.o: main/data_structures/fibonacci_heap.c.o
+.PHONY : main/data_structures/fibonacci_heap.o
+
+# target to build an object file
+main/data_structures/fibonacci_heap.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o
+.PHONY : main/data_structures/fibonacci_heap.c.o
+
+main/data_structures/fibonacci_heap.i: main/data_structures/fibonacci_heap.c.i
+.PHONY : main/data_structures/fibonacci_heap.i
+
+# target to preprocess a source file
+main/data_structures/fibonacci_heap.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.i
+.PHONY : main/data_structures/fibonacci_heap.c.i
+
+main/data_structures/fibonacci_heap.s: main/data_structures/fibonacci_heap.c.s
+.PHONY : main/data_structures/fibonacci_heap.s
+
+# target to generate assembly for a file
+main/data_structures/fibonacci_heap.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.s
+.PHONY : main/data_structures/fibonacci_heap.c.s
+
 main/data_structures/graph.o: main/data_structures/graph.c.o
 .PHONY : main/data_structures/graph.o
 
@@ -224,54 +320,6 @@ main/data_structures/graph.s: main/data_structures/graph.c.s
 main/data_structures/graph.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.s
 .PHONY : main/data_structures/graph.c.s
-
-main/data_structures/linked_list/list_functions.o: main/data_structures/linked_list/list_functions.c.o
-.PHONY : main/data_structures/linked_list/list_functions.o
-
-# target to build an object file
-main/data_structures/linked_list/list_functions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o
-.PHONY : main/data_structures/linked_list/list_functions.c.o
-
-main/data_structures/linked_list/list_functions.i: main/data_structures/linked_list/list_functions.c.i
-.PHONY : main/data_structures/linked_list/list_functions.i
-
-# target to preprocess a source file
-main/data_structures/linked_list/list_functions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.i
-.PHONY : main/data_structures/linked_list/list_functions.c.i
-
-main/data_structures/linked_list/list_functions.s: main/data_structures/linked_list/list_functions.c.s
-.PHONY : main/data_structures/linked_list/list_functions.s
-
-# target to generate assembly for a file
-main/data_structures/linked_list/list_functions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.s
-.PHONY : main/data_structures/linked_list/list_functions.c.s
-
-main/data_structures/linked_list/list_iterator.o: main/data_structures/linked_list/list_iterator.c.o
-.PHONY : main/data_structures/linked_list/list_iterator.o
-
-# target to build an object file
-main/data_structures/linked_list/list_iterator.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o
-.PHONY : main/data_structures/linked_list/list_iterator.c.o
-
-main/data_structures/linked_list/list_iterator.i: main/data_structures/linked_list/list_iterator.c.i
-.PHONY : main/data_structures/linked_list/list_iterator.i
-
-# target to preprocess a source file
-main/data_structures/linked_list/list_iterator.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.i
-.PHONY : main/data_structures/linked_list/list_iterator.c.i
-
-main/data_structures/linked_list/list_iterator.s: main/data_structures/linked_list/list_iterator.c.s
-.PHONY : main/data_structures/linked_list/list_iterator.s
-
-# target to generate assembly for a file
-main/data_structures/linked_list/list_iterator.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.s
-.PHONY : main/data_structures/linked_list/list_iterator.c.s
 
 main/data_structures/mfset.o: main/data_structures/mfset.c.o
 .PHONY : main/data_structures/mfset.o
@@ -489,6 +537,30 @@ test/test_mfset.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.s
 .PHONY : test/test_mfset.c.s
 
+test/test_prim.o: test/test_prim.c.o
+.PHONY : test/test_prim.o
+
+# target to build an object file
+test/test_prim.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o
+.PHONY : test/test_prim.c.o
+
+test/test_prim.i: test/test_prim.c.i
+.PHONY : test/test_prim.i
+
+# target to preprocess a source file
+test/test_prim.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.i
+.PHONY : test/test_prim.c.i
+
+test/test_prim.s: test/test_prim.c.s
+.PHONY : test/test_prim.s
+
+# target to generate assembly for a file
+test/test_prim.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BranchAndBound1Tree.dir/build.make CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.s
+.PHONY : test/test_prim.c.s
+
 test/test_read_file.o: test/test_read_file.c.o
 .PHONY : test/test_read_file.o
 
@@ -528,18 +600,24 @@ help:
 	@echo "... main/algorithms/kruskal.o"
 	@echo "... main/algorithms/kruskal.i"
 	@echo "... main/algorithms/kruskal.s"
+	@echo "... main/algorithms/prim.o"
+	@echo "... main/algorithms/prim.i"
+	@echo "... main/algorithms/prim.s"
 	@echo "... main/data_structures/b_and_b_data.o"
 	@echo "... main/data_structures/b_and_b_data.i"
 	@echo "... main/data_structures/b_and_b_data.s"
+	@echo "... main/data_structures/doubly_linked_list/list_functions.o"
+	@echo "... main/data_structures/doubly_linked_list/list_functions.i"
+	@echo "... main/data_structures/doubly_linked_list/list_functions.s"
+	@echo "... main/data_structures/doubly_linked_list/list_iterator.o"
+	@echo "... main/data_structures/doubly_linked_list/list_iterator.i"
+	@echo "... main/data_structures/doubly_linked_list/list_iterator.s"
+	@echo "... main/data_structures/fibonacci_heap.o"
+	@echo "... main/data_structures/fibonacci_heap.i"
+	@echo "... main/data_structures/fibonacci_heap.s"
 	@echo "... main/data_structures/graph.o"
 	@echo "... main/data_structures/graph.i"
 	@echo "... main/data_structures/graph.s"
-	@echo "... main/data_structures/linked_list/list_functions.o"
-	@echo "... main/data_structures/linked_list/list_functions.i"
-	@echo "... main/data_structures/linked_list/list_functions.s"
-	@echo "... main/data_structures/linked_list/list_iterator.o"
-	@echo "... main/data_structures/linked_list/list_iterator.i"
-	@echo "... main/data_structures/linked_list/list_iterator.s"
 	@echo "... main/data_structures/mfset.o"
 	@echo "... main/data_structures/mfset.i"
 	@echo "... main/data_structures/mfset.s"
@@ -567,6 +645,9 @@ help:
 	@echo "... test/test_mfset.o"
 	@echo "... test/test_mfset.i"
 	@echo "... test/test_mfset.s"
+	@echo "... test/test_prim.o"
+	@echo "... test/test_prim.i"
+	@echo "... test/test_prim.s"
 	@echo "... test/test_read_file.o"
 	@echo "... test/test_read_file.i"
 	@echo "... test/test_read_file.s"

@@ -1,18 +1,18 @@
 MEAN RESULTS for 100 instances
 Percentage of resolved instances: 100.0%
-	of which NN = 2.0%		NN Hybrid = 89.0%		New Best = 9.0%
+	of which NN = 2.0%		NN Hybrid = 89.0%		1Tree = 0.0%		Subgradient = 9.0%
 
-Mean total time: 1.8910690665245056s
-Mean BB time: 0.00204115s
-Mean time to best: 0.00016797s
-Mean BBNodes before best: 1.0
+Mean total time: 2.834019193649292s
+Mean BB time: 0.010194380000000001s
+Mean time to best: 0.0004936799999999999s
+Mean BBNodes before best: 0.12
 
-Mean fixed edges: 157.41
-Mean total tree level: 0.78
-Mean generated BBNodes: 10.01
-Mean explored BBNodes: 4.75
-Mean best level: 0.06
-Mean prob best: 0.97572822
-Mean best value: 3.805551470000001
-Mean mandatory edges: 0.44
-Mean forbidden edges: 6.74
+Mean fixed edges: 50.52
+Mean total tree level: 0.66
+Mean generated BBNodes: 1.74
+Mean explored BBNodes: 1.27
+Mean best level: 0.11
+Mean prob best: 0.9757737899999998
+Mean best value: 3.806149710000001
+Mean mandatory edges: 0.11
+Mean forbidden edges: 2.98

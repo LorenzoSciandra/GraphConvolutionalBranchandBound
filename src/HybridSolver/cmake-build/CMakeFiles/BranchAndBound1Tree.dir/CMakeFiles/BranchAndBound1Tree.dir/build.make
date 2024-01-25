@@ -69,33 +69,33 @@ include CMakeFiles/BranchAndBound1Tree.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/BranchAndBound1Tree.dir/flags.make
 
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o: ../../../main/data_structures/linked_list/list_functions.c
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_functions.c
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o: ../../../main/data_structures/doubly_linked_list/list_functions.c
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_functions.c
 
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_functions.c > CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.i
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_functions.c > CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.i
 
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_functions.c -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.s
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_functions.c -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.s
 
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o: ../../../main/data_structures/linked_list/list_iterator.c
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_iterator.c
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o: ../../../main/data_structures/doubly_linked_list/list_iterator.c
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_iterator.c
 
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_iterator.c > CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.i
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_iterator.c > CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.i
 
-CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_iterator.c -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.s
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_iterator.c -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.s
 
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o: ../../../main/data_structures/graph.c
@@ -125,10 +125,24 @@ CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/mfset.c -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.s
 
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o: ../../../main/data_structures/fibonacci_heap.c
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/fibonacci_heap.c
+
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/fibonacci_heap.c > CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.i
+
+CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/fibonacci_heap.c -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.s
+
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o: ../../../main/data_structures/mst.c
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/mst.c
 
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o: ../../../main/data_structures/b_and_b_data.c
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/b_and_b_data.c
 
 CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.s: cmake_
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o: ../../../main/algorithms/kruskal.c
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/kruskal.c
 
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o: ../../../main/algorithms/branch_and_bound.c
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/branch_and_bound.c
 
 CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.s: cmake_f
 CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o: ../../../main/tsp_instance_reader.c
 CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/tsp_instance_reader.c
 
 CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o: ../../../test/test_graph.c
 CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_graph.c
 
 CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o: ../../../test/test_mfset.c
 CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_mfset.c
 
 CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.i: cmake_force
@@ -226,7 +240,7 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o: ../../../test/test_kruskal.c
 CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_kruskal.c
 
 CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.i: cmake_force
@@ -240,7 +254,7 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o: ../../../test/test_BB.c
 CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_BB.c
 
 CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.i: cmake_force
@@ -254,7 +268,7 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o: ../../../test/test_read_file.c
 CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_read_file.c
 
 CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.i: cmake_force
@@ -268,7 +282,7 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o: ../../../main/main.c
 CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/main.c
 
 CMakeFiles/BranchAndBound1Tree.dir/main/main.c.i: cmake_force
@@ -282,7 +296,7 @@ CMakeFiles/BranchAndBound1Tree.dir/main/main.c.s: cmake_force
 CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
 CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o: ../../../test/main_test.c
 CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/main_test.c
 
 CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.i: cmake_force
@@ -293,12 +307,41 @@ CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/main_test.c -o CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.s
 
+CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
+CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o: ../../../main/algorithms/prim.c
+CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/prim.c
+
+CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/prim.c > CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.i
+
+CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/prim.c -o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.s
+
+CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o: CMakeFiles/BranchAndBound1Tree.dir/flags.make
+CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o: ../../../test/test_prim.c
+CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o: CMakeFiles/BranchAndBound1Tree.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o -MF CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o.d -o CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o -c /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_prim.c
+
+CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_prim.c > CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.i
+
+CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_prim.c -o CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.s
+
 # Object files for target BranchAndBound1Tree
 BranchAndBound1Tree_OBJECTS = \
-"CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o" \
-"CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o" \
+"CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o" \
+"CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o" \
 "CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o" \
 "CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.o" \
+"CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o" \
 "CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o" \
 "CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o" \
 "CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o" \
@@ -310,15 +353,18 @@ BranchAndBound1Tree_OBJECTS = \
 "CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o" \
 "CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o" \
 "CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o" \
-"CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o"
+"CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o" \
+"CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o" \
+"CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o"
 
 # External object files for target BranchAndBound1Tree
 BranchAndBound1Tree_EXTERNAL_OBJECTS =
 
-BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o
-BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o
+BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o
+BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.o
+BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o
@@ -331,9 +377,11 @@ BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o
+BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o
+BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/build.make
 BranchAndBound1Tree: CMakeFiles/BranchAndBound1Tree.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking C executable BranchAndBound1Tree"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/cmake-build/CMakeFiles/BranchAndBound1Tree.dir/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking C executable BranchAndBound1Tree"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/BranchAndBound1Tree.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

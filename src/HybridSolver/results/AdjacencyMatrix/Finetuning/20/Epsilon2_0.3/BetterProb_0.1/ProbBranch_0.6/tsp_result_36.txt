@@ -1,0 +1,38 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_36.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/Finetuning/20/Epsilon2_0.3/BetterProb_0.1/ProbBranch_0.6/tsp_result_36.txt'
+
+Optimal tour found with candidate node = 8, elapsed time = 0.000758s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
+
+Number of fixed edges = 0
+
+SUBPROBLEM with cost = 3.371196, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob = 0.999987, BBNode number = 0 and time to obtain = 0.000000s
+MST or 1-Tree with cost: 3.371196 and validity = TRUE
+Edge32: 1 <--> 14 weight = 0.043639 prob = 1.000000
+Edge178: 14 <--> 17 weight = 0.058230 prob = 1.000000
+Edge160: 11 <--> 17 weight = 0.102140 prob = 1.000000
+Edge127: 8 <--> 11 weight = 0.563245 prob = 1.000000
+Edge74: 4 <--> 8 weight = 0.468678 prob = 1.000000
+Edge71: 4 <--> 5 weight = 0.166532 prob = 1.000000
+Edge40: 2 <--> 5 weight = 0.021545 prob = 1.000000
+Edge53: 2 <--> 18 weight = 0.273040 prob = 1.000000
+Edge153: 10 <--> 18 weight = 0.139942 prob = 1.000000
+Edge147: 10 <--> 12 weight = 0.144380 prob = 0.999808
+Edge117: 7 <--> 12 weight = 0.022609 prob = 1.000000
+Edge114: 7 <--> 9 weight = 0.351147 prob = 0.999930
+Edge9: 0 <--> 9 weight = 0.187735 prob = 1.000000
+Edge3: 0 <--> 3 weight = 0.175750 prob = 1.000000
+Edge64: 3 <--> 13 weight = 0.105665 prob = 1.000000
+Edge172: 13 <--> 16 weight = 0.132690 prob = 1.000000
+Edge187: 16 <--> 19 weight = 0.084231 prob = 1.000000
+Edge112: 6 <--> 19 weight = 0.090223 prob = 1.000000
+Edge108: 6 <--> 15 weight = 0.072954 prob = 1.000000
+Edge33: 1 <--> 15 weight = 0.166823 prob = 1.000000
+
+Cycle with 20 edges:  1 <-> 14   14 <-> 17   17 <-> 11   11 <-> 8   8 <-> 4   4 <-> 5   5 <-> 2   2 <-> 18   18 <-> 10   10 <-> 12   12 <-> 7   7 <-> 9   9 <-> 0   0 <-> 3   3 <-> 13   13 <-> 16   16 <-> 19   19 <-> 6   6 <-> 15   15 <-> 1 
+0 Mandatory edges
+0 Forbidden edges
+Time taken: 0.009820222854614258s

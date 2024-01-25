@@ -14,12 +14,12 @@
 
 #ifndef BRANCHANDBOUND1TREE_MAIN_TEST_H
 #define BRANCHANDBOUND1TREE_MAIN_TEST_H
-#include "../test/test_graph.h"
-#include "../test/test_mfset.h"
-#include "../test/test_kruskal.h"
-#include "../test/test_BB.h"
-#include "../test/test_read_file.h"
+#include "test_graph.h"
+#include "test_mfset.h"
+#include "test_kruskal.h"
+#include "test_prim.h"
 #include "test_BB.h"
+#include "test_read_file.h"
 
 
 /**

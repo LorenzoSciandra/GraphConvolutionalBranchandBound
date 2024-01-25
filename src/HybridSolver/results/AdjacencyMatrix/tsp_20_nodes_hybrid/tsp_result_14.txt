@@ -3,13 +3,13 @@ Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSP
 
 Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_20_nodes_hybrid/tsp_result_14.txt'
 
-Optimal tour found with candidate node = 2, elapsed time = 0.001238s and interrupted = FALSE
+Optimal tour found with candidate node = 0, elapsed time = 0.001141s and interrupted = FALSE
 
 B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
 
 Number of fixed edges = 0
 
-SUBPROBLEM with cost = 3.790550, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob = 0.999774, BBNode number = 0 and time to obtain = 0.000000s
+SUBPROBLEM with cost = 3.790550, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob_tour = 0.999774, BBNode number = 0 and time to obtain = 0.000000s
 MST or 1-Tree with cost: 3.790550 and validity = TRUE
 Edge3: 0 <--> 3 weight = 0.230115 prob = 1.000000
 Edge2: 0 <--> 2 weight = 0.361806 prob = 1.000000
@@ -35,4 +35,4 @@ Edge69: 3 <--> 18 weight = 0.145817 prob = 1.000000
 Cycle with 20 edges:  3 <-> 0   0 <-> 2   2 <-> 19   19 <-> 7   7 <-> 11   11 <-> 14   14 <-> 4   4 <-> 5   5 <-> 13   13 <-> 6   6 <-> 12   12 <-> 17   17 <-> 9   9 <-> 10   10 <-> 15   15 <-> 1   1 <-> 16   16 <-> 8   8 <-> 18   18 <-> 3 
 0 Mandatory edges
 0 Forbidden edges
-Time taken: 1.795565128326416s
+Time taken: 1.6963624954223633s

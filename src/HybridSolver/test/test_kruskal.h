@@ -25,6 +25,13 @@
 void test_quick_sort(void);
 
 
+///**
+// * @brief Test the quick sort algorithm with the probability. If two edges have the same weight,
+// * the one with the max probability is placed first.
+// */
+void test_quick_sort_prob(void);
+
+
 /**
  * @brief Test the Kruskal algorithm. It creates a Graph, and then computes its MST.
  *

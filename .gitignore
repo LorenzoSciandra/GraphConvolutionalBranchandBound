@@ -4,3 +4,4 @@ res/docs/Doxyfile
 res/docs/html/*
 res/docs/latex/*
 src/HybridSolver/main/graph-convnet-tsp/logs
+src/HybridSolver/.idea/

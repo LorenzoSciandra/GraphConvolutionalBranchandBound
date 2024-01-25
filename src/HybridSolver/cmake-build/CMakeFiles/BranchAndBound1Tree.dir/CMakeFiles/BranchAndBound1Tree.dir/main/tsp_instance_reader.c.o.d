@@ -3,7 +3,7 @@ CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o: \
  /usr/include/stdc-predef.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/tsp_instance_reader.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/graph.h \
- /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/./linked_list/linked_list.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/./doubly_linked_list//linked_list.h \
  /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -63,8 +63,8 @@ CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o: \
  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
  /usr/include/assert.h /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
- /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/./linked_list/list_iterator.h \
- /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/./linked_list/list_functions.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/./doubly_linked_list/list_iterator.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/./doubly_linked_list/list_functions.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/../problem_settings.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \

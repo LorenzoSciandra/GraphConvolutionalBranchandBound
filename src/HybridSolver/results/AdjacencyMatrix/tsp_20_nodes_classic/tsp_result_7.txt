@@ -1,36 +1,38 @@
 
-Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_7.csv'
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_7.csv'
 
-Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_7.txt'
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_7.txt'
 
-Optimal tour found with candidate node = 9, elapsed time = 0.001034s and interrupted = FALSE
+Optimal tour found with candidate node = 10, elapsed time = 0.001143s and interrupted = FALSE
 
 B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
 
-SUBPROBLEM with cost = 3.965356, type = CLOSED_NEW_BEST, level of the BB tree = 0, prob = 0.000000, BBNode number = 0 and time to obtain = 0.000199s
-MST or 1-Tree with cost: 3.784580 and validity = TRUE
-Edge53: 2 <--> 18 weight = 0.188653 prob = 0.000000
-Edge165: 12 <--> 15 weight = 0.174467 prob = 0.000000
-Edge163: 12 <--> 13 weight = 0.095068 prob = 0.000000
-Edge83: 4 <--> 17 weight = 0.282359 prob = 0.000000
-Edge93: 5 <--> 13 weight = 0.115685 prob = 0.000000
-Edge3: 0 <--> 3 weight = 0.102015 prob = 0.000000
-Edge1: 0 <--> 1 weight = 0.086803 prob = 0.000000
-Edge91: 5 <--> 11 weight = 0.108826 prob = 0.000000
-Edge126: 8 <--> 10 weight = 0.412101 prob = 0.000000
-Edge107: 6 <--> 14 weight = 0.074595 prob = 0.000000
-Edge110: 6 <--> 17 weight = 0.131526 prob = 0.000000
-Edge74: 4 <--> 8 weight = 0.381320 prob = 0.000000
-Edge36: 1 <--> 18 weight = 0.278678 prob = 0.000000
-Edge150: 10 <--> 15 weight = 0.580073 prob = 0.000000
-Edge62: 3 <--> 11 weight = 0.170553 prob = 0.000000
-Edge42: 2 <--> 7 weight = 0.261852 prob = 0.000000
-Edge180: 14 <--> 19 weight = 0.179675 prob = 0.000000
-Edge187: 16 <--> 19 weight = 0.176997 prob = 0.000000
-Edge142: 9 <--> 16 weight = 0.063289 prob = 0.000000
-Edge114: 7 <--> 9 weight = 0.100819 prob = 0.000000
+Number of fixed edges = 0
 
-Cycle with 20 edges:  9 <-> 16   16 <-> 19   14 <-> 19   6 <-> 14   6 <-> 17   4 <-> 17   4 <-> 8   8 <-> 10   10 <-> 15   12 <-> 15   12 <-> 13   5 <-> 13   5 <-> 11   3 <-> 11   0 <-> 3   0 <-> 1   1 <-> 18   2 <-> 18   2 <-> 7   7 <-> 9 
-0 Mandatory edges:
-0 Forbidden edges:
-Time taken: 0.003525972366333008s
+SUBPROBLEM with cost = 3.965355, type = CLOSED_SUBGRADIENT, level of the BB tree = 1, prob_tour = 0.000000, BBNode number = 1 and time to obtain = 0.000269s
+MST or 1-Tree with cost: 2.669716 and validity = TRUE
+Edge1: 0 <--> 1 weight = 0.086803 prob = 0.000000
+Edge53: 2 <--> 18 weight = 0.188653 prob = 0.000000
+Edge3: 0 <--> 3 weight = 0.102015 prob = 0.000000
+Edge83: 4 <--> 17 weight = 0.282359 prob = 0.000000
+Edge91: 5 <--> 11 weight = 0.108826 prob = 0.000000
+Edge107: 6 <--> 14 weight = 0.074595 prob = 0.000000
+Edge42: 2 <--> 7 weight = 0.261852 prob = 0.000000
+Edge74: 4 <--> 8 weight = 0.381320 prob = 0.000000
+Edge114: 7 <--> 9 weight = 0.100819 prob = 0.000000
+Edge62: 3 <--> 11 weight = 0.170553 prob = 0.000000
+Edge163: 12 <--> 13 weight = 0.095068 prob = 0.000000
+Edge93: 5 <--> 13 weight = 0.115685 prob = 0.000000
+Edge180: 14 <--> 19 weight = 0.179675 prob = 0.000000
+Edge165: 12 <--> 15 weight = 0.174467 prob = 0.000000
+Edge142: 9 <--> 16 weight = 0.063289 prob = 0.000000
+Edge110: 6 <--> 17 weight = 0.131526 prob = 0.000000
+Edge36: 1 <--> 18 weight = 0.278678 prob = 0.000000
+Edge187: 16 <--> 19 weight = 0.176997 prob = 0.000000
+Edge126: 8 <--> 10 weight = 0.412101 prob = 0.000000
+Edge150: 10 <--> 15 weight = 0.580073 prob = 0.000000
+
+Cycle with 20 edges:  8 <-> 10   4 <-> 8   4 <-> 17   6 <-> 17   6 <-> 14   14 <-> 19   16 <-> 19   9 <-> 16   7 <-> 9   2 <-> 7   2 <-> 18   1 <-> 18   0 <-> 1   0 <-> 3   3 <-> 11   5 <-> 11   5 <-> 13   12 <-> 13   12 <-> 15   10 <-> 15 
+0 Mandatory edges
+0 Forbidden edges
+Time taken: 0.0038161277770996094s

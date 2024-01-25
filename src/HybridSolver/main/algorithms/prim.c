@@ -50,4 +50,11 @@ void prim(const Graph * graph, MST * mst){
             add_edge(mst, &graph->edges_matrix[i][fathers[i]]);
         }
     }
+
+    if(mst->num_edges == graph->num_nodes - 1){
+        mst->isValid = true;
+    }
+    else{
+        mst->isValid = false;
+    }
 }

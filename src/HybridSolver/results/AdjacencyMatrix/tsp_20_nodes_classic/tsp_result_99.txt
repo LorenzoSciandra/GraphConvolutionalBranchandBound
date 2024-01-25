@@ -1,36 +1,38 @@
 
-Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_99.csv'
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_99.csv'
 
-Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_99.txt'
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_99.txt'
 
-Optimal tour found with candidate node = 16, elapsed time = 0.028025s and interrupted = FALSE
+Optimal tour found with candidate node = 5, elapsed time = 0.008338s and interrupted = FALSE
 
-B-&-B tree with generated BBNodes = 299,  explored BBNodes = 187 and max tree level = 8
+B-&-B tree with generated BBNodes = 35,  explored BBNodes = 20 and max tree level = 8
 
-SUBPROBLEM with cost = 4.247882, type = CLOSED_NEW_BEST, level of the BB tree = 4, prob = 0.000000, BBNode number = 235 and time to obtain = 0.016594s
-MST or 1-Tree with cost: 4.061029 and validity = TRUE
-Edge78: 4 <--> 12 weight = 0.126520 prob = 0.000000
-Edge71: 4 <--> 5 weight = 0.458203 prob = 0.000000
-Edge90: 5 <--> 10 weight = 0.276817 prob = 0.000000
-Edge115: 7 <--> 10 weight = 0.519149 prob = 0.000000
+Number of fixed edges = 416
+
+SUBPROBLEM with cost = 4.320958, type = CLOSED_SUBGRADIENT, level of the BB tree = 7, prob_tour = 0.000000, BBNode number = 33 and time to obtain = 0.008166s
+MST or 1-Tree with cost: 3.882901 and validity = TRUE
 Edge36: 1 <--> 18 weight = 0.027581 prob = 0.000000
-Edge156: 11 <--> 13 weight = 0.070534 prob = 0.000000
-Edge53: 2 <--> 18 weight = 0.126284 prob = 0.000000
-Edge19: 0 <--> 19 weight = 0.115662 prob = 0.000000
-Edge62: 3 <--> 11 weight = 0.214186 prob = 0.000000
-Edge65: 3 <--> 14 weight = 0.122320 prob = 0.000000
-Edge140: 9 <--> 14 weight = 0.082225 prob = 0.000000
 Edge41: 2 <--> 6 weight = 0.218068 prob = 0.000000
-Edge143: 9 <--> 17 weight = 0.238442 prob = 0.000000
-Edge171: 13 <--> 15 weight = 0.191135 prob = 0.000000
-Edge135: 8 <--> 19 weight = 0.202991 prob = 0.000000
+Edge64: 3 <--> 13 weight = 0.236728 prob = 0.000000
+Edge78: 4 <--> 12 weight = 0.126520 prob = 0.000000
 Edge108: 6 <--> 15 weight = 0.137402 prob = 0.000000
 Edge25: 1 <--> 7 weight = 0.479282 prob = 0.000000
-Edge17: 0 <--> 17 weight = 0.420880 prob = 0.000000
+Edge135: 8 <--> 19 weight = 0.202991 prob = 0.000000
+Edge9: 0 <--> 9 weight = 0.407819 prob = 0.000000
+Edge61: 3 <--> 10 weight = 0.333605 prob = 0.000000
+Edge116: 7 <--> 11 weight = 0.339369 prob = 0.000000
 Edge166: 12 <--> 16 weight = 0.101032 prob = 0.000000
+Edge156: 11 <--> 13 weight = 0.070534 prob = 0.000000
+Edge140: 9 <--> 14 weight = 0.082225 prob = 0.000000
+Edge182: 15 <--> 17 weight = 0.225534 prob = 0.000000
 Edge132: 8 <--> 16 weight = 0.119170 prob = 0.000000
+Edge178: 14 <--> 17 weight = 0.236133 prob = 0.000000
+Edge53: 2 <--> 18 weight = 0.126284 prob = 0.000000
+Edge19: 0 <--> 19 weight = 0.115662 prob = 0.000000
+Edge90: 5 <--> 10 weight = 0.276817 prob = 0.000000
+Edge71: 4 <--> 5 weight = 0.458203 prob = 0.000000
 
-Cycle with 20 edges:  12 <-> 16   4 <-> 12   4 <-> 5   5 <-> 10   7 <-> 10   1 <-> 7   1 <-> 18   2 <-> 18   2 <-> 6   6 <-> 15   13 <-> 15   11 <-> 13   3 <-> 11   3 <-> 14   9 <-> 14   9 <-> 17   0 <-> 17   0 <-> 19   8 <-> 19   8 <-> 16 
-5 Mandatory edges:  12 <-> 16   4 <-> 12   4 <-> 5   5 <-> 10   7 <-> 10 
-4 Forbidden edges:  3 <-> 10   10 <-> 11   7 <-> 13   7 <-> 11 
-Time taken: 0.031044960021972656s
+Cycle with 20 edges:  5 <-> 10   3 <-> 10   3 <-> 13   11 <-> 13   7 <-> 11   1 <-> 7   1 <-> 18   2 <-> 18   2 <-> 6   6 <-> 15   15 <-> 17   14 <-> 17   9 <-> 14   0 <-> 9   0 <-> 19   8 <-> 19   8 <-> 16   12 <-> 16   4 <-> 12   4 <-> 5 
+4 Mandatory edges
+111 Forbidden edges
+Time taken: 0.012341499328613281s

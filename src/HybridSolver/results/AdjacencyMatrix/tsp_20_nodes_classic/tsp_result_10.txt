@@ -1,36 +1,38 @@
 
-Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_10.csv'
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_10.csv'
 
-Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_10.txt'
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_10.txt'
 
-Optimal tour found with candidate node = 11, elapsed time = 0.015252s and interrupted = FALSE
+Optimal tour found with candidate node = 15, elapsed time = 0.003807s and interrupted = FALSE
 
-B-&-B tree with generated BBNodes = 111,  explored BBNodes = 94 and max tree level = 7
+B-&-B tree with generated BBNodes = 1,  explored BBNodes = 1 and max tree level = 0
 
-SUBPROBLEM with cost = 3.873764, type = CLOSED_NEW_BEST, level of the BB tree = 4, prob = 0.000000, BBNode number = 13 and time to obtain = 0.002242s
-MST or 1-Tree with cost: 3.908329 and validity = TRUE
-Edge5: 0 <--> 5 weight = 0.110159 prob = 0.000000
-Edge40: 2 <--> 5 weight = 0.374412 prob = 0.000000
-Edge149: 10 <--> 14 weight = 0.115828 prob = 0.000000
-Edge76: 4 <--> 10 weight = 0.128935 prob = 0.000000
-Edge59: 3 <--> 8 weight = 0.041150 prob = 0.000000
-Edge113: 7 <--> 8 weight = 0.160013 prob = 0.000000
-Edge163: 12 <--> 13 weight = 0.062951 prob = 0.000000
-Edge53: 2 <--> 18 weight = 0.061191 prob = 0.000000
-Edge184: 15 <--> 19 weight = 0.370473 prob = 0.000000
-Edge143: 9 <--> 17 weight = 0.006894 prob = 0.000000
-Edge117: 7 <--> 12 weight = 0.171695 prob = 0.000000
+Number of fixed edges = 0
+
+SUBPROBLEM with cost = 3.873651, type = CLOSED_SUBGRADIENT, level of the BB tree = 1, prob_tour = 0.000000, BBNode number = 1 and time to obtain = 0.000513s
+MST or 1-Tree with cost: 3.336674 and validity = TRUE
 Edge21: 1 <--> 3 weight = 0.228070 prob = 0.000000
-Edge174: 13 <--> 18 weight = 0.155894 prob = 0.000000
-Edge109: 6 <--> 16 weight = 0.192795 prob = 0.000000
-Edge32: 1 <--> 14 weight = 0.325506 prob = 0.000000
+Edge40: 2 <--> 5 weight = 0.374412 prob = 0.000000
+Edge59: 3 <--> 8 weight = 0.041150 prob = 0.000000
+Edge76: 4 <--> 10 weight = 0.128935 prob = 0.000000
+Edge91: 5 <--> 11 weight = 0.092734 prob = 0.000000
+Edge6: 0 <--> 6 weight = 0.226486 prob = 0.000000
+Edge117: 7 <--> 12 weight = 0.171695 prob = 0.000000
+Edge113: 7 <--> 8 weight = 0.160013 prob = 0.000000
 Edge75: 4 <--> 9 weight = 0.249240 prob = 0.000000
-Edge187: 16 <--> 19 weight = 0.496420 prob = 0.000000
-Edge182: 15 <--> 17 weight = 0.386691 prob = 0.000000
+Edge149: 10 <--> 14 weight = 0.115828 prob = 0.000000
 Edge11: 0 <--> 11 weight = 0.026273 prob = 0.000000
-Edge104: 6 <--> 11 weight = 0.209173 prob = 0.000000
+Edge163: 12 <--> 13 weight = 0.062951 prob = 0.000000
+Edge174: 13 <--> 18 weight = 0.155894 prob = 0.000000
+Edge32: 1 <--> 14 weight = 0.325506 prob = 0.000000
+Edge109: 6 <--> 16 weight = 0.192795 prob = 0.000000
+Edge143: 9 <--> 17 weight = 0.006894 prob = 0.000000
+Edge53: 2 <--> 18 weight = 0.061191 prob = 0.000000
+Edge187: 16 <--> 19 weight = 0.496420 prob = 0.000000
+Edge184: 15 <--> 19 weight = 0.370473 prob = 0.000000
+Edge182: 15 <--> 17 weight = 0.386691 prob = 0.000000
 
-Cycle with 20 edges:  0 <-> 11   0 <-> 5   2 <-> 5   2 <-> 18   13 <-> 18   12 <-> 13   7 <-> 12   7 <-> 8   3 <-> 8   1 <-> 3   1 <-> 14   10 <-> 14   4 <-> 10   4 <-> 9   9 <-> 17   15 <-> 17   15 <-> 19   16 <-> 19   6 <-> 16   6 <-> 11 
-3 Mandatory edges:  0 <-> 11   0 <-> 5   2 <-> 5 
-4 Forbidden edges:  5 <-> 11   5 <-> 6   5 <-> 16   2 <-> 19 
-Time taken: 0.017534255981445312s
+Cycle with 20 edges:  15 <-> 19   16 <-> 19   6 <-> 16   0 <-> 6   0 <-> 11   5 <-> 11   2 <-> 5   2 <-> 18   13 <-> 18   12 <-> 13   7 <-> 12   7 <-> 8   3 <-> 8   1 <-> 3   1 <-> 14   10 <-> 14   4 <-> 10   4 <-> 9   9 <-> 17   15 <-> 17 
+0 Mandatory edges
+0 Forbidden edges
+Time taken: 0.008234739303588867s

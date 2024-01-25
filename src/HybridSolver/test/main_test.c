@@ -33,7 +33,14 @@ void mfset_tests(void) {
 void kruskal_tests(void) {
     printf("\n\n\n##################################### KRUSKAL TESTS ######################################\n");
     test_quick_sort();
+    test_quick_sort_prob();
     test_kruskal();
+}
+
+
+void prim_tests(void) {
+    printf("\n\n\n###################################### PRIM TESTS ########################################\n");
+    test_prim();
 }
 
 

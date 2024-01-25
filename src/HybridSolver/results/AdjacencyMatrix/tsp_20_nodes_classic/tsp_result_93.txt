@@ -1,36 +1,38 @@
 
-Reading from file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_93.csv'
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_20_nodes/tsp_test_93.csv'
 
-Writing to file '/home/lorenzosciandra/Documenti/Code/BranchAndBound1Tree/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_93.txt'
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/tsp_20_nodes_classic/tsp_result_93.txt'
 
-Optimal tour found with candidate node = 12, elapsed time = 0.037118s and interrupted = FALSE
+Optimal tour found with candidate node = 0, elapsed time = 0.004137s and interrupted = FALSE
 
-B-&-B tree with generated BBNodes = 370,  explored BBNodes = 284 and max tree level = 10
+B-&-B tree with generated BBNodes = 3,  explored BBNodes = 2 and max tree level = 2
 
-SUBPROBLEM with cost = 3.917590, type = CLOSED_NEW_BEST, level of the BB tree = 6, prob = 0.000000, BBNode number = 147 and time to obtain = 0.006246s
-MST or 1-Tree with cost: 3.918768 and validity = TRUE
-Edge139: 9 <--> 13 weight = 0.269482 prob = 0.000000
-Edge173: 13 <--> 17 weight = 0.300273 prob = 0.000000
-Edge115: 7 <--> 10 weight = 0.120824 prob = 0.000000
-Edge179: 14 <--> 18 weight = 0.030527 prob = 0.000000
-Edge95: 5 <--> 15 weight = 0.143572 prob = 0.000000
-Edge24: 1 <--> 6 weight = 0.029853 prob = 0.000000
+Number of fixed edges = 54
+
+SUBPROBLEM with cost = 3.757309, type = CLOSED_SUBGRADIENT, level of the BB tree = 2, prob_tour = 0.000000, BBNode number = 2 and time to obtain = 0.003945s
+MST or 1-Tree with cost: 3.498705 and validity = TRUE
+Edge46: 2 <--> 11 weight = 0.273832 prob = 0.000000
 Edge56: 3 <--> 5 weight = 0.206059 prob = 0.000000
 Edge74: 4 <--> 8 weight = 0.072488 prob = 0.000000
-Edge177: 14 <--> 16 weight = 0.157019 prob = 0.000000
-Edge154: 10 <--> 19 weight = 0.334579 prob = 0.000000
-Edge2: 0 <--> 2 weight = 0.235365 prob = 0.000000
+Edge95: 5 <--> 15 weight = 0.143572 prob = 0.000000
+Edge24: 1 <--> 6 weight = 0.029853 prob = 0.000000
+Edge115: 7 <--> 10 weight = 0.120824 prob = 0.000000
 Edge59: 3 <--> 8 weight = 0.191129 prob = 0.000000
-Edge37: 1 <--> 19 weight = 0.291371 prob = 0.000000
-Edge122: 7 <--> 17 weight = 0.158249 prob = 0.000000
-Edge16: 0 <--> 16 weight = 0.341313 prob = 0.000000
-Edge84: 4 <--> 18 weight = 0.225496 prob = 0.000000
-Edge46: 2 <--> 11 weight = 0.273832 prob = 0.000000
-Edge108: 6 <--> 15 weight = 0.300357 prob = 0.000000
 Edge138: 9 <--> 12 weight = 0.134611 prob = 0.000000
-Edge155: 11 <--> 12 weight = 0.101192 prob = 0.000000
+Edge154: 10 <--> 19 weight = 0.334579 prob = 0.000000
+Edge137: 9 <--> 11 weight = 0.204865 prob = 0.000000
+Edge163: 12 <--> 13 weight = 0.163777 prob = 0.000000
+Edge173: 13 <--> 17 weight = 0.300273 prob = 0.000000
+Edge179: 14 <--> 18 weight = 0.030527 prob = 0.000000
+Edge108: 6 <--> 15 weight = 0.300357 prob = 0.000000
+Edge177: 14 <--> 16 weight = 0.157019 prob = 0.000000
+Edge122: 7 <--> 17 weight = 0.000000 prob = 0.000000
+Edge84: 4 <--> 18 weight = 0.225496 prob = 0.000000
+Edge37: 1 <--> 19 weight = 0.291371 prob = 0.000000
+Edge2: 0 <--> 2 weight = 0.235365 prob = 0.000000
+Edge16: 0 <--> 16 weight = 0.341313 prob = 0.000000
 
-Cycle with 20 edges:  9 <-> 12   9 <-> 13   13 <-> 17   7 <-> 17   7 <-> 10   10 <-> 19   1 <-> 19   1 <-> 6   6 <-> 15   5 <-> 15   3 <-> 5   3 <-> 8   4 <-> 8   4 <-> 18   14 <-> 18   14 <-> 16   0 <-> 16   0 <-> 2   2 <-> 11   11 <-> 12 
-3 Mandatory edges:  9 <-> 12   9 <-> 13   13 <-> 17 
-6 Forbidden edges:  9 <-> 11   4 <-> 13   11 <-> 13   13 <-> 18   13 <-> 14   6 <-> 17 
-Time taken: 0.03892827033996582s
+Cycle with 20 edges:  0 <-> 2   2 <-> 11   9 <-> 11   9 <-> 12   12 <-> 13   13 <-> 17   7 <-> 17   7 <-> 10   10 <-> 19   1 <-> 19   1 <-> 6   6 <-> 15   5 <-> 15   3 <-> 5   3 <-> 8   4 <-> 8   4 <-> 18   14 <-> 18   14 <-> 16   0 <-> 16 
+3 Mandatory edges
+72 Forbidden edges
+Time taken: 0.007402181625366211s

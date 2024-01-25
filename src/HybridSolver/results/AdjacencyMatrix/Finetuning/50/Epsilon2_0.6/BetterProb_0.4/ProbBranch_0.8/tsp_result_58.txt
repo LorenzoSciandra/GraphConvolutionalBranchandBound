@@ -1,0 +1,68 @@
+
+Reading from file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/data/AdjacencyMatrix/tsp_50_nodes/tsp_test_58.csv'
+
+Writing to file '/home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/results/AdjacencyMatrix/Finetuning/50/Epsilon2_0.6/BetterProb_0.4/ProbBranch_0.8/tsp_result_58.txt'
+
+Optimal tour found with candidate node = 22, elapsed time = 0.426021s and interrupted = FALSE
+
+B-&-B tree with generated BBNodes = 111,  explored BBNodes = 89 and max tree level = 10
+
+Number of fixed edges = 3154
+
+SUBPROBLEM with cost = 5.417436, type = CLOSED_SUBGRADIENT, level of the BB tree = 5, prob = 0.958600, BBNode number = 32 and time to obtain = 0.265169s
+MST or 1-Tree with cost: 5.281592 and validity = TRUE
+Edge261: 5 <--> 31 weight = 0.169141 prob = 0.992056
+Edge381: 8 <--> 25 weight = 0.136865 prob = 1.000000
+Edge389: 8 <--> 33 weight = 0.095632 prob = 1.000000
+Edge406: 9 <--> 10 weight = 0.028309 prob = 0.991266
+Edge489: 11 <--> 16 weight = 0.194234 prob = 0.999084
+Edge583: 13 <--> 37 weight = 0.091141 prob = 1.000000
+Edge677: 16 <--> 29 weight = 0.059270 prob = 1.000000
+Edge846: 21 <--> 48 weight = 0.257133 prob = 0.998754
+Edge911: 24 <--> 35 weight = 0.007473 prob = 1.000000
+Edge944: 25 <--> 44 weight = 0.105746 prob = 1.000000
+Edge963: 26 <--> 40 weight = 0.058239 prob = 0.920374
+Edge970: 26 <--> 47 weight = 0.070790 prob = 0.997770
+Edge989: 27 <--> 44 weight = 0.258982 prob = 1.000000
+Edge1028: 29 <--> 42 weight = 0.236966 prob = 1.000000
+Edge1079: 32 <--> 39 weight = 0.075013 prob = 0.991890
+Edge1104: 33 <--> 48 weight = 0.074563 prob = 1.000000
+Edge1210: 43 <--> 49 weight = 0.071141 prob = 0.966645
+Edge203: 4 <--> 17 weight = 0.048568 prob = 0.998034
+Edge497: 11 <--> 24 weight = 0.102931 prob = 0.998478
+Edge308: 6 <--> 35 weight = 0.116364 prob = 0.992280
+Edge1150: 37 <--> 40 weight = 0.110368 prob = 0.992622
+Edge18: 0 <--> 18 weight = 0.043437 prob = 1.000000
+Edge107: 2 <--> 12 weight = 0.040492 prob = 1.000000
+Edge538: 12 <--> 28 weight = 0.047396 prob = 1.000000
+Edge140: 2 <--> 45 weight = 0.025822 prob = 1.000000
+Edge86: 1 <--> 38 weight = 0.123146 prob = 1.000000
+Edge731: 18 <--> 20 weight = 0.052223 prob = 1.000000
+Edge816: 20 <--> 46 weight = 0.067317 prob = 1.000000
+Edge216: 4 <--> 30 weight = 0.059226 prob = 0.999634
+Edge410: 9 <--> 14 weight = 0.018653 prob = 0.999314
+Edge762: 19 <--> 21 weight = 0.126688 prob = 0.999927
+Edge1143: 36 <--> 45 weight = 0.072016 prob = 1.000000
+Edge448: 10 <--> 13 weight = 0.118771 prob = 0.963145
+Edge986: 27 <--> 41 weight = 0.081476 prob = 1.000000
+Edge42: 0 <--> 42 weight = 0.122661 prob = 1.000000
+Edge790: 19 <--> 49 weight = 0.092853 prob = 0.998619
+Edge656: 15 <--> 41 weight = 0.117321 prob = 1.000000
+Edge78: 1 <--> 30 weight = 0.106636 prob = 0.997424
+Edge329: 7 <--> 14 weight = 0.074051 prob = 0.988184
+Edge1066: 31 <--> 43 weight = 0.172484 prob = 0.988628
+Edge643: 15 <--> 28 weight = 0.132818 prob = 0.999633
+Edge361: 7 <--> 46 weight = 0.118735 prob = 0.075253
+Edge311: 6 <--> 38 weight = 0.225928 prob = 0.999982
+Edge277: 5 <--> 47 weight = 0.155964 prob = 0.084218
+Edge1137: 36 <--> 39 weight = 0.070778 prob = 1.000000
+Edge158: 3 <--> 17 weight = 0.178718 prob = 0.996801
+Edge164: 3 <--> 23 weight = 0.118305 prob = 1.000000
+Edge1074: 32 <--> 34 weight = 0.116498 prob = 1.000000
+Edge848: 22 <--> 23 weight = 0.189535 prob = 1.000000
+Edge859: 22 <--> 34 weight = 0.178617 prob = 1.000000
+
+Cycle with 50 edges:  22 <-> 23   3 <-> 23   3 <-> 17   4 <-> 17   4 <-> 30   1 <-> 30   1 <-> 38   6 <-> 38   6 <-> 35   24 <-> 35   11 <-> 24   11 <-> 16   16 <-> 29   29 <-> 42   0 <-> 42   0 <-> 18   18 <-> 20   20 <-> 46   7 <-> 46   7 <-> 14   9 <-> 14   9 <-> 10   10 <-> 13   13 <-> 37   37 <-> 40   26 <-> 40   26 <-> 47   5 <-> 47   5 <-> 31   31 <-> 43   43 <-> 49   19 <-> 49   19 <-> 21   21 <-> 48   33 <-> 48   8 <-> 33   8 <-> 25   25 <-> 44   27 <-> 44   27 <-> 41   15 <-> 41   15 <-> 28   12 <-> 28   2 <-> 12   2 <-> 45   36 <-> 45   36 <-> 39   32 <-> 39   32 <-> 34   22 <-> 34 
+23 Mandatory edges
+1138 Forbidden edges
+Time taken: 0.43633055686950684s

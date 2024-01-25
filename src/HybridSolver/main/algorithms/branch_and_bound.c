@@ -579,9 +579,9 @@ void constrained_prim(Graph * graph, SubProblem * subProblem, unsigned short can
 
         if(src != candidateId && dest != candidateId) {
             old_edge_values[i] = graph->edges_matrix[src][dest].weight;
-            graph->edges_matrix[src][dest].weight = 0;
-            graph->edges_matrix[dest][src].weight = 0;
-            graph->edges[graph->edges_matrix[src][dest].positionInGraph].weight = 0;
+            graph->edges_matrix[src][dest].weight = -(INFINITE/MAX_EDGES_NUM);
+            graph->edges_matrix[dest][src].weight = -(INFINITE/MAX_EDGES_NUM);
+            graph->edges[graph->edges_matrix[src][dest].positionInGraph].weight = -(INFINITE/MAX_EDGES_NUM);
 
         }
     }

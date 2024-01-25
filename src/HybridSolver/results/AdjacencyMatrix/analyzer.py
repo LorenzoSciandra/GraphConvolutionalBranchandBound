@@ -37,6 +37,7 @@ def analyze(abs_dir):
     forbidden_edges_list = []
     resolved_list = []
     num_fixed_edges_list = []
+    not_resolved_list = []
     num_closed_nn = 0
     num_closed_nnHybrid = 0
     num_closed_1Tree = 0
@@ -44,24 +45,24 @@ def analyze(abs_dir):
     all_files = os.listdir(abs_dir)
     for file in all_files:
         if file.endswith('.txt') and file != 'mean_results.txt':
-            file_path = os.path.join(directory, file)
+            file_path = abs_dir + '/' + file
             with open(file_path, 'r') as result_file:
                 text = result_file.read()
 
-            elapsed_time = re.search(r"elapsed time = ([0-9]+\.[0-9]+)s", text).group(1)
+            elapsed_time = re.search(r"elapsed time = ([0-9]+\.?[0-9]+)s", text).group(1)
             generated_BBNodes = re.search(r"generated BBNodes = ([0-9]+)", text).group(1)
             explored_BBNodes = re.search(r"explored BBNodes = ([0-9]+)", text).group(1)
             max_tree_level = re.search(r"max tree level = ([0-9]+)", text).group(1)
-            time_taken = re.search(r"Time taken: ([0-9]+\.[0-9]+)s", text).group(1)
+            time_taken = re.search(r"Time taken: ([0-9]+\.?[0-9]+)s", text).group(1)
             num_fixed_edges = re.search(r"Number of fixed edges = ([0-9]+)", text).group(1)
 
             if re.search(r"interrupted = FALSE", text) is not None:
                 current_resolved = 1
-                cost = re.search(r"SUBPROBLEM with cost = ([0-9]+\.[0-9]+),", text).group(1)
+                cost = re.search(r"SUBPROBLEM with cost = ([0-9]+\.?[0-9]+),", text).group(1)
                 level_of_best = re.search(r"level of the BB tree = ([0-9]+)", text).group(1)
-                prob = re.search(r"prob = ([0-9]+\.[0-9]+)", text).group(1)
+                prob = re.search(r"prob_tour = (-?[0-9]+\.?[0-9]+)", text).group(1)
                 BBNode_number = re.search(r"BBNode number = ([0-9]+)", text).group(1)
-                time_to_obtain = re.search(r"time to obtain = ([0-9]+\.[0-9]+)s", text).group(1)
+                time_to_obtain = re.search(r"time to obtain = ([0-9]+\.?[0-9]+)s", text).group(1)
                 num_mandatory_edges = re.search(r"(.+?) Mandatory edges", text).group(1)
                 num_forbidden_edges = re.search(r"(.+?) Forbidden edges", text).group(1)
 
@@ -90,9 +91,10 @@ def analyze(abs_dir):
 
             else:
                 current_resolved = 0
+                filename = re.search(r"(.+?)\.txt", file).group(1)
+                not_resolved_list.append(filename)
 
             resolved_list.append(current_resolved)
-
 
     num_resolved = sum(map(float, resolved_list))
     mean_total_time = sum(map(float, total_time_list)) / num_resolved
@@ -114,7 +116,10 @@ def analyze(abs_dir):
     mean_closed_1Tree = num_closed_1Tree / num_resolved
     mean_closed_subgradient = num_closed_subgradient / num_resolved
 
-    output_filename = absolute_dir + '/mean_results.txt'
+    if len(not_resolved_list) > 0:
+        print("Not resolved instances: " + str(not_resolved_list))
+
+    output_filename = abs_dir + '/mean_results.txt'
     with open(output_filename, 'w') as f:
         f.write("MEAN RESULTS for " + str(len(total_time_list)) + " instances\n")
         f.write("Percentage of resolved instances: " + str(mean_resolved * 100)+ "%\n")

@@ -7,7 +7,7 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o: \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/mst.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/mfset.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/graph.h \
- /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/./linked_list/linked_list.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/./doubly_linked_list//linked_list.h \
  /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -67,8 +67,8 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o: \
  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
  /usr/include/assert.h /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
- /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/./linked_list/list_iterator.h \
- /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/./linked_list/list_functions.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/./doubly_linked_list/list_iterator.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/./doubly_linked_list/list_functions.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/../problem_settings.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \
@@ -98,7 +98,8 @@ CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o: \
  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/fibonacci_heap.h \
+ /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/prim.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/b_and_b_data.h \
- /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/algorithms/../data_structures/mst.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_graph.h \
  /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/../main/data_structures/graph.h

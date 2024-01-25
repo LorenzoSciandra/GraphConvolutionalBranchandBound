@@ -49,114 +49,135 @@ cmake_ninja_workdir = /home/lorenzosciandra/Documenti/Code/GithubProjects/Hybrid
 
 build cmake_object_order_depends_target_BranchAndBound1Tree: phony || CMakeFiles/BranchAndBound1Tree.dir
 
-build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_functions.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
-  DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o.d
+build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_functions.c || cmake_object_order_depends_target_BranchAndBound1Tree
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
+  DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
-  OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list
+  OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list
 
-build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/linked_list/list_iterator.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
-  DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o.d
+build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/doubly_linked_list/list_iterator.c || cmake_object_order_depends_target_BranchAndBound1Tree
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
+  DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
-  OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list
+  OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list
 
 build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/graph.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures
 
 build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/mfset.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures
 
+build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/fibonacci_heap.c || cmake_object_order_depends_target_BranchAndBound1Tree
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
+  DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o.d
+  FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
+  OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures
+
 build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/mst.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures
 
 build CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/data_structures/b_and_b_data.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/data_structures
 
 build CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/kruskal.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/algorithms
 
 build CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/branch_and_bound.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/algorithms
 
 build CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/tsp_instance_reader.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main
 
 build CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_graph.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/test
 
 build CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_mfset.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/test
 
 build CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_kruskal.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/test
 
 build CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_BB.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/test
 
 build CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_read_file.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/test
 
 build CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/main.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main
 
 build CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/main_test.c || cmake_object_order_depends_target_BranchAndBound1Tree
-  DEFINES = -DHYBRID=1 -DMAX_VERTEX_NUM=20
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
   DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o.d
+  FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
+  OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/test
+
+build CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/main/algorithms/prim.c || cmake_object_order_depends_target_BranchAndBound1Tree
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
+  DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o.d
+  FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
+  OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/main/algorithms
+
+build CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o: C_COMPILER__BranchAndBound1Tree_unscanned_Debug /home/lorenzosciandra/Documenti/Code/GithubProjects/HybridTSPSolver/src/HybridSolver/test/test_prim.c || cmake_object_order_depends_target_BranchAndBound1Tree
+  DEFINES = -DHYBRID=0 -DMAX_VERTEX_NUM=20
+  DEP_FILE = CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o.d
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
   OBJECT_FILE_DIR = CMakeFiles/BranchAndBound1Tree.dir/test
@@ -169,7 +190,7 @@ build CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o: C_COMPILER__BranchA
 #############################################
 # Link the executable BranchAndBound1Tree
 
-build BranchAndBound1Tree: C_EXECUTABLE_LINKER__BranchAndBound1Tree_Debug CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_functions.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/linked_list/list_iterator.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o
+build BranchAndBound1Tree: C_EXECUTABLE_LINKER__BranchAndBound1Tree_Debug CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_functions.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/doubly_linked_list/list_iterator.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/graph.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mfset.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/fibonacci_heap.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/mst.c.o CMakeFiles/BranchAndBound1Tree.dir/main/data_structures/b_and_b_data.c.o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/kruskal.c.o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o CMakeFiles/BranchAndBound1Tree.dir/main/tsp_instance_reader.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_graph.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_mfset.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_kruskal.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_BB.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_read_file.c.o CMakeFiles/BranchAndBound1Tree.dir/main/main.c.o CMakeFiles/BranchAndBound1Tree.dir/test/main_test.c.o CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o CMakeFiles/BranchAndBound1Tree.dir/test/test_prim.c.o
   FLAGS = -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g
   LINK_LIBRARIES = -lm
   OBJECT_DIR = CMakeFiles/BranchAndBound1Tree.dir
