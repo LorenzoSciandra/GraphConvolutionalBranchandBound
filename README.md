@@ -29,47 +29,18 @@ Below are the mean values obtained from 100 instances for each graph size. The b
 
 |                           | **Classic Solver** | **Hybrid Solver** |
 |---------------------------|--------------------|-------------------|
-|   *20 nodes             100 instances          max 10 minutes*   |||
-|                           |                    |                   |
-| Total time (s)            | **0.028**          | 1.494             |
-| B-&-B time (s)            | 0.025              | **0.020**         |
-| B-&-B tree depth          | 4.72               | **3.94**          |
-| Generated B-&-B nodes     | 228.69             | **147.95**        |
-| Explored B-&-B nodes      | 170.04             | **142.8**         |
-| Best value                | 3.805              | 3.805             |
-| Time to Best (s)          | 0.008              | **0.002**         |
-| Depth of the best         | 1.49               | **0.32**          |
-| B-&-B nodes before best   | 110.47             | **19.62**         |
-| Probability of the best   | -                  | 0.974             |
-| Mandatory edges in best   | 3.37               | 0.72              |
-| Forbidden edges in best   | 1.49               | 0.32              |
-|                           |                    |                   |
-|   *50 nodes             100 instances             max 10 minutes* |||
-|                           |                    |                   |
-| Total time (s)            | 24.931             | **16.512**        |
-| B-&-B time (s)            | 24.922             | **14.633**        |
-| B-&-B tree depth          | 13.57              | **12.44**         |
-| Generated B-&-B nodes     | 18384.37           | **10519.63**      |
-| Explored B-&-B nodes      | 9850.52            | **9225.95**       |
-| Best value                | 5.678              | 5.678             |
-| Time to Best (s)          | 17.555             | **2.825**         |
-| Depth of the best         | 6.33               | **1.6**           |
-| B-&-B nodes before best   | 13084.21           | **2224.68**       |
-| Probability of the best   | -                  | 0.988             |
-| Mandatory edges in best   | 23.08              | 5.0               |
-| Forbidden edges in best   | 6.33               | 1.6               |
-|                           |                    |                   |
 |   *100 nodes*            *100 instances*       *max 10 minutes*  |||
 |                           |                    |                   |
-| Total time (s)            | 188.989            | **103.150**       |
-| B-&-B time (s)            | 188.870            | **98.586**        |
-| B-&-B tree depth          | 14.37              | **12.49**         |
-| Generated B-&-B nodes     | 37802.4            | **13214.54**      |
-| Explored B-&-B nodes      | 10199.05           | **7207.29**       |
-| Best value                | 7.753              | 7.751             |
-| Time to Best (s)          | 128.527            | **39.935**        |
-| Depth of the best         | 7.61               | **3.49**          |
-| B-&-B nodes before best   | 26659.2            | **6652.21**       |
-| Probability of the best   | -                  | 0.994             |
-| Mandatory edges in best   | 50.46              | 21.71             |
-| Forbidden edges in best   | 7.61               | 3.49              |
+| Total time (s)            | 62.560             | **25.858**        |
+| B-&-B time (s)            | 62.089             | **20.139**        |
+| Time to Best (s)          | 44.781             | **39.935**        |
+|							|					 |					 |
+| B-&-B tree depth          | 13.58              | **7.86**          |
+| Depth of the best         | 9.45               | **3.45**          |
+|							|					 |					 |
+| Generated B-&-B nodes     | 2094.38            | **757.8**         |
+| Explored B-&-B nodes      | 1318.67            | **507.72**        |
+| B-&-B nodes before best   | 1049.65            | **371.09**        |
+|							|					 | 					 |
+| Best value                | 7.795              | 7.795             |
+| Probability of the best   | -                  | 0.988             |
