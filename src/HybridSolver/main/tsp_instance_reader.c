@@ -92,11 +92,31 @@ void read_tsp_csv_file(Graph *graph, char *filename) {
     unsigned short z = 0;
     char *line = NULL;
     size_t len = 0;
+    bool first = true;
     while (getline(&line, &len, fp) != -1) {
-        graph->nodes[i].positionInGraph = i;
-        graph->nodes[i].x = 0;
-        graph->nodes[i].y = 0;
-        graph->nodes[i].num_neighbours = 0;
+        if (first) {
+            first = false;
+
+            char *token = strtok(line, ";");
+            unsigned short node_num = 0;
+            while (token != NULL && strcmp(token, "\n") != 0) {
+                double x = 0, y = 0;
+                int result = sscanf(token, "(%lf, %lf)", &x, &y);
+                if (result != 2) {
+                    perror("Error while reading the file.\n");
+                    printf("\nFile: %s\n", filename);
+                    exit(1);
+                }
+                graph->nodes[node_num].positionInGraph = node_num;
+                graph->nodes[node_num].x = x;
+                graph->nodes[node_num].y = y;
+                graph->nodes[node_num].num_neighbours = 0;
+                node_num++;
+                token = strtok(NULL, ";");
+            }
+
+            continue;
+        }
         char *token = strtok(line, ";");
         unsigned short j = 0;
         while (token != NULL && strcmp(token, "\n") != 0) {

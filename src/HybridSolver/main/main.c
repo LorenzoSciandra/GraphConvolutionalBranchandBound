@@ -32,12 +32,12 @@ int main(int argc, char *argv[]) {
     char *input_file = argv[1];
     char *output_file = argv[2];
 
-    //printf("\nNodes :%d \t\tMode: %s\n", MAX_VERTEX_NUM, HYBRID ? "Hybrid" : "Classic");
+    //printf("\nNodes:%d \t\tMode: %s\t\t\n", MAX_VERTEX_NUM, HYBRID ? "Hybrid" : "Classic");
+
+    //printf("\nReading from file '%s'\n", input_file);
+    //printf("\nWriting to file '%s'\n", output_file);
 
     freopen(output_file, "w+", stdout);
-
-    printf("\nReading from file '%s'\n", input_file);
-    printf("\nWriting to file '%s'\n", output_file);
 
     //run_all_tests();
 

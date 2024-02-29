@@ -14,7 +14,7 @@ void create_fibonacci_heap(FibonacciHeap * heap){
 }
 
 
-void create_node(OrdTreeNode * node, unsigned short key, float value){
+void create_node(OrdTreeNode * node, unsigned short key, double value){
     node->value = value;
     node->key = key;
     node->parent = NULL;
@@ -52,7 +52,7 @@ void insert_node(FibonacciHeap * heap, OrdTreeNode * node){
 }
 
 
-void create_insert_node(FibonacciHeap * heap, OrdTreeNode * node, unsigned short key, float value){
+void create_insert_node(FibonacciHeap * heap, OrdTreeNode * node, unsigned short key, double value){
     create_node(node, key, value);
     insert_node(heap, node);
 }
@@ -282,7 +282,7 @@ static void cascading_cut(FibonacciHeap * heap, OrdTreeNode * node){
 }
 
 
-void decrease_value(FibonacciHeap * heap, OrdTreeNode * node, float new_value){
+void decrease_value(FibonacciHeap * heap, OrdTreeNode * node, double new_value){
     if(new_value > node->value){
         fprintf(stderr, "Error: new value is greater than current value\n");
         exit(EXIT_FAILURE);

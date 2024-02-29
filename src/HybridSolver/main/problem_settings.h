@@ -30,7 +30,7 @@
 
 
 //! The maximum number to set the initial value of Problem and SubProblem.
-#define INFINITE FLT_MAX
+#define INFINITE DBL_MAX
 
 
 //! The maximum number of Node in the Graph.

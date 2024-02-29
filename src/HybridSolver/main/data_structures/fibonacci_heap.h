@@ -12,7 +12,7 @@
 
 typedef struct OrdTreeNode {
     unsigned short key;
-    float value;
+    double value;
     struct OrdTreeNode *parent;
 
     struct OrdTreeNode *left_sibling;
@@ -37,15 +37,15 @@ typedef struct FibonacciHeap{
 
 void create_fibonacci_heap(FibonacciHeap * heap);
 
-void create_node(OrdTreeNode * node, unsigned short key, float value);
+void create_node(OrdTreeNode * node, unsigned short key, double value);
 
 void insert_node(FibonacciHeap * heap, OrdTreeNode * node);
 
-void create_insert_node(FibonacciHeap * heap, OrdTreeNode * node, unsigned short key, float value);
+void create_insert_node(FibonacciHeap * heap, OrdTreeNode * node, unsigned short key, double value);
 
 int extract_min(FibonacciHeap * heap);
 
-void decrease_value(FibonacciHeap * heap, OrdTreeNode * node, float new_value);
+void decrease_value(FibonacciHeap * heap, OrdTreeNode * node, double new_value);
 
 void delete_node(FibonacciHeap * heap, OrdTreeNode * node);
 

@@ -18,7 +18,7 @@ void prim(const Graph * graph, MST * mst){
             create_insert_node(&heap, &tree_nodes[i], i, 0);
             start = false;
         } else{
-            create_insert_node(&heap, &tree_nodes[i], i, FLT_MAX);
+            create_insert_node(&heap, &tree_nodes[i], i, DBL_MAX);
         }
         in_heap[i] = true;
         fathers[i] = -1;
@@ -35,7 +35,7 @@ void prim(const Graph * graph, MST * mst){
             for(unsigned short i = 0; i < graph->nodes[min_pos].num_neighbours; i++){
                 unsigned short neigh = graph->nodes[min_pos].neighbours[i];
                 if(neigh != min_pos && in_heap[neigh]) {
-                    float weight = graph->edges_matrix[min_pos][neigh].weight;
+                    double weight = graph->edges_matrix[min_pos][neigh].weight;
                     if (weight < tree_nodes[neigh].value) {
                         fathers[neigh] = min_pos;
                         decrease_value(&heap, &tree_nodes[neigh], weight);

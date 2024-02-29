@@ -28,8 +28,8 @@ typedef enum GraphKind{
 
 //! Structure of a Node.
 typedef struct Node {
-    float x; ///< x coordinate of the Node.
-    float y; ///< y coordinate of the Node.
+    double x; ///< x coordinate of the Node.
+    double y; ///< y coordinate of the Node.
     unsigned short positionInGraph; ///< Position of the Node in the list of Nodes of the Graph, i.e. its unique ID.
     unsigned short num_neighbours; ///< Number of neighbours of the Node.
     unsigned short neighbours [MAX_VERTEX_NUM - 1]; ///< Array of IDs of the Node's neighbors.
@@ -41,8 +41,8 @@ typedef struct Edge {
     unsigned short src; ///< ID of the source vertex.
     unsigned short dest; ///< ID of the destination vertex.
     unsigned short symbol; ///< Symbol of the Edge, i.e. its unique ID.
-    float weight; ///< Weigth of the Edge, 1 if the data_structures is not weighted.
-    float prob; ///< Probability of the Edge to be in an optimal tour.
+    double weight; ///< Weight of the Edge, 1 if the data_structures is not weighted.
+    double prob; ///< Probability of the Edge to be in an optimal tour.
     unsigned short positionInGraph; ///< Position of the Edge in the list of Edges of the Graph.
 }Edge;
 
@@ -50,7 +50,7 @@ typedef struct Edge {
 //! Structure of a Graph.
 typedef struct Graph {
     GraphKind kind; ///< Type of the Graph.
-    float cost; ///< Sum of the weights of the Edges in the Graph.
+    double cost; ///< Sum of the weights of the Edges in the Graph.
     unsigned short num_nodes; ///< Number of Nodes in the Graph.
     unsigned short num_edges; ///< Number of Edges in the Graph.
     bool orderedEdges; ///< True if the Edges are ordered by weight, false otherwise.

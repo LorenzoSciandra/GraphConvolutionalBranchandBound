@@ -42,8 +42,8 @@ static int pivot_quicksort(Graph * graph, unsigned short first, unsigned short l
     Edge first_edge = edges[first];
     unsigned short middle = (first + last) / 2;
     Edge middle_edge = edges[middle];
-    float pivot_weight = first_edge.weight;
-    float pivot_prob = first_edge.prob;
+    double pivot_weight = first_edge.weight;
+    double pivot_prob = first_edge.prob;
 
     if (last_edge.weight > first_edge.weight ||
             (HYBRID && last_edge.weight == first_edge.weight && last_edge.prob < first_edge.prob)){

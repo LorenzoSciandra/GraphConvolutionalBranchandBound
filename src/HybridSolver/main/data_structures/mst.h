@@ -26,8 +26,8 @@ typedef struct ConstrainedEdge{
 //! Minimum Spanning Tree, or MST, and also a 1-Tree.
 typedef struct MST{
     bool isValid; ///< True if the MST has the correct number of Edges, false otherwise.
-    float cost; ///< The total cost of the MST, i.e. the sum of the weights of the Edges.
-    float prob; ///< The probability of the MST, i.e. the average of the probabilities of its Edges.
+    double cost; ///< The total cost of the MST, i.e. the sum of the weights of the Edges.
+    double prob; ///< The probability of the MST, i.e. the average of the probabilities of its Edges.
     unsigned short num_nodes; ///< The number of Nodes in the MST.
     unsigned short num_edges; ///< The number of Edges in the MST.
     Node nodes [MAX_VERTEX_NUM]; ///< The set of Nodes in the MST.

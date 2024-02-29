@@ -43,12 +43,12 @@ typedef struct SubProblem{
     BBNodeType type; ///< The label of the SubProblem.
     unsigned int id; ///< The id of the SubProblem, an incremental number.
     unsigned int fatherId; ///< The id of the father of the SubProblem.
-    float value; ///< The cost of the SubProblem.
+    double value; ///< The cost of the SubProblem.
     unsigned short treeLevel; ///< The level of the SubProblem in the Branch and Bound tree.
     float timeToReach; ///< The time needed to reach the SubProblem, in seconds.
     MST oneTree; ///< The 1Tree of the SubProblem.
     unsigned short num_edges_in_cycle; ///< The number of edges in the cycle of the SubProblem.
-    float prob; ///< The probability of the SubProblem to be the best tour.
+    double prob; ///< The probability of the SubProblem to be the best tour.
     ConstrainedEdge cycleEdges [MAX_VERTEX_NUM]; ///< The edges in the cycle of the SubProblem.
     unsigned short num_forbidden_edges; ///< The number of forbidden edges in the SubProblem.
     unsigned short num_mandatory_edges; ///< The number of mandatory edges in the SubProblem.
@@ -65,7 +65,7 @@ typedef struct Problem{
     unsigned short candidateNodeId; ///< The id of the candidate node.
     unsigned short totTreeLevels; ///< The total number of levels in the Branch and Bound tree.
     SubProblem bestSolution; ///< The best solution found so far.
-    float bestValue; ///< The cost of the best solution found so far.
+    double bestValue; ///< The cost of the best solution found so far.
     unsigned int generatedBBNodes; ///< The number of nodes generated in the Branch and Bound tree.
     unsigned int exploredBBNodes; ///< The number of nodes explored in the Branch and Bound tree.
     unsigned int num_fixed_edges; ///< The number of fixed edges in the Branch and Bound tree.

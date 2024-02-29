@@ -11,12 +11,310 @@
 
     Repo: https://github.com/LorenzoSciandra/HybridTSPSolver
 """
-
-
+import random
 import subprocess
 import sys
 import os
 import time
+import re
+import fileinput
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn_extra.cluster import KMedoids
+
+
+def get_solution(output_file):
+    """
+    Args:
+        output_file: The file containing the solution to the TSP instance.
+    """
+    tour = None
+
+    with open(output_file, "r") as f:
+        lines = f.readlines()
+
+    for line in lines:
+        if "Cycle with" in line:
+            tour = line.split("cost: ")[1]
+
+    if tour is None:
+        raise Exception("The output file ", output_file, " of the Branch and Bound is empty.")
+
+    return tour
+
+
+def farthest_selection(to_add_nodes, cities_tour, adj_matrix, num_nodes):
+    best_index = -1
+    best_distance = -1
+
+    for node in to_add_nodes:
+
+        min_distance = 1000000
+
+        for j in range(0, num_nodes):
+            if j in cities_tour and adj_matrix[node][j] < min_distance:
+                min_distance = adj_matrix[node][j]
+
+        if min_distance > best_distance:
+            best_distance = min_distance
+            best_index = node
+
+    return best_index
+
+
+def cheapest_insertion(cities_tour, adj_matrix, node_to_add):
+    """
+    Args:
+        cities_tour: The cities already in the tour.
+        adj_matrix: The adjacency matrix of the graph.
+        node_to_add: The node to add to the current tour.
+    """
+
+    best_node_pos = -1
+    best_value = 1000000
+
+    for i in range(0, len(cities_tour) - 1):
+        src = cities_tour[i]
+        dst = cities_tour[i + 1]
+        cost = adj_matrix[src][dst]
+        if adj_matrix[src][node_to_add] + adj_matrix[node_to_add][dst] - cost < best_value:
+            best_value = adj_matrix[src][node_to_add] + adj_matrix[node_to_add][dst] - cost
+            best_node_pos = i
+
+    return best_node_pos
+
+
+def current_tour(edges, medoids_indx):
+    cities_tour = []
+    original_tour = "Reconstructed cycle with " + str(len(medoids_indx)) + " edges: "
+
+    for edge in edges:
+        edge = edge.replace("\n", "")
+        src, dst = edge.split(" <-> ")
+        src = int(src)
+        dst = int(dst)
+        original_src = medoids_indx[src]
+        original_dst = medoids_indx[dst]
+        cities_tour.append(original_src)
+        original_tour += str(original_src) + " <-> " + str(original_dst) + ",  "
+
+    return cities_tour, original_tour
+
+
+def adjacency_matrix(orig_graph):
+    """
+    Args:
+        orig_graph: The original graph.
+    """
+    adj_matrix = np.zeros((len(orig_graph), len(orig_graph)))
+
+    for i in range(0, len(orig_graph)):
+        for j in range(i + 1, len(orig_graph)):
+            adj_matrix[i][j] = np.linalg.norm(np.array(orig_graph[i]) - np.array(orig_graph[j]))
+            adj_matrix[j][i] = adj_matrix[i][j]
+
+    return adj_matrix
+
+
+def vertex_insertion(solution, medoids_indx, graph, adj_matrix):
+    """
+    Args:
+        solution: The solution to fix.
+        medoids_indx: The indices of the medoids.
+        graph: The original graph.
+        adj_matrix: The original adjacency matrix.
+    """
+
+    num_nodes = len(graph)
+    model_size = len(medoids_indx)
+    all_indexes = set(range(0, num_nodes))
+    to_add_nodes = list(all_indexes - set(medoids_indx))
+    edges = solution.split(",  ")
+    final_cost = 0
+    cities_tour, original_tour = current_tour(edges, medoids_indx)
+    original_tour += str(cities_tour[0]) + "\n"
+
+    for i in range(model_size, num_nodes):
+        new_city = farthest_selection(to_add_nodes, cities_tour, adj_matrix, num_nodes)
+        best_city_pos = cheapest_insertion(cities_tour, adj_matrix, new_city)
+        to_add_nodes = to_add_nodes.append(new_city)
+        cities_tour[best_city_pos:] = new_city, *cities_tour[best_city_pos:-1]
+
+    final_tour = "Final cycle with " + str(num_nodes) + " edges of 0 cost: "
+
+    for i in range(0, len(cities_tour) - 1):
+        final_tour += str(cities_tour[i]) + " <-> " + str(cities_tour[i + 1]) + ",  "
+        final_cost += adj_matrix[cities_tour[i]][cities_tour[i + 1]]
+        # print("Adding edge: ", cities_tour[i], " <-> ", cities_tour[i + 1], " Cost: ", adj_matrix[cities_tour[i]][cities_tour[i + 1]])
+
+    final_tour += str(cities_tour[-1]) + " <-> " + str(cities_tour[0])
+    final_cost += adj_matrix[cities_tour[-1]][cities_tour[0]]
+    # print("Adding edge: ", cities_tour[-1], " <-> ", cities_tour[0], " Cost: ", adj_matrix[cities_tour[-1]][cities_tour[0]])
+
+    final_tour = final_tour.replace("of 0", "of " + str(final_cost))
+    return original_tour + final_tour
+
+
+def cluster_nodes(graph):
+    """
+    Args:
+        graph: The graph to cluster.
+    """
+    graph = np.array(graph)
+    kmedoids = KMedoids(n_clusters=100, random_state=42).fit(graph)
+    medoids_indx = list(kmedoids.medoid_indices_)
+    medoids = graph[medoids_indx]
+
+    return medoids, medoids_indx
+
+
+def remove_dummy_cities(solution, num_nodes, adj_matrix):
+    """
+    Args:
+        solution: The solution to fix.
+        num_nodes: The number of nodes of the graph instance.
+        adj_matrix: The adjacency matrix of the graph.
+    """
+
+    edges = solution.split(",  ")
+    first_dummy = num_nodes
+    final_tour = "Final cycle with " + str(num_nodes) + " edges of 0 cost: "
+    final_nodes = []
+    final_cost = 0
+    j = 0
+    for edge in edges:
+        src, _ = edge.split(" <-> ")
+        src = int(src)
+        if src < first_dummy:
+            final_nodes.append(src)
+
+    i = 0
+    for node in final_nodes:
+        if i < len(final_nodes) - 1:
+            final_tour += str(node) + " <-> " + str(final_nodes[i + 1]) + ",  "
+            final_cost += adj_matrix[node][final_nodes[i + 1]]
+
+        else:
+            final_tour += str(node) + " <-> " + str(final_nodes[0])
+            final_cost += adj_matrix[node][final_nodes[0]]
+
+        i += 1
+
+    final_tour = final_tour.replace("of 0", "of " + str(final_cost))
+
+    return final_tour
+
+
+def add_dummy_cities(graph, num_nodes):
+    """
+    Args:
+        graph: The graph to which add the dummy cities.
+        num_nodes: The number of nodes of the graph instance.
+    """
+    num_dummy_cities = 0
+
+    if num_nodes < 20:
+        num_dummy_cities = 20 - num_nodes
+    elif num_nodes < 50:
+        num_dummy_cities = 50 - num_nodes
+    elif num_nodes < 100:
+        num_dummy_cities = 100 - num_nodes
+    else:
+        raise Exception("The max dimension of the GCN is 100 nodes.")
+
+    rr_index = 0
+    for i in range(num_dummy_cities):
+
+        find = False
+        x = None
+        y = None
+        while not find:
+            values = np.random.uniform(1, 9, 2)
+            signs = np.random.choice([-1, 1], 2)
+            x = graph[rr_index][0] + signs[0] * values[0] * 0.000001
+            y = graph[rr_index][1] + signs[1] * values[1] * 0.000001
+            if [x, y] not in graph:
+                find = True
+
+        graph.append([x, y])
+        rr_index = (rr_index + 1) % num_nodes
+
+    return np.array(graph).flatten()
+
+
+def fix_instance_size(graph, instance, num_nodes):
+    """
+    Args:
+        graph: The graph to fix.
+        instance: The number of the instance to fix.
+        num_nodes: The number of nodes of the graph instance.
+    """
+
+    medoids_indx = set()
+    new_graph = None
+    end_str = " output "
+
+    if num_nodes < 100:
+        new_graph = add_dummy_cities(graph, num_nodes)
+        dim = int(len(new_graph) / 2 + 1)
+    else:
+        new_graph, medoids_indx = cluster_nodes(graph)
+        dim = len(new_graph) + 1
+
+    for i in range(1, dim):
+        end_str += str(i) + " "
+
+    new_graph_str = str(new_graph).replace("[", "").replace("]", "").replace("\n", "")
+    new_graph_str = re.sub(' +', ' ', new_graph_str)
+    end_str += "1\n"
+
+    lines = None
+    with open("graph-convnet-tsp/data/hyb_tsp/test_100_instances.txt", 'r') as file:
+        lines = file.readlines()
+
+    lines[instance - 1] = new_graph_str + end_str
+
+    with open("graph-convnet-tsp/data/hyb_tsp/test_100_instances.txt", 'w+') as file:
+        file.writelines(lines)
+        file.flush()
+        os.fsync(file.fileno())
+
+    return medoids_indx
+
+
+def get_nodes(graph):
+    """
+    Args:
+        graph: The graph to get the nodes from.
+    """
+    nodes = ""
+    i = 0
+    for node in graph:
+        nodes += "\t" + str(i) + " : " + str(node[0]) + " " + str(node[1]) + "\n"
+        i += 1
+
+    return nodes
+
+
+def get_instance(instance):
+    lines = None
+    with open("graph-convnet-tsp/data/hyb_tsp/test_100_instances.txt", "r") as f:
+        lines = f.readlines()
+
+    if lines is None or len(lines) < instance - 1:
+        raise Exception("The instance " + str(instance) + " does not exist.")
+
+    str_graph = lines[instance - 1]
+
+    if "output" in str_graph:
+        str_graph = str_graph.split(" output")[0]
+
+    str_graph = str_graph.replace("\n", "").strip()
+    nodes = str_graph.split(" ")
+    graph = [float(x) for x in nodes]
+    graph = [[graph[i], graph[i + 1]] for i in range(0, len(graph), 2)]
+
+    return graph
 
 
 def build_c_program(build_directory, num_nodes, hyb_mode):
@@ -50,16 +348,33 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         raise Exception("Build failed")
 
 
-def hybrid_solver(num_instances, num_nodes, hyb_mode, skip_nn):
+def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
     """
     Args:
         num_instances: The range of instances to run on the Solver.
-        num_nodes: The number of nodes to use in the C program.
+        num_nodes: The number of nodes in each TSP instance.
         hyb_mode: True if the program is in hybrid mode, False otherwise.
+        gen_matrix: True if the adjacency matrix is already generated, False otherwise.
     """
+
+    model_size = 0
+    adj_matrix = None
+
+    if hyb_mode:
+        if num_nodes <= 1:
+            raise Exception("The number of nodes must be greater than 1.")
+        elif num_nodes <= 20:
+            model_size = 20
+        elif num_nodes <= 50:
+            model_size = 50
+        else:
+            model_size = 100
+    else:
+        model_size = num_nodes
+
     build_directory = "../cmake-build/CMakeFiles/BranchAndBound1Tree.dir"
     hybrid = 1 if hyb_mode else 0
-    build_c_program(build_directory, num_nodes, hybrid)
+    build_c_program(build_directory, model_size, hybrid)
 
     if "-" in num_instances:
         instances = num_instances.split("-")
@@ -74,32 +389,88 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, skip_nn):
 
     for i in range(start_instance, end_instance + 1):
         start_time = time.time()
+        orig_graph = get_instance(i)
+        medoids_indx = set()
+        to_fix = False
         input_file = "../data/AdjacencyMatrix/tsp_" + str(num_nodes) + "_nodes/tsp_test_" + str(i) + ".csv"
         absolute_input_path = os.path.abspath(input_file)
+
+        if not os.path.exists(os.path.dirname(absolute_input_path)):
+            try:
+                os.makedirs(os.path.dirname(absolute_input_path))
+            except OSError as exc:  # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
+
         result_mode = "hybrid" if hyb_mode else "classic"
         output_file = "../results/AdjacencyMatrix/tsp_" + str(num_nodes) + "_nodes_" + result_mode \
                       + "/tsp_result_" + str(i) + ".txt"
-        if hyb_mode and not skip_nn:
+
+        if hyb_mode:
+            if num_nodes != model_size:
+                print("Need to fix the instance size.")
+                to_fix = True
+                medoids_indx = fix_instance_size(orig_graph, i, num_nodes)
+                adj_matrix = adjacency_matrix(orig_graph)
+
             absolute_python_path = os.path.abspath("./graph-convnet-tsp/main.py")
-            result = subprocess.run(['python3', absolute_python_path, absolute_input_path, str(num_nodes), str(i)], cwd="./graph-convnet-tsp",
-                                    check=True)
+            result = subprocess.run(['python3', absolute_python_path, absolute_input_path, str(model_size), str(i)],
+                                    cwd="./graph-convnet-tsp", check=True)
             if result.returncode == 0:
                 print('Neural Network completed successfully on instance ' + str(i) + ' / ' + str(end_instance))
             else:
                 print('Neural Network failed on instance ' + str(i) + ' / ' + str(end_instance))
-            os.rename(absolute_input_path.replace(".csv", "_temp.csv"), absolute_input_path)
+
+        elif gen_matrix:
+            adj_matrix = adjacency_matrix(orig_graph)
+            with open(absolute_input_path, "w") as f:
+                nodes_coord = ";".join([f"({orig_graph[i][0]}, {orig_graph[i][1]})" for i in range(len(orig_graph))])
+                f.write(nodes_coord + "\n")
+                for k in range(len(adj_matrix)):
+                    for j in range(len(adj_matrix[k])):
+                        f.write(f"({adj_matrix[k][j]}, 0);")
+                    f.write("\n")
 
         absolute_output_path = os.path.abspath(output_file)
+        if not os.path.exists(os.path.dirname(absolute_output_path)):
+            try:
+                os.makedirs(os.path.dirname(absolute_output_path))
+            except OSError as exc:  # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
         cmd = [build_directory + "/BranchAndBound1Tree", absolute_input_path, absolute_output_path]
         result = subprocess.run(cmd)
         if result.returncode == 0:
             print('Branch-and-Bound completed successfully on instance ' + str(i) + ' / ' + str(end_instance))
         else:
             print('Branch-and-Bound failed on instance ' + str(i) + ' / ' + str(end_instance))
+
+        final_tour = None
+        cities = get_nodes(orig_graph)
+
+        if to_fix:
+
+            solution = get_solution(output_file)
+            if adj_matrix is None:
+                raise Exception("The original graph is empty.")
+            if num_nodes < model_size:
+                final_tour = remove_dummy_cities(solution, num_nodes, adj_matrix)
+            elif num_nodes > model_size:
+                final_tour = vertex_insertion(solution, medoids_indx, orig_graph, adj_matrix)
+
+            if final_tour is None:
+                raise Exception("The final tour is empty.")
+
         end_time = time.time()
-        # append to the output file the time taken to solve the instance
+
         with open(output_file, "a") as f:
-            f.write("Time taken: " + str(end_time - start_time) + "s\n")
+            if final_tour is not None:
+                final_tour += "\n"
+                f.write(final_tour)
+            f.write("\nNodes: \n" + cities)
+            f.write("\nTime taken: " + str(end_time - start_time) + "s\n")
+            f.flush()
+            os.fsync(f.fileno())
 
 
 if __name__ == "__main__":
@@ -108,12 +479,13 @@ if __name__ == "__main__":
         sys.argv[1]: The range of instances to run on the Solver.
         sys.argv[2]: The number of nodes to use in the C program.
         sys.argv[3]: "h" if the program is in hybrid mode, "n" normal.
-        sys.argv[4]: "y" if the adjacency matrix is already generated, "n" otherwise. (optional)
+        sys.argv[4]: "y" to generate the adjacency matrix, "n" otherwise.
     """
 
     if len(sys.argv) < 4:
         print("\nERROR: Please provide the number of instances to run on the Solver, the number of nodes to select the "
-              "correct Neural Network, yes or no to run on hybrid mode or not and optionally yes or no to skip the Neural Network.\n"
+              "correct Neural Network, yes or no to run on hybrid mode or not and optionally yes or no to skip the "
+              "Neural Network.\n"
               ".Usage: python3 HybridSolver.py <num instances> <num nodes> <y/n> (<y/n>) or\n"
               "python3 HybridSolver.py <num start instance>-<num end instance> <num nodes> <y/n> (<y/n>)\n"
               )
@@ -126,9 +498,9 @@ if __name__ == "__main__":
     num_instances = sys.argv[1]
     num_nodes = int(sys.argv[2])
     hyb_mode = (sys.argv[3] == "h" or sys.argv[3] == "H")
-    skip_nn = False
+    gen_matrix = False
 
     if len(sys.argv) == 5:
-        skip_nn = (sys.argv[4] == "y" or sys.argv[4] == "Y" or sys.argv[4] == "yes" or sys.argv[4] == "Yes")
+        gen_matrix = (sys.argv[4] == "y" or sys.argv[4] == "Y" or sys.argv[4] == "yes" or sys.argv[4] == "Yes")
 
-    hybrid_solver(num_instances, num_nodes, hyb_mode, skip_nn)
+    hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix)

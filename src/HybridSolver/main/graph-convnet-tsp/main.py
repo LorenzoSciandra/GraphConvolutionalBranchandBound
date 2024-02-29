@@ -67,15 +67,19 @@ def compute_prob(net, config, dtypeLong, dtypeFloat, instance_number):
 
     # read the instance number line from the test_filepath
     instance = None
+    lines = []
     with open(test_filepath, 'r') as f:
-        for i, line in enumerate(f):
-            if i == instance_number:
-                instance = line
-                break
+        lines = f.readlines()
 
-    # split the instance before the "output" part
+    if lines is None:
+        raise Exception("The input file is empty.")
+
+    instance = lines[instance_number]
+
+    if instance is None:
+        raise Exception("The instance " + str(instance_number) + " does not exist.")
+
     instance = instance.split(" output")[0]
-    # create a list of the nodes spliting by spaces and convert to double
     instance = [float(x) for x in instance.split(" ")]
 
     with torch.no_grad():
@@ -101,10 +105,13 @@ def compute_prob(net, config, dtypeLong, dtypeFloat, instance_number):
         # y_bins = y.argmax(dim=3)
         y_probs = y[:, :, :, 1]
 
-    return y_probs, x_edges_values
+    nodes_coord = batch.nodes_coord.flatten().tolist()
+    nodes_coord = ";".join([f"({nodes_coord[i]}, {nodes_coord[i+1]})" for i in range(0, len(nodes_coord), 2)])
+
+    return y_probs, x_edges_values, nodes_coord
 
 
-def write_adjacency_matrix(y_probs, x_edges_values, filepath):
+def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath):
     """
     This function simply writes the probabilistic adjacency matrix in a file, where each cell
     is a tuple (distance, probability).
@@ -124,9 +131,10 @@ def write_adjacency_matrix(y_probs, x_edges_values, filepath):
     # format the strings using a list comprehension
     arr_strings = np.array(['({}, {});'.format(x[0], x[1]) for x in arr_combined])
 
-    filepath = filepath.replace(".csv", "_temp.csv")
+    #filepath = filepath.replace(".csv", "_temp.csv")
     # write arr_strings to file
     with open(filepath, 'w') as f:
+        f.write("%s\n" % nodes_coord)
         edge = 0
         for item in arr_strings:
             if (edge + 1) % num_nodes == 0:
@@ -134,7 +142,8 @@ def write_adjacency_matrix(y_probs, x_edges_values, filepath):
             else:
                 f.write("%s" % item)
             edge += 1
-
+        f.flush()
+        os.fsync(f.fileno())
 
 def main(filepath, num_nodes, instance_number):
     """
@@ -149,8 +158,8 @@ def main(filepath, num_nodes, instance_number):
 
     config.gpu_id = "0"
     config.accumulation_steps = 1
-    config.val_filepath = "./data/hyb_tsp_" + num_nodes + "/test_100_instances.txt"
-    config.test_filepath = "./data/hyb_tsp_" + num_nodes + "/test_100_instances.txt"
+    config.val_filepath = "./data/hyb_tsp/test_100_instances.txt"
+    config.test_filepath = "./data/hyb_tsp/test_100_instances.txt"
 
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
@@ -178,8 +187,8 @@ def main(filepath, num_nodes, instance_number):
     # Load network state
     net.load_state_dict(checkpoint['model_state_dict'])
     config.batch_size = 1
-    probs, edges_value = compute_prob(net, config, dtypeLong, dtypeFloat, instance_number)
-    write_adjacency_matrix(probs, edges_value, filepath)
+    probs, edges_value, nodes_coord = compute_prob(net, config, dtypeLong, dtypeFloat, instance_number)
+    write_adjacency_matrix(probs, edges_value, nodes_coord, filepath)
 
 
 if __name__ == "__main__":

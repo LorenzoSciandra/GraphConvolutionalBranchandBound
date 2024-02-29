@@ -12,7 +12,6 @@
 
 
 #include "graph.h"
-#include "doubly_linked_list//list_functions.h"
 #include "doubly_linked_list/list_iterator.h"
 
 
@@ -85,8 +84,8 @@ void create_euclidean_graph(Graph * graph, List *nodes) {
             edges[z].symbol = z + 1;
             edges[z].positionInGraph = z;
             edges[z].prob = 0;
-            edges[z].weight = (float) sqrt(pow(fabsf(node_src->x - node_dest->x), 2) +
-                                        pow(fabsf(node_src->y - node_dest->y), 2));
+            edges[z].weight = (float) sqrt(pow(fabs(node_src->x - node_dest->x), 2) +
+                                        pow(fabs(node_src->y - node_dest->y), 2));
             add_elem_list_bottom(edges_list, &edges[z]);
             z++;
 
@@ -103,7 +102,7 @@ void print_graph(const Graph *G) {
     printf("Nodes: %i\n", G->num_nodes);
     for (int i = 0; i < G->num_nodes; i++) {
         Node curr = G->nodes[i];
-        printf("Node%i:\t(%.3f, %.3f)\t%i neighbours: ", curr.positionInGraph, curr.x, curr.y, curr.num_neighbours);
+        printf("Node%i:\t(%.*f, %.*f)\t%i neighbours: ", curr.positionInGraph, DBL_DIG-1, curr.x, DBL_DIG-1, curr.y, curr.num_neighbours);
 
         for (int z = 0; z < curr.num_neighbours; z++) {
             printf("%i ", G->nodes[curr.neighbours[z]].positionInGraph);
@@ -124,10 +123,12 @@ void print_graph(const Graph *G) {
         sprintf(edge_print_dest, "%i", curr.dest);
         strcat(edge_print, edge_print_dest);
 
-        printf("Edge%i:\t%s\tweight = %lf\tprob = %lf\n",
+        printf("Edge%i:\t%s\tweight = %.*f\tprob = %.*f\n",
                curr.symbol,
                edge_print,
+               DBL_DIG-1,
                curr.weight,
+               DBL_DIG-1,
                curr.prob);
     }
 

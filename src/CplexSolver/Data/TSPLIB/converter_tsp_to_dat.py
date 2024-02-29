@@ -35,7 +35,9 @@ def convert(input_file, output_file):
     final_matrix = np.squeeze(np.asarray(distance_matrix))
     # let every list in the final_matrix of the same size of the len of final_matrix adding zeros at the end
     #final_matrix = np.pad(final_matrix, (0, len(final_matrix) - len(final_matrix[0])), 'constant', constant_values=(0))
-
+	
+    #print(problem.as_name_dict())
+   
     n_nodes = len(final_matrix)
     n_edges = 0
 
