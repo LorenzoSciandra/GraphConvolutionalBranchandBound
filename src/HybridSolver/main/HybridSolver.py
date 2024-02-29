@@ -17,6 +17,7 @@ import sys
 import os
 import time
 import re
+import json
 import fileinput
 import numpy as np
 import matplotlib.pyplot as plt
@@ -155,17 +156,28 @@ def vertex_insertion(solution, medoids_indx, graph, adj_matrix):
     return original_tour + final_tour
 
 
-def cluster_nodes(graph):
+def cluster_nodes(graph, num_nodes):
     """
     Args:
         graph: The graph to cluster.
+        num_nodes: The number of nodes in the graph.
     """
     graph = np.array(graph)
-    kmedoids = KMedoids(n_clusters=100, random_state=42).fit(graph)
+    k = 0
+
+    if 20 < num_nodes < 50:
+        k = 20
+    elif 50 < num_nodes < 100:
+        k = 50
+    else:
+        k = 100
+
+    kmedoids = KMedoids(n_clusters=k, random_state=42).fit(graph)
     medoids_indx = list(kmedoids.medoid_indices_)
     medoids = graph[medoids_indx]
+    medoids_str = " ".join(f"{x} {y}" for x, y in medoids)
 
-    return medoids, medoids_indx
+    return medoids_str, medoids_indx, len(medoids) + 1
 
 
 def remove_dummy_cities(solution, num_nodes, adj_matrix):
@@ -231,41 +243,46 @@ def add_dummy_cities(graph, num_nodes):
         while not find:
             values = np.random.uniform(1, 9, 2)
             signs = np.random.choice([-1, 1], 2)
-            x = graph[rr_index][0] + signs[0] * values[0] * 0.000001
-            y = graph[rr_index][1] + signs[1] * values[1] * 0.000001
+            x = graph[rr_index][0] + signs[0] * values[0] * 0.00000000000000001
+            y = graph[rr_index][1] + signs[1] * values[1] * 0.00000000000000001
             if [x, y] not in graph:
                 find = True
 
         graph.append([x, y])
         rr_index = (rr_index + 1) % num_nodes
 
-    return np.array(graph).flatten()
+    graph_str = " ".join(f"{x} {y}" for x, y in graph)
+
+    return graph_str, len(graph) + 1
 
 
-def fix_instance_size(graph, instance, num_nodes):
+def fix_instance_size(graph, instance, num_nodes, rate):
     """
     Args:
         graph: The graph to fix.
         instance: The number of the instance to fix.
         num_nodes: The number of nodes of the graph instance.
+        rate: The fraction of missing cities.
     """
 
-    medoids_indx = set()
-    new_graph = None
+    medoids_idx = set()
+    new_graph_str = None
     end_str = " output "
 
     if num_nodes < 100:
-        new_graph = add_dummy_cities(graph, num_nodes)
-        dim = int(len(new_graph) / 2 + 1)
+        if rate >= 0.7:
+            print("Need to fix the instance size adding dummy cities")
+            new_graph_str, dim = add_dummy_cities(graph, num_nodes)
+        else:
+            print("Need to fix the instance size with clustering")
+            new_graph_str, medoids_idx, dim = cluster_nodes(graph, num_nodes)
     else:
-        new_graph, medoids_indx = cluster_nodes(graph)
-        dim = len(new_graph) + 1
+        print("Need to fix the instance size with clustering")
+        new_graph_str, medoids_idx, dim = cluster_nodes(graph, num_nodes)
 
     for i in range(1, dim):
         end_str += str(i) + " "
 
-    new_graph_str = str(new_graph).replace("[", "").replace("]", "").replace("\n", "")
-    new_graph_str = re.sub(' +', ' ', new_graph_str)
     end_str += "1\n"
 
     lines = None
@@ -279,7 +296,7 @@ def fix_instance_size(graph, instance, num_nodes):
         file.flush()
         os.fsync(file.fileno())
 
-    return medoids_indx
+    return medoids_idx
 
 
 def get_nodes(graph):
@@ -358,6 +375,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
     """
 
     model_size = 0
+    rate = 0
     adj_matrix = None
 
     if hyb_mode:
@@ -365,10 +383,15 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
             raise Exception("The number of nodes must be greater than 1.")
         elif num_nodes <= 20:
             model_size = 20
+            rate = 1
         elif num_nodes <= 50:
             model_size = 50
+            rate = num_nodes / model_size
+            model_size = model_size if rate >= 0.7 else 20
         else:
             model_size = 100
+            rate = num_nodes / model_size
+            model_size = model_size if rate >= 0.7 else 50
     else:
         model_size = num_nodes
 
@@ -408,9 +431,8 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
 
         if hyb_mode:
             if num_nodes != model_size:
-                print("Need to fix the instance size.")
                 to_fix = True
-                medoids_indx = fix_instance_size(orig_graph, i, num_nodes)
+                medoids_indx = fix_instance_size(orig_graph, i, num_nodes, rate)
                 adj_matrix = adjacency_matrix(orig_graph)
 
             absolute_python_path = os.path.abspath("./graph-convnet-tsp/main.py")
