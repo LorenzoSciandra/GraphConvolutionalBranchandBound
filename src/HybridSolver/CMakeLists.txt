@@ -3,6 +3,26 @@ project(BranchAndBound1Tree C)
 
 
 set(CMAKE_C_STANDARD 99)
+
+find_program(CLANG_FOUND clang)
+if(CLANG_FOUND)
+    # Set Clang as the compiler
+    set(CMAKE_C_COMPILER "clang")
+
+    # Set optimization flags for Clang compiler
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
+
+    message("Using Clang compiler with optimization flags.")
+else()
+    # Clang not found, fall back to GCC
+    message("Clang compiler not found. Using default compiler with default optimization flags.")
+endif()
+
+# Set default optimization flags if Clang not found or not using Clang-specific flags
+if(NOT CLANG_FOUND)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")  # Default optimization flags for GCC
+endif()
+
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable")
 set(SOURCE_FILES
         main/data_structures/doubly_linked_list/linked_list.h
