@@ -1091,7 +1091,7 @@ void print_subProblem(const SubProblem *subProblem) {
 
     //print_mst_original_weight(&subProblem->oneTree, &problem->graph);
 
-    printf("\nCycle with %i edges of %lf cost:", subProblem->num_edges_in_cycle, subProblem->oneTree.cost);
+    printf("\nCycle with %i edges:", subProblem->num_edges_in_cycle);
     unsigned short last_dest = 0;
     for (unsigned short i = 0; i < subProblem->num_edges_in_cycle; i++) {
         ConstrainedEdge edge_cycle = subProblem->cycleEdges[i];
