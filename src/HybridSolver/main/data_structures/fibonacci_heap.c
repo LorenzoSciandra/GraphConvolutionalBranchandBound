@@ -105,7 +105,7 @@ void swap_roots(FibonacciHeap * heap, OrdTreeNode * node1, OrdTreeNode * node2){
 
 void consolidate(FibonacciHeap * heap){
 
-    int dimension = ((int) ceil(log(heap->num_nodes) / log(2))) + 1;
+    int dimension = ((int) ceil(log(heap->num_nodes) / log(2))) + 2;
     OrdTreeNode * degree_list [dimension] ;
 
     for (int i = 0; i < dimension; i++) {

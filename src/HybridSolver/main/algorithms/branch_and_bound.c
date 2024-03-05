@@ -190,36 +190,32 @@ bool infer_constraints(SubProblem * subProblem){
         short num_nothing_node = 0;
         short num_mandatory_node = 0;
         short num_forbidden_node = 0;
-        short nothing_nodes [MAX_VERTEX_NUM];
+        short nothing_nodes[MAX_VERTEX_NUM];
 
         for (short j = 0; j < MAX_VERTEX_NUM; j++) {
-            if(subProblem->constraints[i][j] == NOTHING){
+            if (subProblem->constraints[i][j] == NOTHING) {
                 nothing_nodes[num_nothing_node] = j;
                 num_nothing_node++;
-            }
-            else if(subProblem->constraints[i][j] == MANDATORY){
+            } else if (subProblem->constraints[i][j] == MANDATORY) {
                 num_mandatory_node++;
-            }
-            else{
+            } else {
                 num_forbidden_node++;
             }
         }
 
-        if(num_mandatory_node == 2){
-            for (short j = 0; j < num_nothing_node; j++){
+        if (num_mandatory_node == 2) {
+            for (short j = 0; j < num_nothing_node; j++) {
                 subProblem->constraints[i][nothing_nodes[j]] = FORBIDDEN;
                 subProblem->constraints[nothing_nodes[j]][i] = FORBIDDEN;
                 subProblem->num_forbidden_edges++;
                 problem->num_fixed_edges++;
+                i = 0;
             }
-        } else if (num_mandatory_node > 2 || (MAX_VERTEX_NUM - num_forbidden_node < 2)){
+        } else if (num_mandatory_node > 2 || (MAX_VERTEX_NUM - num_forbidden_node < 2)) {
             valid = false;
-            //printf("\nSubproblem %d is unfeasible, on node %d\n", subProblem->id, i);
-            //printf("\nMandatory: %d, Forbidden: %d, Nothing: %d\n", num_mandatory_node, num_forbidden_node, num_nothing_node);
-        }
-        else if (MAX_VERTEX_NUM - num_forbidden_node == 2) {
+        } else if (MAX_VERTEX_NUM - num_forbidden_node == 2) {
 
-            if (num_nothing_node + num_mandatory_node == 2){
+            if (num_nothing_node + num_mandatory_node == 2) {
                 for (short j = 0; j < num_nothing_node; j++) {
                     subProblem->constraints[i][nothing_nodes[j]] = MANDATORY;
                     subProblem->constraints[nothing_nodes[j]][i] = MANDATORY;
@@ -227,11 +223,11 @@ bool infer_constraints(SubProblem * subProblem){
                     subProblem->mandatoryEdges[subProblem->num_mandatory_edges].dest = nothing_nodes[j];
                     subProblem->num_mandatory_edges++;
                     problem->num_fixed_edges++;
+                    i = 0;
                 }
             }
         }
     }
-
     return valid;
 }
 

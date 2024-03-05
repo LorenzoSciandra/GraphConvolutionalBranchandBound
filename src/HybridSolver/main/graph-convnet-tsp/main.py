@@ -158,8 +158,8 @@ def main(filepath, num_nodes, instance_number):
 
     config.gpu_id = "0"
     config.accumulation_steps = 1
-    config.val_filepath = "./data/hyb_tsp/test_100_instances.txt"
-    config.test_filepath = "./data/hyb_tsp/test_100_instances.txt"
+    config.val_filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes.txt"
+    config.test_filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes.txt"
 
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
@@ -198,6 +198,7 @@ if __name__ == "__main__":
         sys.argv[2]: The number of nodes in the TSP instance.
         sys.argv[3]: The number of the instance to be computed.
     """
+
     if len(sys.argv) != 4:
         print("\nPlease provide the path to the output file to write in, the number of nodes in the tsp and the "
               "instance number to analyze. The format is: "

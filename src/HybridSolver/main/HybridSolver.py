@@ -13,6 +13,8 @@
 """
 import random
 import subprocess
+import argparse
+import pprint as pp
 import sys
 import os
 import time
@@ -286,12 +288,12 @@ def fix_instance_size(graph, instance, num_nodes, rate):
     end_str += "1\n"
 
     lines = None
-    with open("graph-convnet-tsp/data/hyb_tsp/test_100_instances.txt", 'r') as file:
+    with open("graph-convnet-tsp/data/hyb_tsp/test_20_nodes.txt", 'r') as file:
         lines = file.readlines()
 
     lines[instance - 1] = new_graph_str + end_str
 
-    with open("graph-convnet-tsp/data/hyb_tsp/test_100_instances.txt", 'w+') as file:
+    with open("graph-convnet-tsp/data/hyb_tsp/test_20_nodes.txt", 'w+') as file:
         file.writelines(lines)
         file.flush()
         os.fsync(file.fileno())
@@ -313,13 +315,20 @@ def get_nodes(graph):
     return nodes
 
 
-def get_instance(instance):
+def get_instance(instance, num_nodes):
+    """
+    Args:
+        instance: The number of the instance to get.
+        num_nodes: The number of nodes of the graph instance.
+    """
+
     lines = None
-    with open("graph-convnet-tsp/data/hyb_tsp/test_100_instances.txt", "r") as f:
+    file_path = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes.txt"
+    with open(file_path, "r") as f:
         lines = f.readlines()
 
     if lines is None or len(lines) < instance - 1:
-        raise Exception("The instance " + str(instance) + " does not exist.")
+        raise Exception("The instance " + str(instance) + " for the number of nodes " + str(num_nodes) + " does not exist.")
 
     str_graph = lines[instance - 1]
 
@@ -412,7 +421,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
 
     for i in range(start_instance, end_instance + 1):
         start_time = time.time()
-        orig_graph = get_instance(i)
+        orig_graph = get_instance(i, num_nodes)
         medoids_indx = set()
         to_fix = False
         input_file = "../data/AdjacencyMatrix/tsp_" + str(num_nodes) + "_nodes/tsp_test_" + str(i) + ".csv"
@@ -498,31 +507,19 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
 if __name__ == "__main__":
     """
     Args:
-        sys.argv[1]: The range of instances to run on the Solver.
-        sys.argv[2]: The number of nodes to use in the C program.
-        sys.argv[3]: "h" if the program is in hybrid mode, "n" normal.
-        sys.argv[4]: "y" to generate the adjacency matrix, "n" otherwise.
+        --range_instances: The range of instances to run on the Solver.
+        --num_nodes: The number of nodes in each TSP instance.
+        --hybrid_mode: If present, the program is in hybrid mode, otherwise it is in classic mode.
+        --gen_matrix: If present, the adjacency matrix will be generated, otherwise it will be read from the data folder.
     """
 
-    if len(sys.argv) < 4:
-        print("\nERROR: Please provide the number of instances to run on the Solver, the number of nodes to select the "
-              "correct Neural Network, yes or no to run on hybrid mode or not and optionally yes or no to skip the "
-              "Neural Network.\n"
-              ".Usage: python3 HybridSolver.py <num instances> <num nodes> <y/n> (<y/n>) or\n"
-              "python3 HybridSolver.py <num start instance>-<num end instance> <num nodes> <y/n> (<y/n>)\n"
-              )
-        sys.exit(1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--range_instances", type=str, default="1-1")
+    parser.add_argument("--num_nodes", type=int, default=20)
+    parser.add_argument("--hybrid_mode", action="store_true")
+    parser.add_argument("--gen_matrix", action="store_true")
+    opts = parser.parse_args()
 
-    if not isinstance(sys.argv[1], str) or not isinstance(sys.argv[2], str) or not isinstance(sys.argv[3], str):
-        print("ERROR: The arguments must be strings.")
-        sys.exit(1)
+    pp.pprint(vars(opts))
 
-    num_instances = sys.argv[1]
-    num_nodes = int(sys.argv[2])
-    hyb_mode = (sys.argv[3] == "h" or sys.argv[3] == "H")
-    gen_matrix = False
-
-    if len(sys.argv) == 5:
-        gen_matrix = (sys.argv[4] == "y" or sys.argv[4] == "Y" or sys.argv[4] == "yes" or sys.argv[4] == "Yes")
-
-    hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix)
+    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid_mode, opts.gen_matrix)
