@@ -2,12 +2,12 @@
 /**
  * @file kruskal.h
  * @author Lorenzo Sciandra
- * @brief There is also the implementation of the constrained version of Kruskal's algorithm with mandatory and forbidden edges.
+ * @brief This file contains the declaration of the Kruskal algorithm to find the Minimum Spanning Tree.
  * @version 0.1.0
  * @date 2023-04-18
  * @copyright Copyright (c) 2023, license MIT
  *
- * Repo: https://github.com/LorenzoSciandra/HybridTSPSolver
+ * Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
  *
  */
 

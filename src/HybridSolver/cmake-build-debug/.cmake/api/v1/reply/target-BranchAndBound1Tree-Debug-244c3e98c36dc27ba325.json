@@ -55,7 +55,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : " -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always"
+					"fragment" : " -O3 -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g -std=gnu99 -fdiagnostics-color=always"
 				}
 			],
 			"defines" : 
@@ -108,7 +108,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g",
+				"fragment" : "-O3 -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-label -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable -g",
 				"role" : "flags"
 			},
 			{

@@ -1,6 +1,14 @@
-//
-// Created by lorenzosciandra on 15/12/23.
-//
+/**
+ * @file fibonacci_heap.c
+ * @author Lorenzo Sciandra
+ * @brief This file contains the implementation of the Fibonacci Heap datastructure for the Minimum Spanning Tree problem.
+ * @version 0.1.0
+ * @date 2023-04-18
+ * @copyright Copyright (c) 2023, license MIT
+ *
+ * Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
+ *
+ */
 
 #include "fibonacci_heap.h"
 

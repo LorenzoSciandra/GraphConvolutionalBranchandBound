@@ -6,7 +6,7 @@
     @version 0.1.0
     @date 2023-04-18
     @copyright Copyright (c) 2023, license MIT
-    Repo: https://github.com/LorenzoSciandra/HybridTSPSolver
+    Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
 """
 
 

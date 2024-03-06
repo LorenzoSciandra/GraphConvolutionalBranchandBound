@@ -9,7 +9,7 @@
     @date 2023-04-18
     @copyright Copyright (c) 2023, license MIT
 
-    Repo: https://github.com/LorenzoSciandra/HybridTSPSolver
+    Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
 """
 import random
 import subprocess
@@ -148,11 +148,8 @@ def vertex_insertion(solution, medoids_indx, graph, adj_matrix):
     for i in range(0, len(cities_tour) - 1):
         final_tour += str(cities_tour[i]) + " <-> " + str(cities_tour[i + 1]) + ",  "
         final_cost += adj_matrix[cities_tour[i]][cities_tour[i + 1]]
-        # print("Adding edge: ", cities_tour[i], " <-> ", cities_tour[i + 1], " Cost: ", adj_matrix[cities_tour[i]][cities_tour[i + 1]])
-
     final_tour += str(cities_tour[-1]) + " <-> " + str(cities_tour[0])
     final_cost += adj_matrix[cities_tour[-1]][cities_tour[0]]
-    # print("Adding edge: ", cities_tour[-1], " <-> ", cities_tour[0], " Cost: ", adj_matrix[cities_tour[-1]][cities_tour[0]])
 
     final_tour = final_tour.replace("of 0", "of " + str(final_cost))
     return original_tour + final_tour
