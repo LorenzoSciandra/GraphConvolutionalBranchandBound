@@ -841,7 +841,6 @@ void nearest_prob_neighbour(unsigned short start_node) {
     SubProblem nn_subProblem;
     nn_subProblem.num_forbidden_edges = 0;
     nn_subProblem.num_mandatory_edges = 0;
-    nn_subProblem.id = 0;
     nn_subProblem.num_edges_in_cycle = 0;
     nn_subProblem.timeToReach = ((float) (clock() - problem->start)) / CLOCKS_PER_SEC;
     create_mst(&nn_subProblem.oneTree, problem->graph.nodes, problem->graph.num_nodes);
@@ -961,14 +960,12 @@ unsigned short find_candidate_node(void) {
     SubProblem best_subProblem;
     best_subProblem.value = 0;
     best_subProblem.prob = 0;
-    best_subProblem.id = 0;
 
     for (unsigned short i = 0; i < problem->graph.num_nodes; i++) {
         SubProblem currentCandidate;
         problem->candidateNodeId = i;
         currentCandidate.num_forbidden_edges = 0;
         currentCandidate.num_mandatory_edges = 0;
-        currentCandidate.id = 0;
 
         nearest_prob_neighbour(i);
 
@@ -1017,6 +1014,9 @@ void branch_and_bound(Problem *current_problem) {
         problem->start = clock();
         problem->bestValue = INFINITE;
         problem->candidateNodeId = find_candidate_node();
+        problem->bestSolution.id = 0;
+        problem->bestSolution.treeLevel = 0;
+        problem->bestSolution.fatherId = -1;
         problem->exploredBBNodes = 0;
         problem->generatedBBNodes = 0;
         problem->totTreeLevels = 0;

@@ -23,6 +23,7 @@ def analyze(abs_dir):
         abs_dir: The absolute path of the directory containing the results files.
     """
 
+    file_names = []
     time_bb_list = []
     total_time_list = []
     time_to_best_list = []
@@ -48,6 +49,8 @@ def analyze(abs_dir):
             file_path = abs_dir + '/' + file
             with open(file_path, 'r') as result_file:
                 text = result_file.read()
+
+            file_names.append(file_path)
 
             if re.search(r"interrupted = FALSE", text) is not None:
                 current_resolved = 1
@@ -110,6 +113,11 @@ def analyze(abs_dir):
 
     mean_total_tree_level = sum(total_tree_level_list) / num_resolved
     std_total_tree_level = (sum([(x - mean_total_tree_level) ** 2 for x in total_tree_level_list]) / num_resolved) ** 0.5
+
+    for i in range(0,num_resolved):
+        if generate_bbnodes_list[i] > 1000:
+            print("High generate_bbnodes: " + file_names[i])
+
 
     mean_generate_bbnodes = sum(generate_bbnodes_list) / num_resolved
     std_generate_bbnodes = (sum([(x - mean_generate_bbnodes) ** 2 for x in generate_bbnodes_list]) / num_resolved) ** 0.5
