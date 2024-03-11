@@ -9,7 +9,6 @@
     Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
 """
 
-
 import os
 import sys
 import time
@@ -21,8 +20,10 @@ import torch.nn as nn
 from sklearn.utils.class_weight import compute_class_weight
 # Remove warning
 import warnings
+
 warnings.filterwarnings("ignore", category=UserWarning)
 from scipy.sparse import SparseEfficiencyWarning
+
 warnings.simplefilter('ignore', SparseEfficiencyWarning)
 from config import *
 from utils.graph_utils import *
@@ -32,7 +33,7 @@ from models.gcn_model import ResidualGatedGCNModel
 from utils.model_utils import *
 
 
-def compute_prob(net, config, dtypeLong, dtypeFloat, instance_number):
+def compute_prob(net, config, dtypeLong, dtypeFloat):
     """
     This function computes the probability of the edges being in the optimal tour, by running the GCN.
     Args:
@@ -40,7 +41,6 @@ def compute_prob(net, config, dtypeLong, dtypeFloat, instance_number):
         config: The configuration file, from which the parameters are taken.
         dtypeLong: The data type for the long tensors.
         dtypeFloat: The data type for the float tensors.
-        instance_number: The number of the instance to be computed.
     Returns:
         y_probs: The probability of the edges being in the optimal tour.
         x_edges_values: The distance between the nodes.
@@ -74,13 +74,14 @@ def compute_prob(net, config, dtypeLong, dtypeFloat, instance_number):
     if lines is None:
         raise Exception("The input file is empty.")
 
-    instance = lines[instance_number]
+    instance = lines[0]
 
     if instance is None:
-        raise Exception("The instance " + str(instance_number) + " does not exist.")
+        raise Exception("The instance does not exist.")
 
     instance = instance.split(" output")[0]
     instance = [float(x) for x in instance.split(" ")]
+    #print(config)
 
     with torch.no_grad():
 
@@ -106,7 +107,7 @@ def compute_prob(net, config, dtypeLong, dtypeFloat, instance_number):
         y_probs = y[:, :, :, 1]
 
     nodes_coord = batch.nodes_coord.flatten().tolist()
-    nodes_coord = ";".join([f"({nodes_coord[i]}, {nodes_coord[i+1]})" for i in range(0, len(nodes_coord), 2)])
+    nodes_coord = ";".join([f"({nodes_coord[i]}, {nodes_coord[i + 1]})" for i in range(0, len(nodes_coord), 2)])
 
     return y_probs, x_edges_values, nodes_coord
 
@@ -131,7 +132,7 @@ def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath):
     # format the strings using a list comprehension
     arr_strings = np.array(['({}, {});'.format(x[0], x[1]) for x in arr_combined])
 
-    #filepath = filepath.replace(".csv", "_temp.csv")
+    # filepath = filepath.replace(".csv", "_temp.csv")
     # write arr_strings to file
     with open(filepath, 'w') as f:
         f.write("%s\n" % nodes_coord)
@@ -145,21 +146,28 @@ def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath):
         f.flush()
         os.fsync(f.fileno())
 
-def main(filepath, num_nodes, instance_number):
+
+def main(filepath, num_nodes, model_size):
     """
     The function that calls the previous functions and first sets the parameters for the calculation.
     Args:
         filepath: The path to the file where the adjacency matrix will be written.
         num_nodes: The number of nodes in the TSP instance.
-        instance_number: The number of the instance to be computed.
+        model_size: The size of the Graph Convolutional Network to use.
     """
-    config_path = "./logs/tsp" + num_nodes + "/config.json"
+
+    config_path = "./logs/tsp" + model_size + "/config.json"
     config = get_config(config_path)
 
     config.gpu_id = "0"
     config.accumulation_steps = 1
-    config.val_filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes.txt"
-    config.test_filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes.txt"
+
+    if int(num_nodes) != int(model_size):
+        config.val_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
+        config.test_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
+    else:
+        config.val_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes.txt"
+        config.test_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes.txt"
 
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
@@ -187,7 +195,7 @@ def main(filepath, num_nodes, instance_number):
     # Load network state
     net.load_state_dict(checkpoint['model_state_dict'])
     config.batch_size = 1
-    probs, edges_value, nodes_coord = compute_prob(net, config, dtypeLong, dtypeFloat, instance_number)
+    probs, edges_value, nodes_coord = compute_prob(net, config, dtypeLong, dtypeFloat)
     write_adjacency_matrix(probs, edges_value, nodes_coord, filepath)
 
 
@@ -196,13 +204,13 @@ if __name__ == "__main__":
     Args:
         sys.argv[1]: The path to the file where the adjacency matrix will be written.
         sys.argv[2]: The number of nodes in the TSP instance.
-        sys.argv[3]: The number of the instance to be computed.
+        sys.argv[3]: The dimension of the model.
     """
 
     if len(sys.argv) != 4:
         print("\nPlease provide the path to the output file to write in, the number of nodes in the tsp and the "
               "instance number to analyze. The format is: "
-              "<filepath> <number of nodes> <instance number>\n")
+              "<filepath> <number of nodes> <model size>\n")
         sys.exit(1)
 
     if not isinstance(sys.argv[1], str) or not isinstance(sys.argv[2], str) or not isinstance(sys.argv[3], str):
@@ -211,6 +219,5 @@ if __name__ == "__main__":
 
     filepath = sys.argv[1]
     num_nodes = sys.argv[2]
-    instance_number = int(sys.argv[3]) - 1
-
-    main(filepath, num_nodes, instance_number)
+    model_size = sys.argv[3]
+    main(filepath, num_nodes, model_size)

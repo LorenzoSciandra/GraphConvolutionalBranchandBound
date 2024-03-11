@@ -38,7 +38,8 @@ def get_solution(output_file):
 
     for line in lines:
         if "Cycle with" in line:
-            tour = line.split("cost: ")[1]
+            tour = line.split("edges: ")[1]
+            break
 
     if tour is None:
         raise Exception("The output file ", output_file, " of the Branch and Bound is empty.")
@@ -89,7 +90,9 @@ def cheapest_insertion(cities_tour, adj_matrix, node_to_add):
 
 def current_tour(edges, medoids_indx):
     cities_tour = []
-    original_tour = "Reconstructed cycle with " + str(len(medoids_indx)) + " edges: "
+    tour_len = len(medoids_indx)
+    original_tour = "Reconstructed cycle with " + str(tour_len) + " edges: "
+    i = 0
 
     for edge in edges:
         edge = edge.replace("\n", "")
@@ -99,7 +102,12 @@ def current_tour(edges, medoids_indx):
         original_src = medoids_indx[src]
         original_dst = medoids_indx[dst]
         cities_tour.append(original_src)
-        original_tour += str(original_src) + " <-> " + str(original_dst) + ",  "
+
+        if i < tour_len - 1:
+            original_tour += str(original_src) + " <-> " + str(original_dst) + ",  "
+        else:
+            original_tour += str(original_src) + " <-> " + str(original_dst) + "\n"
+        i += 1
 
     return cities_tour, original_tour
 
@@ -135,19 +143,19 @@ def vertex_insertion(solution, medoids_indx, graph, adj_matrix):
     edges = solution.split(",  ")
     final_cost = 0
     cities_tour, original_tour = current_tour(edges, medoids_indx)
-    original_tour += str(cities_tour[0]) + "\n"
 
     for i in range(model_size, num_nodes):
         new_city = farthest_selection(to_add_nodes, cities_tour, adj_matrix, num_nodes)
         best_city_pos = cheapest_insertion(cities_tour, adj_matrix, new_city)
-        to_add_nodes = to_add_nodes.append(new_city)
-        cities_tour[best_city_pos:] = new_city, *cities_tour[best_city_pos:-1]
+        to_add_nodes.remove(new_city)
+        cities_tour[best_city_pos:] = new_city, *cities_tour[best_city_pos:]
 
     final_tour = "Final cycle with " + str(num_nodes) + " edges of 0 cost: "
 
     for i in range(0, len(cities_tour) - 1):
         final_tour += str(cities_tour[i]) + " <-> " + str(cities_tour[i + 1]) + ",  "
         final_cost += adj_matrix[cities_tour[i]][cities_tour[i + 1]]
+        # print(cities_tour[i], cities_tour[i + 1], adj_matrix[cities_tour[i]][cities_tour[i + 1]])
     final_tour += str(cities_tour[-1]) + " <-> " + str(cities_tour[0])
     final_cost += adj_matrix[cities_tour[-1]][cities_tour[0]]
 
@@ -175,7 +183,6 @@ def cluster_nodes(graph, num_nodes):
     medoids_indx = list(kmedoids.medoid_indices_)
     medoids = graph[medoids_indx]
     medoids_str = " ".join(f"{x} {y}" for x, y in medoids)
-
     return medoids_str, medoids_indx, len(medoids) + 1
 
 
@@ -284,14 +291,17 @@ def fix_instance_size(graph, instance, num_nodes, rate):
 
     end_str += "1\n"
 
-    lines = None
-    with open("graph-convnet-tsp/data/hyb_tsp/test_20_nodes.txt", 'r') as file:
-        lines = file.readlines()
+    filepath = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
 
-    lines[instance - 1] = new_graph_str + end_str
+    if not os.path.exists(os.path.dirname(filepath)):
+        try:
+            os.makedirs(os.path.dirname(filepath))
+        except OSError as exc:  # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
 
-    with open("graph-convnet-tsp/data/hyb_tsp/test_20_nodes.txt", 'w+') as file:
-        file.writelines(lines)
+    with open(filepath, 'w+') as file:
+        file.writelines(new_graph_str + end_str)
         file.flush()
         os.fsync(file.fileno())
 
@@ -356,7 +366,7 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         "-DMAX_VERTEX_NUM=" + str(num_nodes),
         "-DHYBRID=" + str(hyb_mode)
     ]
-    print(cmake_command)
+    #print(cmake_command)
     make_command = [
         "make",
         "-C" + build_directory,
@@ -442,7 +452,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
                 adj_matrix = adjacency_matrix(orig_graph)
 
             absolute_python_path = os.path.abspath("./graph-convnet-tsp/main.py")
-            result = subprocess.run(['python3', absolute_python_path, absolute_input_path, str(model_size), str(i)],
+            result = subprocess.run(['python3', absolute_python_path, absolute_input_path, str(num_nodes), str(model_size)],
                                     cwd="./graph-convnet-tsp", check=True)
             if result.returncode == 0:
                 print('Neural Network completed successfully on instance ' + str(i) + ' / ' + str(end_instance))
@@ -477,7 +487,6 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
         cities = get_nodes(orig_graph)
 
         if to_fix:
-
             solution = get_solution(output_file)
             if adj_matrix is None:
                 raise Exception("The original graph is empty.")
@@ -488,6 +497,8 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
 
             if final_tour is None:
                 raise Exception("The final tour is empty.")
+
+            os.remove("graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt")
 
         end_time = time.time()
 

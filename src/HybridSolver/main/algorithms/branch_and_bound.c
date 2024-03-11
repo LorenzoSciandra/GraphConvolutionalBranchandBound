@@ -1100,11 +1100,11 @@ void print_subProblem(const SubProblem *subProblem) {
         if (i == 0){
             if (src == subProblem->cycleEdges[subProblem->num_edges_in_cycle - 1].dest ||
                 src == subProblem->cycleEdges[subProblem->num_edges_in_cycle - 1].src){
-                printf("  %i <-> %i,", src, dest);
+                printf(" %i <-> %i,", src, dest);
                 last_dest = dest;
             }
             else{
-                printf("  %i <-> %i,", dest, src);
+                printf(" %i <-> %i,", dest, src);
                 last_dest = src;
             }
         } else{
@@ -1129,18 +1129,18 @@ void print_subProblem(const SubProblem *subProblem) {
     }
 
     printf("\n%i Mandatory edges:", subProblem->num_mandatory_edges);
-    for (unsigned short i = 0; i < subProblem->num_mandatory_edges; i++) {
+    /*for (unsigned short i = 0; i < subProblem->num_mandatory_edges; i++) {
         ConstrainedEdge edge = subProblem->mandatoryEdges[i];
         printf("  %i <-> %i", edge.src, edge.dest);
-    }
+    }*/
 
-    printf("\n%i Forbidden edges", subProblem->num_forbidden_edges);
-    for (unsigned short i = 0; i < problem->graph.num_edges; i++) {
+    printf("\n%i Forbidden edges:", subProblem->num_forbidden_edges);
+    /*for (unsigned short i = 0; i < problem->graph.num_edges; i++) {
         Edge edge = problem->graph.edges[i];
         if (subProblem->constraints[edge.src][edge.dest] == FORBIDDEN) {
             printf("  %i <-> %i", edge.src, edge.dest);
         }
-    }
+    }*/
     printf("\n");
 }
 
