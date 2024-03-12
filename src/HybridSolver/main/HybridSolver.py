@@ -289,7 +289,7 @@ def fix_instance_size(graph, instance, num_nodes, rate):
     for i in range(1, dim):
         end_str += str(i) + " "
 
-    end_str += "1\n"
+    end_str += "1"
 
     filepath = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
 

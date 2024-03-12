@@ -13,16 +13,19 @@
 import sys
 import os
 import re
+import argparse
+import pprint as pp
 
 
-def analyze(abs_dir):
+def analyze(path, num_nodes, hybrid):
     """
     Cycle through all the files in the directory, and extract the metrics from each one.
     Then compute the mean of each metric, and write it in a new file.
     Args:
-        abs_dir: The absolute path of the directory containing the results files.
+        path: The path of the directory containing the results files.
     """
 
+    abs_dir = os.path.abspath(path)
     file_names = []
     time_bb_list = []
     total_time_list = []
@@ -44,8 +47,10 @@ def analyze(abs_dir):
     num_closed_1Tree = 0
     num_closed_subgradient = 0
     all_files = os.listdir(abs_dir)
+    partial_output_filename = 'mean_results_' + str(num_nodes) + '_nodes' + ('_hybrid' if hybrid else '_classic') + '.txt'
+    output_filename = abs_dir + '/' + partial_output_filename
     for file in all_files:
-        if file.endswith('.txt') and file != 'mean_results.txt':
+        if file.endswith('.txt') and file != partial_output_filename:
             file_path = abs_dir + '/' + file
             with open(file_path, 'r') as result_file:
                 text = result_file.read()
@@ -60,7 +65,15 @@ def analyze(abs_dir):
                 max_tree_level = re.search(r"max tree level = ([0-9]+)", text).group(1)
                 time_taken = re.search(r"Time taken: ([0-9]+\.?[0-9]+)s", text).group(1)
                 num_fixed_edges = re.search(r"Number of fixed edges = ([0-9]+)", text).group(1)
-                cost = re.search(r"SUBPROBLEM with cost = ([0-9]+\.?[0-9]+),", text).group(1)
+
+                cost = 0
+
+                if (re.search(r"Final cycle with ", text)) is not None:
+                    cost = re.search(r"Final cycle with [0-9]+ edges of ([0-9]+\.?[0-9]+)", text).group(1)
+
+                else:
+                    cost = re.search(r"SUBPROBLEM with cost = ([0-9]+\.?[0-9]+),", text).group(1)
+
                 level_of_best = re.search(r"level of the BB tree = ([0-9]+)", text).group(1)
                 prob = re.search(r"prob_tour = (-?[0-9]+\.?[0-9]+)", text).group(1)
                 BBNode_number = re.search(r"BBNode number = ([0-9]+)", text).group(1)
@@ -114,11 +127,6 @@ def analyze(abs_dir):
     mean_total_tree_level = sum(total_tree_level_list) / num_resolved
     std_total_tree_level = (sum([(x - mean_total_tree_level) ** 2 for x in total_tree_level_list]) / num_resolved) ** 0.5
 
-    for i in range(0,num_resolved):
-        if generate_bbnodes_list[i] > 1000:
-            print("High generate_bbnodes: " + file_names[i])
-
-
     mean_generate_bbnodes = sum(generate_bbnodes_list) / num_resolved
     std_generate_bbnodes = (sum([(x - mean_generate_bbnodes) ** 2 for x in generate_bbnodes_list]) / num_resolved) ** 0.5
 
@@ -152,7 +160,7 @@ def analyze(abs_dir):
     if len(not_resolved_list) > 0:
         print("Not resolved instances: " + str(not_resolved_list))
 
-    output_filename = abs_dir + '/mean_results.txt'
+
     with open(output_filename, 'w') as f:
         f.write("MEAN RESULTS for " + str(len(total_time_list)) + " instances\n")
         f.write("Percentage of resolved instances: " + str(mean_resolved * 100)+ "%\n")
@@ -180,12 +188,16 @@ def analyze(abs_dir):
 if __name__ == "__main__":
     """
     Args:
-        sys.argv[1]: The directory containing the output files to be analyzed.
+        --path: The path to the directory containing the results files to analyze.
+        --num_nodes: The number of nodes in each TSP instance.
+        --hybrid If the TSP results are from the hybrid mode.
     """
 
-    if len(sys.argv) != 2:
-        print("Usage: python3 analyzer.py <directory>")
-        sys.exit(1)
-    directory = sys.argv[1]
-    absolute_dir = os.path.abspath(directory)
-    analyze(absolute_dir)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--path", type=str, default="tsp_20_nodes_classic")
+    parser.add_argument("--num_nodes", type=int, default=20)
+    parser.add_argument("--hybrid", action="store_true")
+    opts = parser.parse_args()
+
+    pp.pprint(vars(opts))
+    analyze(opts.path, opts.num_nodes, opts.hybrid)
