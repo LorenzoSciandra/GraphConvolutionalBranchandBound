@@ -24,7 +24,7 @@ import fileinput
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn_extra.cluster import KMedoids
-
+from py2opt.routefinder import RouteFinder
 
 def get_solution(output_file):
     """
@@ -45,6 +45,35 @@ def get_solution(output_file):
         raise Exception("The output file ", output_file, " of the Branch and Bound is empty.")
 
     return tour
+
+
+def cheapest_selection_and_insertion(cities_tour, adj_matrix, node_to_add):
+    best_city = -1
+    best_distance = 100000
+    best_pos = -1
+
+    for node in node_to_add:
+        for i in range(0, len(cities_tour)):
+            if i == len(cities_tour) - 1:
+                src = cities_tour[i]
+                dst = cities_tour[0]
+                cost = adj_matrix[src][dst]
+                val = adj_matrix[src][node] + adj_matrix[node][dst] - cost
+                if val < best_distance:
+                    best_distance = val
+                    best_city = node
+                    best_pos = i
+            else:
+                src = cities_tour[i]
+                dst = cities_tour[i + 1]
+                cost = adj_matrix[src][dst]
+                val = adj_matrix[src][node] + adj_matrix[node][dst] - cost
+                if val < best_distance:
+                    best_distance = val
+                    best_city = node
+                    best_pos = i
+
+    return best_city, best_pos
 
 
 def farthest_selection(to_add_nodes, cities_tour, adj_matrix, num_nodes):
@@ -77,13 +106,23 @@ def cheapest_insertion(cities_tour, adj_matrix, node_to_add):
     best_node_pos = -1
     best_value = 1000000
 
-    for i in range(0, len(cities_tour) - 1):
-        src = cities_tour[i]
-        dst = cities_tour[i + 1]
-        cost = adj_matrix[src][dst]
-        if adj_matrix[src][node_to_add] + adj_matrix[node_to_add][dst] - cost < best_value:
-            best_value = adj_matrix[src][node_to_add] + adj_matrix[node_to_add][dst] - cost
-            best_node_pos = i
+    for i in range(0, len(cities_tour)):
+        if i == len(cities_tour) - 1:
+            src = cities_tour[i]
+            dst = cities_tour[0]
+            cost = adj_matrix[src][dst]
+            val = adj_matrix[src][node_to_add] + adj_matrix[node_to_add][dst] - cost
+            if val < best_value:
+                best_value = val
+                best_node_pos = i
+        else:
+            src = cities_tour[i]
+            dst = cities_tour[i + 1]
+            cost = adj_matrix[src][dst]
+            val = adj_matrix[src][node_to_add] + adj_matrix[node_to_add][dst] - cost
+            if val < best_value:
+                best_value = val
+                best_node_pos = i
 
     return best_node_pos
 
@@ -127,13 +166,14 @@ def adjacency_matrix(orig_graph):
     return adj_matrix
 
 
-def vertex_insertion(solution, medoids_indx, graph, adj_matrix):
+def vertex_insertion(solution, medoids_indx, graph, adj_matrix, two_opt):
     """
     Args:
         solution: The solution to fix.
         medoids_indx: The indices of the medoids.
         graph: The original graph.
         adj_matrix: The original adjacency matrix.
+        two_opt: True if the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering, False otherwise.
     """
 
     num_nodes = len(graph)
@@ -141,25 +181,39 @@ def vertex_insertion(solution, medoids_indx, graph, adj_matrix):
     all_indexes = set(range(0, num_nodes))
     to_add_nodes = list(all_indexes - set(medoids_indx))
     edges = solution.split(",  ")
-    final_cost = 0
+    vi_cost = 0
+    final_tour = ""
     cities_tour, original_tour = current_tour(edges, medoids_indx)
 
     for i in range(model_size, num_nodes):
         new_city = farthest_selection(to_add_nodes, cities_tour, adj_matrix, num_nodes)
         best_city_pos = cheapest_insertion(cities_tour, adj_matrix, new_city)
+        #new_city, best_city_pos = cheapest_selection_and_insertion(cities_tour, adj_matrix, to_add_nodes)
         to_add_nodes.remove(new_city)
         cities_tour[best_city_pos:] = new_city, *cities_tour[best_city_pos:]
 
-    final_tour = "Final cycle with " + str(num_nodes) + " edges of 0 cost: "
-
     for i in range(0, len(cities_tour) - 1):
-        final_tour += str(cities_tour[i]) + " <-> " + str(cities_tour[i + 1]) + ",  "
-        final_cost += adj_matrix[cities_tour[i]][cities_tour[i + 1]]
-        # print(cities_tour[i], cities_tour[i + 1], adj_matrix[cities_tour[i]][cities_tour[i + 1]])
-    final_tour += str(cities_tour[-1]) + " <-> " + str(cities_tour[0])
-    final_cost += adj_matrix[cities_tour[-1]][cities_tour[0]]
+        vi_cost += adj_matrix[cities_tour[i]][cities_tour[i + 1]]
 
-    final_tour = final_tour.replace("of 0", "of " + str(final_cost))
+    vi_cost += adj_matrix[cities_tour[-1]][cities_tour[0]]
+
+    if two_opt:
+        route_finder = RouteFinder(adj_matrix, sorted(cities_tour), iterations=num_nodes, verbose=False)
+        best_distance, best_route = route_finder.solve_from_init_cycle(cities_tour, vi_cost)
+
+        final_tour = "Final cycle with " + str(num_nodes) + " edges of " + str(best_distance) + " cost: "
+        for i in range(0, len(best_route) - 1):
+            final_tour += str(best_route[i]) + " <-> " + str(best_route[i + 1]) + ",  "
+
+        final_tour += str(best_route[-1]) + " <-> " + str(best_route[0])
+
+    else:
+        final_tour = "Final cycle with " + str(num_nodes) + " edges of " + str(vi_cost) + " cost: "
+        for i in range(0, len(cities_tour) - 1):
+            final_tour += str(cities_tour[i]) + " <-> " + str(cities_tour[i + 1]) + ",  "
+
+        final_tour += str(cities_tour[-1]) + " <-> " + str(cities_tour[0])
+
     return original_tour + final_tour
 
 
@@ -381,13 +435,14 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         raise Exception("Build failed")
 
 
-def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
+def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
     """
     Args:
         num_instances: The range of instances to run on the Solver.
         num_nodes: The number of nodes in each TSP instance.
         hyb_mode: True if the program is in hybrid mode, False otherwise.
         gen_matrix: True if the adjacency matrix is already generated, False otherwise.
+        two_opt: True if the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering, False otherwise.
     """
 
     model_size = 0
@@ -493,7 +548,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
             if num_nodes < model_size:
                 final_tour = remove_dummy_cities(solution, num_nodes, adj_matrix)
             elif num_nodes > model_size:
-                final_tour = vertex_insertion(solution, medoids_indx, orig_graph, adj_matrix)
+                final_tour = vertex_insertion(solution, medoids_indx, orig_graph, adj_matrix, two_opt)
 
             if final_tour is None:
                 raise Exception("The final tour is empty.")
@@ -519,6 +574,7 @@ if __name__ == "__main__":
         --num_nodes: The number of nodes in each TSP instance.
         --hybrid_mode: If present, the program is in hybrid mode, otherwise it is in classic mode.
         --gen_matrix: If present, the adjacency matrix will be generated, otherwise it will be read from the data folder.
+        --two_opt: If present, the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering.
     """
 
     parser = argparse.ArgumentParser()
@@ -526,8 +582,9 @@ if __name__ == "__main__":
     parser.add_argument("--num_nodes", type=int, default=20)
     parser.add_argument("--hybrid_mode", action="store_true")
     parser.add_argument("--gen_matrix", action="store_true")
+    parser.add_argument("--two_opt", action="store_true")
     opts = parser.parse_args()
 
     pp.pprint(vars(opts))
 
-    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid_mode, opts.gen_matrix)
+    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid_mode, opts.gen_matrix, opts.two_opt)
