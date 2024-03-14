@@ -277,11 +277,13 @@ def remove_dummy_cities(solution, num_nodes, adj_matrix):
     return final_tour
 
 
-def add_dummy_cities(graph, num_nodes):
+def add_dummy_cities(graph, num_nodes, adj_matrix, dummy_cities):
     """
     Args:
         graph: The graph to which add the dummy cities.
         num_nodes: The number of nodes of the graph instance.
+        adj_matrix: The adjacency matrix of the graph.
+        dummy_cities: The way of generating the dummy cities to add to the graph.
     """
     num_dummy_cities = 0
 
@@ -294,35 +296,57 @@ def add_dummy_cities(graph, num_nodes):
     else:
         raise Exception("The max dimension of the GCN is 100 nodes.")
 
-    rr_index = 0
-    for i in range(num_dummy_cities):
+    if dummy_cities == "rr":
+        rr_index = 0
+        for i in range(num_dummy_cities):
+            find = False
+            x = None
+            y = None
+            while not find:
+                values = np.random.randint(1, 9, 2)
+                signs = np.random.choice([-1, 1], 2)
+                x = graph[rr_index][0] + signs[0] * values[0] * 0.000000000000001
+                y = graph[rr_index][1] + signs[1] * values[1] * 0.000000000000001
+                if [x, y] not in graph:
+                    find = True
 
-        find = False
-        x = None
-        y = None
-        while not find:
-            values = np.random.uniform(1, 9, 2)
-            signs = np.random.choice([-1, 1], 2)
-            x = graph[rr_index][0] + signs[0] * values[0] * 0.00000000000000001
-            y = graph[rr_index][1] + signs[1] * values[1] * 0.00000000000000001
-            if [x, y] not in graph:
-                find = True
+            graph.append([x, y])
+            rr_index = (rr_index + 1) % num_nodes
 
-        graph.append([x, y])
-        rr_index = (rr_index + 1) % num_nodes
+    elif dummy_cities == "cf":
+        adj_matrix = np.array(adj_matrix)
+        dist = np.sum(adj_matrix, axis=1, dtype=np.float64)
+        farthest_city = np.argmax(dist)
+        for i in range(num_dummy_cities):
+            find = False
+            x = None
+            y = None
+            while not find:
+                values = np.random.randint(1, 9, 2)
+                signs = np.random.choice([-1, 1], 2)
+                x = graph[farthest_city][0] + signs[0] * values[0] * 0.000000000000001
+                y = graph[farthest_city][1] + signs[1] * values[1] * 0.000000000000001
+                if [x, y] not in graph:
+                    find = True
+
+            graph.append([x, y])
+
+    else:
+        raise Exception("The way of generating the dummy cities is not valid.")
 
     graph_str = " ".join(f"{x} {y}" for x, y in graph)
 
     return graph_str, len(graph) + 1
 
 
-def fix_instance_size(graph, instance, num_nodes, rate):
+def fix_instance_size(graph, num_nodes, adj_matrix, rate, dummy_cities):
     """
     Args:
         graph: The graph to fix.
-        instance: The number of the instance to fix.
         num_nodes: The number of nodes of the graph instance.
+        adj_matrix: The adjacency matrix of the graph.
         rate: The fraction of missing cities.
+        dummy_cities: The way of generating the dummy cities to add to the graph.
     """
 
     medoids_idx = set()
@@ -332,7 +356,7 @@ def fix_instance_size(graph, instance, num_nodes, rate):
     if num_nodes < 100:
         if rate >= 0.7:
             print("Need to fix the instance size adding dummy cities")
-            new_graph_str, dim = add_dummy_cities(graph, num_nodes)
+            new_graph_str, dim = add_dummy_cities(graph, num_nodes, adj_matrix, dummy_cities)
         else:
             print("Need to fix the instance size with clustering")
             new_graph_str, medoids_idx, dim = cluster_nodes(graph, num_nodes)
@@ -435,7 +459,7 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         raise Exception("Build failed")
 
 
-def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
+def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy_cities):
     """
     Args:
         num_instances: The range of instances to run on the Solver.
@@ -443,6 +467,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
         hyb_mode: True if the program is in hybrid mode, False otherwise.
         gen_matrix: True if the adjacency matrix is already generated, False otherwise.
         two_opt: True if the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering, False otherwise.
+        dummy_cities: The way of generating the dummy cities to add to the graph.
     """
 
     model_size = 0
@@ -503,8 +528,8 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
         if hyb_mode:
             if num_nodes != model_size:
                 to_fix = True
-                medoids_indx = fix_instance_size(orig_graph, i, num_nodes, rate)
                 adj_matrix = adjacency_matrix(orig_graph)
+                medoids_indx = fix_instance_size(orig_graph, num_nodes, adj_matrix, rate, dummy_cities)
 
             absolute_python_path = os.path.abspath("./graph-convnet-tsp/main.py")
             result = subprocess.run(['python3', absolute_python_path, absolute_input_path, str(num_nodes), str(model_size)],
@@ -558,6 +583,8 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
         end_time = time.time()
 
         with open(output_file, "a") as f:
+            if two_opt:
+                f.write("\nImproved the tsp tour with 2Opt\n\n")
             if final_tour is not None:
                 final_tour += "\n"
                 f.write(final_tour)
@@ -575,6 +602,9 @@ if __name__ == "__main__":
         --hybrid_mode: If present, the program is in hybrid mode, otherwise it is in classic mode.
         --gen_matrix: If present, the adjacency matrix will be generated, otherwise it will be read from the data folder.
         --two_opt: If present, the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering.
+        --dummy_cities: The way of generating the dummy cities to add to the graph:
+            - rr: Round Robin
+            - cf: Clustered near the Farthest city
     """
 
     parser = argparse.ArgumentParser()
@@ -583,8 +613,9 @@ if __name__ == "__main__":
     parser.add_argument("--hybrid_mode", action="store_true")
     parser.add_argument("--gen_matrix", action="store_true")
     parser.add_argument("--two_opt", action="store_true")
+    parser.add_argument("--dummy_cities",  type=str, default="rr")
     opts = parser.parse_args()
 
     pp.pprint(vars(opts))
 
-    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid_mode, opts.gen_matrix, opts.two_opt)
+    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid_mode, opts.gen_matrix, opts.two_opt, opts.dummy_cities)
