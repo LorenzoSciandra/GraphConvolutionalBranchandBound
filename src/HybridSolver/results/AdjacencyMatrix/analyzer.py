@@ -18,7 +18,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def time_profile(partial_solutions, other_partial_solutions):
+def time_profile(partial_solutions, other_partial_solutions, hybrid):
     # take all the times of the partial solutions
     times = set()
 
@@ -33,7 +33,6 @@ def time_profile(partial_solutions, other_partial_solutions):
     times = sorted(list(times))
     points_one = []
     points_two = []
-
     for time in times:
         sol_one = []
         sol_two = []
@@ -60,13 +59,14 @@ def time_profile(partial_solutions, other_partial_solutions):
         points_two.append(sum([1 for i in range(len(sol_two)) if sol_two[i] < sol_one[i]]) / len(sol_two))
 
     # plot the performance profile
-    plt.plot(times, points_one, label='Hybrid')
-    plt.plot(times, points_two, label='Classic')
-    plt.xlabel('Time')
-    plt.ylabel('Proportion of instances')
+    plt.plot(times, points_one, label='Hybrid' if hybrid else 'Classic')
+    plt.plot(times, points_two, label='Classic' if hybrid else 'Hybrid')
+    plt.title('Performance profile')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Proportion of instances with a better solution')
     plt.legend()
     # store the plot in a file
-    plt.savefig('performance_profile.png')
+    plt.savefig('performance_profile.pdf', format='pdf')
 
 
 def read_other_values(path, hybrid):
@@ -118,7 +118,7 @@ def performance_profiles(partial_solutions, path, hybrid):
         print("The number of instances in the two folders is different.")
         exit(1)
 
-    time_profile(partial_solutions, other_partial_solutions)
+    time_profile(partial_solutions, other_partial_solutions, hybrid)
 
 
 def analyze(path, num_nodes, hybrid, perf_profile):

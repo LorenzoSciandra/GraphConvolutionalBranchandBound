@@ -1,4 +1,4 @@
-Optimal tour found with candidate node = 14, elapsed time = 0.001306s and interrupted = FALSE
+Optimal tour found with candidate node = 14, elapsed time = 0.000793s and interrupted = FALSE
 
 MST solved with: Prim algorithm
 
@@ -37,4 +37,4 @@ Nodes:
 	18 : 0.2766491295692003 0.10964714032359779
 	19 : 0.8754419603764221 0.568643326410392
 
-Time taken: 1.8628859519958496s
+Time taken: 1.5172710418701172s

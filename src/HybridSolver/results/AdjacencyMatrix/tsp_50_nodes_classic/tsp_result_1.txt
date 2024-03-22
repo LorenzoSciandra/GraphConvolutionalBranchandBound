@@ -1,7 +1,7 @@
-Updated best value: 5.889294, at time: 0.197784
-Updated best value: 5.868514, at time: 0.499779
-Updated best value: 5.826050, at time: 0.533664
-Optimal tour found with candidate node = 14, elapsed time = 0.647572s and interrupted = FALSE
+Updated best value: 5.889294, at time: 0.198616
+Updated best value: 5.868514, at time: 0.524640
+Updated best value: 5.826050, at time: 0.562143
+Optimal tour found with candidate node = 14, elapsed time = 0.698323s and interrupted = FALSE
 
 MST solved with: Prim algorithm
 
@@ -12,13 +12,13 @@ Number of fixed edges = 44845
 
 Using dummy cities = FALSE
 
-SUBPROBLEM with cost = 5.826050, type = CLOSED_SUBGRADIENT, level of the BB tree = 7, prob_tour = 0.000000, BBNode number = 194 and time to obtain = 0.532616s, edge to branch = -1
+SUBPROBLEM with cost = 5.826050, type = CLOSED_SUBGRADIENT, level of the BB tree = 7, prob_tour = 0.000000, BBNode number = 194 and time to obtain = 0.560829s, edge to branch = -1
 
 Cycle with 50 edges: 14 <-> 17,  17 <-> 49,  49 <-> 41,  41 <-> 34,  34 <-> 9,  9 <-> 7,  7 <-> 36,  36 <-> 44,  44 <-> 22,  22 <-> 8,  8 <-> 32,  32 <-> 27,  27 <-> 23,  23 <-> 39,  39 <-> 13,  13 <-> 29,  29 <-> 45,  45 <-> 6,  6 <-> 48,  48 <-> 30,  30 <-> 47,  47 <-> 11,  11 <-> 1,  1 <-> 28,  28 <-> 15,  15 <-> 10,  10 <-> 26,  26 <-> 40,  40 <-> 0,  0 <-> 19,  19 <-> 37,  37 <-> 25,  25 <-> 3,  3 <-> 12,  12 <-> 38,  38 <-> 20,  20 <-> 4,  4 <-> 35,  35 <-> 33,  33 <-> 42,  42 <-> 46,  46 <-> 16,  16 <-> 2,  2 <-> 18,  18 <-> 21,  21 <-> 5,  5 <-> 24,  24 <-> 31,  31 <-> 43,  43 <-> 14
 3 Mandatory edges:
 324 Forbidden edges:
 
-Nodes: 
+Nodes:
 	0 : 0.902421046498 0.77621271719
 	1 : 0.722727240262 0.579024761326
 	2 : 0.202222502748 0.629848925738
@@ -70,4 +70,4 @@ Nodes:
 	48 : 0.514113046765 0.66313845183
 	49 : 0.350561488721 0.000114044320017
 
-Time taken: 0.6889204978942871s
+Time taken: 0.7288761138916016s

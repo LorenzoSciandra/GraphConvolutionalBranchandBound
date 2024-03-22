@@ -1,4 +1,4 @@
-Optimal tour found with candidate node = 6, elapsed time = 0.000939s and interrupted = FALSE
+Optimal tour found with candidate node = 6, elapsed time = 0.000766s and interrupted = FALSE
 
 MST solved with: Prim algorithm
 
@@ -9,7 +9,7 @@ Number of fixed edges = 0
 
 Using dummy cities = FALSE
 
-SUBPROBLEM with cost = 3.834396, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob_tour = 0.997974, BBNode number = 0 and time to obtain = 0.000000s, edge to branch = 152
+SUBPROBLEM with cost = 3.834396, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob_tour = 0.997974, BBNode number = 0 and time to obtain = 0.000000s, edge to branch = 1072067494
 
 Cycle with 20 edges: 4 <-> 1,  1 <-> 6,  6 <-> 14,  14 <-> 13,  13 <-> 17,  17 <-> 15,  15 <-> 2,  2 <-> 0,  0 <-> 3,  3 <-> 10,  10 <-> 5,  5 <-> 19,  19 <-> 12,  12 <-> 11,  11 <-> 18,  18 <-> 16,  16 <-> 9,  9 <-> 7,  7 <-> 8,  8 <-> 4
 0 Mandatory edges:
@@ -37,4 +37,4 @@ Nodes:
 	18 : 0.8094810974806891 0.010132182118844146
 	19 : 0.46792880393360103 0.018294747702901848
 
-Time taken: 1.872687816619873s
+Time taken: 1.5193002223968506s

@@ -1,11 +1,11 @@
-Optimal tour found with candidate node = 4, elapsed time = 0.001459s and interrupted = FALSE
+Optimal tour found with candidate node = 4, elapsed time = 0.001171s and interrupted = FALSE
 
 MST solved with: Prim algorithm
 
 GHOSH_UB = 5.679613, SUBPROBLEM_UB = 0.005680
 B-&-B tree with generated BBNodes = 3,  explored BBNodes = 3 and max tree level = 2
 
-Number of fixed edges = 245
+Number of fixed edges = 36
 
 Using dummy cities = FALSE
 
@@ -37,4 +37,4 @@ Nodes:
 	18 : 0.7298028765190702 0.5940812729381507
 	19 : 0.34688601345837056 0.11783941218933547
 
-Time taken: 1.8524177074432373s
+Time taken: 1.5156419277191162s

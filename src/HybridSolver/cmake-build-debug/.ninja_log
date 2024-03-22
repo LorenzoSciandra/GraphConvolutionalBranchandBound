@@ -40,3 +40,5 @@
 556	701	1711096413301173400	CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/prim.c.o	661ca488ba1e8c06
 194	981	1711096413577178188	CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o	79cb467ea3942d70
 981	1066	1711096413665179714	BranchAndBound1Tree	7bb4c1da5aa7475f
+1	1712	1711120813803671492	CMakeFiles/BranchAndBound1Tree.dir/main/algorithms/branch_and_bound.c.o	79cb467ea3942d70
+1712	1835	1711120813931673640	BranchAndBound1Tree	7bb4c1da5aa7475f

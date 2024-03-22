@@ -1,19 +1,20 @@
-Optimal tour found with candidate node = 9, elapsed time = 0.001315s and interrupted = FALSE
+Updated best value: 4.154757, at time: 0.001255
+Optimal tour found with candidate node = 9, elapsed time = 0.001270s and interrupted = FALSE
 
 MST solved with: Prim algorithm
 
 GHOSH_UB = 5.679613, SUBPROBLEM_UB = 0.005680
-B-&-B tree with generated BBNodes = 3,  explored BBNodes = 1 and max tree level = 2
+B-&-B tree with generated BBNodes = 3,  explored BBNodes = 3 and max tree level = 2
 
-Number of fixed edges = 177
+Number of fixed edges = 42
 
 Using dummy cities = FALSE
 
-SUBPROBLEM with cost = 4.167216, type = CLOSED_NEAREST_NEIGHBOR_HYBRID, level of the BB tree = 0, prob_tour = 0.998878, BBNode number = 0 and time to obtain = 0.000000s, edge to branch = 152
+SUBPROBLEM with cost = 4.154757, type = CLOSED_SUBGRADIENT, level of the BB tree = 2, prob_tour = 0.938070, BBNode number = 3 and time to obtain = 0.001081s, edge to branch = -1
 
-Cycle with 20 edges: 9 <-> 10,  10 <-> 11,  11 <-> 15,  15 <-> 7,  7 <-> 17,  17 <-> 1,  1 <-> 2,  2 <-> 18,  18 <-> 12,  12 <-> 4,  4 <-> 19,  19 <-> 6,  6 <-> 14,  14 <-> 0,  0 <-> 3,  3 <-> 16,  16 <-> 8,  8 <-> 5,  5 <-> 13,  13 <-> 9
-0 Mandatory edges:
-0 Forbidden edges:
+Cycle with 20 edges: 9 <-> 13,  13 <-> 5,  5 <-> 8,  8 <-> 3,  3 <-> 16,  16 <-> 0,  0 <-> 14,  14 <-> 6,  6 <-> 19,  19 <-> 4,  4 <-> 12,  12 <-> 18,  18 <-> 2,  2 <-> 1,  1 <-> 17,  17 <-> 7,  7 <-> 15,  15 <-> 11,  11 <-> 10,  10 <-> 9
+1 Mandatory edges:
+62 Forbidden edges:
 
 Nodes: 
 	0 : 0.6859666525913295 0.9994542351980029
@@ -37,4 +38,4 @@ Nodes:
 	18 : 0.6912387432069982 0.001353445761674399
 	19 : 0.7575891076575364 0.6450911436022164
 
-Time taken: 1.7836997509002686s
+Time taken: 1.5127925872802734s

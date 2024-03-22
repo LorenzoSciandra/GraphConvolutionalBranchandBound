@@ -1,19 +1,19 @@
 MEAN RESULTS for 1000 instances
 Percentage of resolved instances: 100.0%
-	of which NN = 14.099999999999998%		NN Hybrid = 0.0%		1Tree = 0.0%		Subgradient = 85.9%
+	of which NN = 8.9%		NN Hybrid = 0.0%		1Tree = 0.0%		Subgradient = 91.10000000000001%
 
-Mean total time: 0.0282895610332489 +- 0.0023442678731534494s
-Mean BB time: 0.0016995840000000022 +- 0.0018211317104877402s
-Mean time to best: 0.0009072089999999996 +- 0.0015599626230519113s
+Mean total time: 0.00983885908126831 +- 0.004058202594352101s
+Mean BB time: 0.0019520090000000013 +- 0.004038645730801229s
+Mean time to best: 0.0009899999999999987 +- 0.002434135969086362s
 
-Mean total tree level: 1.876 +- 1.631754883553277
-Mean generated BBNodes: 4.338 +- 9.403709693519938
-Mean explored BBNodes: 3.368 +- 6.790329594357005
-Mean fixed edges: 90.825 +- 235.46082981039464
-Mean mandatory edges: 0.372 +- 0.9421337484667384
-Mean forbidden edges: 23.591 +- 45.75066905521688
+Mean total tree level: 2.474 +- 2.6935708641132976
+Mean generated BBNodes: 7.666 +- 20.753227315287642
+Mean explored BBNodes: 7.657 +- 20.742549288840994
+Mean fixed edges: 109.772 +- 468.4971163369088
+Mean mandatory edges: 0.376 +- 0.7514146658137563
+Mean forbidden edges: 13.679 +- 24.912887407926032
 
-Mean BBNodes before best: 2.526 +- 5.5642900715185775
-Mean best level: 1.378 +- 1.227646528932497
+Mean BBNodes before best: 3.966 +- 11.34922217599075
+Mean best level: 1.615 +- 1.383031091479863
 Mean prob best: 0.0 +- 0.0
-Mean best value: 3.845828604000004 +- 0.3103356725189243
+Mean best value: 3.8425902800000005 +- 0.3093521041221534
