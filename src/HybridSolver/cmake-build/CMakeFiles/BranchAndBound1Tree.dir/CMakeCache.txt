@@ -199,7 +199,7 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 HYBRID:UNINITIALIZED=1
 
 //No help, variable specified on the command line.
-MAX_VERTEX_NUM:UNINITIALIZED=20
+MAX_VERTEX_NUM:UNINITIALIZED=50
 
 
 ########################

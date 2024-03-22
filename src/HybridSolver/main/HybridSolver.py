@@ -26,6 +26,7 @@ import matplotlib.pyplot as plt
 from sklearn_extra.cluster import KMedoids
 from py2opt.routefinder import RouteFinder
 
+
 def get_solution(output_file):
     """
     Args:
@@ -188,7 +189,7 @@ def vertex_insertion(solution, medoids_indx, graph, adj_matrix, two_opt):
     for i in range(model_size, num_nodes):
         new_city = farthest_selection(to_add_nodes, cities_tour, adj_matrix, num_nodes)
         best_city_pos = cheapest_insertion(cities_tour, adj_matrix, new_city)
-        #new_city, best_city_pos = cheapest_selection_and_insertion(cities_tour, adj_matrix, to_add_nodes)
+        # new_city, best_city_pos = cheapest_selection_and_insertion(cities_tour, adj_matrix, to_add_nodes)
         to_add_nodes.remove(new_city)
         cities_tour[best_city_pos:] = new_city, *cities_tour[best_city_pos:]
 
@@ -198,21 +199,14 @@ def vertex_insertion(solution, medoids_indx, graph, adj_matrix, two_opt):
     vi_cost += adj_matrix[cities_tour[-1]][cities_tour[0]]
 
     if two_opt:
-        route_finder = RouteFinder(adj_matrix, sorted(cities_tour), iterations=num_nodes, verbose=False)
-        best_distance, best_route = route_finder.solve_from_init_cycle(cities_tour, vi_cost)
+        route_finder = RouteFinder(adj_matrix, sorted(cities_tour), verbose=False)
+        vi_cost, cities_tour = route_finder.solve_from_init_cycle(cities_tour)
 
-        final_tour = "Final cycle with " + str(num_nodes) + " edges of " + str(best_distance) + " cost: "
-        for i in range(0, len(best_route) - 1):
-            final_tour += str(best_route[i]) + " <-> " + str(best_route[i + 1]) + ",  "
+    final_tour = "Final cycle with " + str(num_nodes) + " edges of " + str(vi_cost) + " cost: "
+    for i in range(0, len(cities_tour) - 1):
+        final_tour += str(cities_tour[i]) + " <-> " + str(cities_tour[i + 1]) + ",  "
 
-        final_tour += str(best_route[-1]) + " <-> " + str(best_route[0])
-
-    else:
-        final_tour = "Final cycle with " + str(num_nodes) + " edges of " + str(vi_cost) + " cost: "
-        for i in range(0, len(cities_tour) - 1):
-            final_tour += str(cities_tour[i]) + " <-> " + str(cities_tour[i + 1]) + ",  "
-
-        final_tour += str(cities_tour[-1]) + " <-> " + str(cities_tour[0])
+    final_tour += str(cities_tour[-1]) + " <-> " + str(cities_tour[0])
 
     return original_tour + final_tour
 
@@ -339,6 +333,33 @@ def add_dummy_cities(graph, num_nodes, adj_matrix, dummy_cities):
     return graph_str, len(graph) + 1
 
 
+def create_temp_file(num_nodes, graph=None, instance=None):
+    filepath = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
+
+    if not os.path.exists(os.path.dirname(filepath)):
+        try:
+            os.makedirs(os.path.dirname(filepath))
+        except OSError as exc:  # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
+
+    if instance is not None and graph is None:
+        lines = None
+        orig_path = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes.txt"
+        with open(orig_path, "r") as f:
+            lines = f.readlines()
+
+        if lines is None or len(lines) < instance - 1:
+            raise Exception("The instance " + str(instance) + " for the number of nodes " + str(num_nodes) + " does not exist.")
+
+        graph = lines[instance - 1]
+
+    with open(filepath, 'w+') as file:
+        file.writelines(graph)
+        file.flush()
+        os.fsync(file.fileno())
+
+
 def fix_instance_size(graph, num_nodes, adj_matrix, rate, dummy_cities):
     """
     Args:
@@ -350,7 +371,7 @@ def fix_instance_size(graph, num_nodes, adj_matrix, rate, dummy_cities):
     """
 
     medoids_idx = set()
-    new_graph_str = None
+    new_graph_str = ""
     end_str = " output "
 
     if num_nodes < 100:
@@ -369,19 +390,7 @@ def fix_instance_size(graph, num_nodes, adj_matrix, rate, dummy_cities):
 
     end_str += "1"
 
-    filepath = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
-
-    if not os.path.exists(os.path.dirname(filepath)):
-        try:
-            os.makedirs(os.path.dirname(filepath))
-        except OSError as exc:  # Guard against race condition
-            if exc.errno != errno.EEXIST:
-                raise
-
-    with open(filepath, 'w+') as file:
-        file.writelines(new_graph_str + end_str)
-        file.flush()
-        os.fsync(file.fileno())
+    create_temp_file(num_nodes, graph=new_graph_str + end_str)
 
     return medoids_idx
 
@@ -413,7 +422,8 @@ def get_instance(instance, num_nodes):
         lines = f.readlines()
 
     if lines is None or len(lines) < instance - 1:
-        raise Exception("The instance " + str(instance) + " for the number of nodes " + str(num_nodes) + " does not exist.")
+        raise Exception(
+            "The instance " + str(instance) + " for the number of nodes " + str(num_nodes) + " does not exist.")
 
     str_graph = lines[instance - 1]
 
@@ -444,7 +454,7 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         "-DMAX_VERTEX_NUM=" + str(num_nodes),
         "-DHYBRID=" + str(hyb_mode)
     ]
-    #print(cmake_command)
+    # print(cmake_command)
     make_command = [
         "make",
         "-C" + build_directory,
@@ -491,6 +501,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
     else:
         model_size = num_nodes
 
+    print(model_size)
     build_directory = "../cmake-build/CMakeFiles/BranchAndBound1Tree.dir"
     hybrid = 1 if hyb_mode else 0
     build_c_program(build_directory, model_size, hybrid)
@@ -530,10 +541,13 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
                 to_fix = True
                 adj_matrix = adjacency_matrix(orig_graph)
                 medoids_indx = fix_instance_size(orig_graph, num_nodes, adj_matrix, rate, dummy_cities)
+            else:
+                create_temp_file(num_nodes, instance=i)
 
             absolute_python_path = os.path.abspath("./graph-convnet-tsp/main.py")
-            result = subprocess.run(['python3', absolute_python_path, absolute_input_path, str(num_nodes), str(model_size)],
-                                    cwd="./graph-convnet-tsp", check=True)
+            result = subprocess.run(
+                ['python3', absolute_python_path, absolute_input_path, str(num_nodes), str(model_size)],
+                cwd="./graph-convnet-tsp", check=True)
             if result.returncode == 0:
                 print('Neural Network completed successfully on instance ' + str(i) + ' / ' + str(end_instance))
             else:
@@ -556,7 +570,8 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
-        cmd = [build_directory + "/BranchAndBound1Tree", absolute_input_path, absolute_output_path]
+        cmd = [build_directory + "/BranchAndBound1Tree", absolute_input_path, absolute_output_path,
+               str(num_nodes < model_size)]
         result = subprocess.run(cmd)
         if result.returncode == 0:
             print('Branch-and-Bound completed successfully on instance ' + str(i) + ' / ' + str(end_instance))
@@ -578,9 +593,10 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
             if final_tour is None:
                 raise Exception("The final tour is empty.")
 
-            os.remove("graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt")
-
         end_time = time.time()
+
+        if hyb_mode:
+            os.remove("graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt")
 
         with open(output_file, "a") as f:
             if two_opt:
@@ -600,7 +616,6 @@ if __name__ == "__main__":
         --range_instances: The range of instances to run on the Solver.
         --num_nodes: The number of nodes in each TSP instance.
         --hybrid_mode: If present, the program is in hybrid mode, otherwise it is in classic mode.
-        --gen_matrix: If present, the adjacency matrix will be generated, otherwise it will be read from the data folder.
         --two_opt: If present, the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering.
         --dummy_cities: The way of generating the dummy cities to add to the graph:
             - rr: Round Robin
@@ -610,12 +625,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--range_instances", type=str, default="1-1")
     parser.add_argument("--num_nodes", type=int, default=20)
-    parser.add_argument("--hybrid_mode", action="store_true")
-    parser.add_argument("--gen_matrix", action="store_true")
+    parser.add_argument("--hybrid", action="store_true")
     parser.add_argument("--two_opt", action="store_true")
-    parser.add_argument("--dummy_cities",  type=str, default="rr")
+    parser.add_argument("--dummy_cities", type=str, default="rr")
     opts = parser.parse_args()
 
     pp.pprint(vars(opts))
 
-    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid_mode, opts.gen_matrix, opts.two_opt, opts.dummy_cities)
+    gen_matrix = opts.hybrid == False
+
+    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid, gen_matrix, opts.two_opt,
+                  opts.dummy_cities)

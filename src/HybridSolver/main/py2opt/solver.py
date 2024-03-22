@@ -10,7 +10,7 @@ class Solver:
         self.best_route = []
         self.best_distance = 0
         self.distances = []
-
+    
     def update(self, new_route, new_distance):
         self.best_distance = new_distance
         self.best_route = new_route

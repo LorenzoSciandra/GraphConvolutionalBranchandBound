@@ -162,12 +162,8 @@ def main(filepath, num_nodes, model_size):
     config.gpu_id = "0"
     config.accumulation_steps = 1
 
-    if int(num_nodes) != int(model_size):
-        config.val_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
-        config.test_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
-    else:
-        config.val_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes.txt"
-        config.test_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes.txt"
+    config.val_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
+    config.test_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
 
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)

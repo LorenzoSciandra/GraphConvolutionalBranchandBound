@@ -22,15 +22,16 @@
  */
 int main(int argc, char *argv[]) {
 
-    if (argc != 3) {
+    if (argc != 4) {
         perror("Wrong number of arguments");
-        printf("\nYou need to pass 2 arguments: <input file> <output file>\n");
+        printf("\nYou need to pass 2 arguments: <input file> <output file> <dummy or not>\n");
         exit(1);
     }
 
 
     char *input_file = argv[1];
     char *output_file = argv[2];
+    bool dummy_cities = strcmp(argv[3], "True") == 0;
 
     //printf("\nNodes:%d \t\tMode: %s\t\t\n", MAX_VERTEX_NUM, HYBRID ? "Hybrid" : "Classic");
 
@@ -46,6 +47,7 @@ int main(int argc, char *argv[]) {
     //read_tsp_lib_file(&new_problem.graph, input_file);
     read_tsp_csv_file(&new_problem.graph, input_file);
 
+    new_problem.dummy_cities = dummy_cities;
     //print_graph(&new_problem.graph);
 
     branch_and_bound(&new_problem);

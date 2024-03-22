@@ -70,6 +70,7 @@ typedef struct Problem{
     unsigned int exploredBBNodes; ///< The number of nodes explored in the Branch and Bound tree.
     unsigned int num_fixed_edges; ///< The number of fixed edges in the Branch and Bound tree.
     bool interrupted; ///< True if the algorithm has been interrupted by timeout.
+    bool dummy_cities; ///< True if some of the cities are dummy.
     clock_t start; ///< The time when the algorithm started.
     clock_t end; ///< The time when the algorithm ended.
 }Problem;
