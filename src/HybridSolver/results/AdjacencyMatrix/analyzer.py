@@ -18,7 +18,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def time_profile(partial_solutions, other_partial_solutions, hybrid):
+def improvement_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes):
     # take all the times of the partial solutions
     times = set()
 
@@ -61,12 +61,84 @@ def time_profile(partial_solutions, other_partial_solutions, hybrid):
     # plot the performance profile
     plt.plot(times, points_one, label='Hybrid' if hybrid else 'Classic')
     plt.plot(times, points_two, label='Classic' if hybrid else 'Hybrid')
-    plt.title('Performance profile')
+    plt.title('Improvement profile for ' + str(num_nodes) + ' nodes')
     plt.xlabel('Time (s)')
     plt.ylabel('Proportion of instances with a better solution')
     plt.legend()
     # store the plot in a file
     plt.savefig('performance_profile.pdf', format='pdf')
+    plt.close()
+
+
+def cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes):
+
+    times = set()
+
+    for partial_solution in partial_solutions:
+        times.add(partial_solution[-1][1])
+
+    for partial_solution in other_partial_solutions:
+        times.add(partial_solution[-1][1])
+
+    times = sorted(list(times))
+    points_one = []
+    points_two = []
+
+    for time in times:
+        sol_one_count = 0
+        sol_two_count = 0
+        for instance_solutions in partial_solutions:
+            last_time = instance_solutions[-1][1]
+            if last_time <= time:
+                sol_one_count += 1
+
+        for instance_solutions in other_partial_solutions:
+            last_time = instance_solutions[-1][1]
+            if last_time <= time:
+                sol_two_count += 1
+
+        points_one.append(sol_one_count / len(partial_solutions))
+        points_two.append(sol_two_count / len(partial_solutions))
+
+    plt.plot(times, points_one, label='Hybrid' if hybrid else 'Classic')
+    plt.plot(times, points_two, label='Classic' if hybrid else 'Hybrid')
+    plt.title('Cumulative profile for ' + str(num_nodes) + ' nodes')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Proportion of instances solved')
+    plt.legend()
+    plt.savefig('cumulative_profile.pdf', format='pdf')
+    plt.close()
+
+
+def rateo_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes):
+
+    rateo_one = []
+    rateo_two = []
+
+    for i in range(len(partial_solutions)):
+        time_one = partial_solutions[i][-1][1]
+        time_two = other_partial_solutions[i][-1][1]
+        min_time = min(time_one, time_two)
+        rateo_one.append(time_one / min_time)
+        rateo_two.append(time_two / min_time)
+
+    max_tau = max(max(rateo_one), max(rateo_two))
+    tau = np.linspace(0, max_tau, 10)
+    points_one = []
+    points_two = []
+    for t in tau:
+        points_one.append(sum([1 for rateo in rateo_one if rateo <= t]) / len(rateo_one))
+        points_two.append(sum([1 for rateo in rateo_two if rateo <= t]) / len(rateo_two))
+
+    plt.rcParams['text.usetex'] = True
+    plt.plot(tau, points_one, label='Hybrid' if hybrid else 'Classic')
+    plt.plot(tau, points_two, label='Classic' if hybrid else 'Hybrid')
+    plt.title('Rateo profile for ' + str(num_nodes) + ' nodes')
+    plt.xlabel('$\\tau$')
+    plt.ylabel('$P ( r_{p,s} \leq \\tau)$')
+    plt.legend()
+    plt.savefig('rateo_profile.pdf', format='pdf')
+    plt.close()
 
 
 def read_other_values(path, hybrid):
@@ -111,14 +183,16 @@ def read_other_values(path, hybrid):
     return partial_solution_list
 
 
-def performance_profiles(partial_solutions, path, hybrid):
+def performance_profiles(partial_solutions, path, hybrid, num_nodes):
     other_partial_solutions = read_other_values(path, hybrid)
 
     if len(partial_solutions) != len(other_partial_solutions):
         print("The number of instances in the two folders is different.")
         exit(1)
 
-    time_profile(partial_solutions, other_partial_solutions, hybrid)
+    improvement_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
+    cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
+    rateo_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
 
 
 def analyze(path, num_nodes, hybrid, perf_profile):
@@ -281,7 +355,7 @@ def analyze(path, num_nodes, hybrid, perf_profile):
     std_fixed_edges = (sum([(x - mean_fixed_edges) ** 2 for x in num_fixed_edges_list]) / num_resolved) ** 0.5
 
     if perf_profile:
-        performance_profiles(partial_solution_list, path, hybrid)
+        performance_profiles(partial_solution_list, path, hybrid, num_nodes)
 
     if len(not_resolved_list) > 0:
         print("Not resolved instances: " + str(not_resolved_list))
