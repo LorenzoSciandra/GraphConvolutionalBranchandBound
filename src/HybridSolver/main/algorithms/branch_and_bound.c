@@ -174,23 +174,8 @@ void initialize_matrix(SubProblem *subProblem) {
                 subProblem->constraints[i][j] = FORBIDDEN;
 
             } else{
-
-                if (!problem->dummy_cities){
-                    subProblem->constraints[i][j] = NOTHING;
-                    subProblem->constraints[j][i] = NOTHING;
-                } else{
-                    //connecting the dummy cities to the original ones
-                    if (problem->graph.edges_matrix[i][j].weight <  0.000000000001) {
-                        subProblem->constraints[i][j] = MANDATORY;
-                        subProblem->constraints[j][i] = MANDATORY;
-                        subProblem->mandatoryEdges[subProblem->num_mandatory_edges].src = i;
-                        subProblem->mandatoryEdges[subProblem->num_mandatory_edges].dest = j;
-                        subProblem->num_mandatory_edges++;
-                    } else {
-                        subProblem->constraints[i][j] = NOTHING;
-                        subProblem->constraints[j][i] = NOTHING;
-                    }
-                }
+                subProblem->constraints[i][j] = NOTHING;
+                subProblem->constraints[j][i] = NOTHING;
             }
         }
     }
@@ -1168,8 +1153,6 @@ void print_problem(void) {
            problem->generatedBBNodes, problem->exploredBBNodes, problem->totTreeLevels);
 
     printf("\nNumber of fixed edges = %i\n", problem->num_fixed_edges);
-
-    printf("\nUsing dummy cities = %s\n", problem->dummy_cities ? "TRUE" : "FALSE");
 
     print_subProblem(&problem->bestSolution);
 }

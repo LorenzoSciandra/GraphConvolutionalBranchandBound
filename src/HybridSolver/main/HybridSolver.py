@@ -271,68 +271,6 @@ def remove_dummy_cities(solution, num_nodes, adj_matrix):
     return final_tour
 
 
-def add_dummy_cities(graph, num_nodes, adj_matrix, dummy_cities):
-    """
-    Args:
-        graph: The graph to which add the dummy cities.
-        num_nodes: The number of nodes of the graph instance.
-        adj_matrix: The adjacency matrix of the graph.
-        dummy_cities: The way of generating the dummy cities to add to the graph.
-    """
-    num_dummy_cities = 0
-
-    if num_nodes < 20:
-        num_dummy_cities = 20 - num_nodes
-    elif num_nodes < 50:
-        num_dummy_cities = 50 - num_nodes
-    elif num_nodes < 100:
-        num_dummy_cities = 100 - num_nodes
-    else:
-        raise Exception("The max dimension of the GCN is 100 nodes.")
-
-    if dummy_cities == "rr":
-        rr_index = 0
-        for i in range(num_dummy_cities):
-            find = False
-            x = None
-            y = None
-            while not find:
-                values = np.random.randint(1, 9, 2)
-                signs = np.random.choice([-1, 1], 2)
-                x = graph[rr_index][0] + signs[0] * values[0] * 0.000000000000001
-                y = graph[rr_index][1] + signs[1] * values[1] * 0.000000000000001
-                if [x, y] not in graph:
-                    find = True
-
-            graph.append([x, y])
-            rr_index = (rr_index + 1) % num_nodes
-
-    elif dummy_cities == "cf":
-        adj_matrix = np.array(adj_matrix)
-        dist = np.sum(adj_matrix, axis=1, dtype=np.float64)
-        farthest_city = np.argmax(dist)
-        for i in range(num_dummy_cities):
-            find = False
-            x = None
-            y = None
-            while not find:
-                values = np.random.randint(1, 9, 2)
-                signs = np.random.choice([-1, 1], 2)
-                x = graph[farthest_city][0] + signs[0] * values[0] * 0.000000000000001
-                y = graph[farthest_city][1] + signs[1] * values[1] * 0.000000000000001
-                if [x, y] not in graph:
-                    find = True
-
-            graph.append([x, y])
-
-    else:
-        raise Exception("The way of generating the dummy cities is not valid.")
-
-    graph_str = " ".join(f"{x} {y}" for x, y in graph)
-
-    return graph_str, len(graph) + 1
-
-
 def create_temp_file(num_nodes, graph=None, instance=None):
     filepath = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
 
@@ -350,7 +288,8 @@ def create_temp_file(num_nodes, graph=None, instance=None):
             lines = f.readlines()
 
         if lines is None or len(lines) < instance - 1:
-            raise Exception("The instance " + str(instance) + " for the number of nodes " + str(num_nodes) + " does not exist.")
+            raise Exception(
+                "The instance " + str(instance) + " for the number of nodes " + str(num_nodes) + " does not exist.")
 
         graph = lines[instance - 1]
 
@@ -360,30 +299,19 @@ def create_temp_file(num_nodes, graph=None, instance=None):
         os.fsync(file.fileno())
 
 
-def fix_instance_size(graph, num_nodes, adj_matrix, rate, dummy_cities):
+def fix_instance_size(graph, num_nodes):
     """
     Args:
         graph: The graph to fix.
         num_nodes: The number of nodes of the graph instance.
-        adj_matrix: The adjacency matrix of the graph.
-        rate: The fraction of missing cities.
-        dummy_cities: The way of generating the dummy cities to add to the graph.
     """
 
     medoids_idx = set()
     new_graph_str = ""
     end_str = " output "
 
-    if num_nodes < 100:
-        if rate >= 0.7:
-            print("Need to fix the instance size adding dummy cities")
-            new_graph_str, dim = add_dummy_cities(graph, num_nodes, adj_matrix, dummy_cities)
-        else:
-            print("Need to fix the instance size with clustering")
-            new_graph_str, medoids_idx, dim = cluster_nodes(graph, num_nodes)
-    else:
-        print("Need to fix the instance size with clustering")
-        new_graph_str, medoids_idx, dim = cluster_nodes(graph, num_nodes)
+    print("Need to fix the instance size with clustering")
+    new_graph_str, medoids_idx, dim = cluster_nodes(graph, num_nodes)
 
     for i in range(1, dim):
         end_str += str(i) + " "
@@ -469,7 +397,7 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         raise Exception("Build failed")
 
 
-def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy_cities):
+def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
     """
     Args:
         num_instances: The range of instances to run on the Solver.
@@ -477,7 +405,6 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
         hyb_mode: True if the program is in hybrid mode, False otherwise.
         gen_matrix: True if the adjacency matrix is already generated, False otherwise.
         two_opt: True if the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering, False otherwise.
-        dummy_cities: The way of generating the dummy cities to add to the graph.
     """
 
     model_size = 0
@@ -501,10 +428,9 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
     else:
         model_size = num_nodes
 
-    print(model_size)
     build_directory = "../cmake-build/CMakeFiles/BranchAndBound1Tree.dir"
     hybrid = 1 if hyb_mode else 0
-    build_c_program(build_directory, model_size, hybrid)
+    build_c_program(build_directory, num_nodes if num_nodes < 100 else 100, hybrid)
 
     if "-" in num_instances:
         instances = num_instances.split("-")
@@ -537,10 +463,10 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
                       + "/tsp_result_" + str(i) + ".txt"
 
         if hyb_mode:
-            if num_nodes != model_size:
+            adj_matrix = adjacency_matrix(orig_graph)
+            if rate < 0.7:
                 to_fix = True
-                adj_matrix = adjacency_matrix(orig_graph)
-                medoids_indx = fix_instance_size(orig_graph, num_nodes, adj_matrix, rate, dummy_cities)
+                medoids_indx = fix_instance_size(orig_graph, num_nodes)
             else:
                 create_temp_file(num_nodes, instance=i)
 
@@ -570,8 +496,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt, dummy
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
-        cmd = [build_directory + "/BranchAndBound1Tree", absolute_input_path, absolute_output_path,
-               str(num_nodes < model_size)]
+        cmd = [build_directory + "/BranchAndBound1Tree", absolute_input_path, absolute_output_path]
         result = subprocess.run(cmd)
         if result.returncode == 0:
             print('Branch-and-Bound completed successfully on instance ' + str(i) + ' / ' + str(end_instance))
@@ -617,9 +542,6 @@ if __name__ == "__main__":
         --num_nodes: The number of nodes in each TSP instance.
         --hybrid_mode: If present, the program is in hybrid mode, otherwise it is in classic mode.
         --two_opt: If present, the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering.
-        --dummy_cities: The way of generating the dummy cities to add to the graph:
-            - rr: Round Robin
-            - cf: Clustered near the Farthest city
     """
 
     parser = argparse.ArgumentParser()
@@ -627,12 +549,10 @@ if __name__ == "__main__":
     parser.add_argument("--num_nodes", type=int, default=20)
     parser.add_argument("--hybrid", action="store_true")
     parser.add_argument("--two_opt", action="store_true")
-    parser.add_argument("--dummy_cities", type=str, default="rr")
     opts = parser.parse_args()
 
     pp.pprint(vars(opts))
 
     gen_matrix = opts.hybrid == False
 
-    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid, gen_matrix, opts.two_opt,
-                  opts.dummy_cities)
+    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid, gen_matrix, opts.two_opt)

@@ -81,7 +81,7 @@ def compute_prob(net, config, dtypeLong, dtypeFloat):
 
     instance = instance.split(" output")[0]
     instance = [float(x) for x in instance.split(" ")]
-    #print(config)
+    # print(config)
 
     with torch.no_grad():
 
@@ -107,12 +107,11 @@ def compute_prob(net, config, dtypeLong, dtypeFloat):
         y_probs = y[:, :, :, 1]
 
     nodes_coord = batch.nodes_coord.flatten().tolist()
-    nodes_coord = ";".join([f"({nodes_coord[i]}, {nodes_coord[i + 1]})" for i in range(0, len(nodes_coord), 2)])
 
     return y_probs, x_edges_values, nodes_coord
 
 
-def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath):
+def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath, num_nodes):
     """
     This function simply writes the probabilistic adjacency matrix in a file, where each cell
     is a tuple (distance, probability).
@@ -122,18 +121,31 @@ def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath):
         filepath: The path to the file where the adjacency matrix will be written.
     """
     # Convert to numpy
-    num_nodes = y_probs.shape[1]
+    model_size = y_probs.shape[1]
+    num_dummies = model_size - num_nodes
     y_probs = y_probs.flatten().numpy()
     x_edges_values = x_edges_values.flatten().numpy()
 
     # stack the arrays horizontally and convert to string data type
     arr_combined = np.stack((x_edges_values, y_probs), axis=1).astype('U')
 
-    # format the strings using a list comprehension
+    if num_nodes != model_size:
+        nodes_coord = nodes_coord[:num_nodes*2]
+        final_arr = []
+        for i in range(num_nodes):
+            for j in range(num_nodes):
+                final_arr.append(arr_combined[i * model_size + j])
+
+            for j in range(num_nodes, model_size):
+                if i != j-num_nodes:
+                    if arr_combined[i * model_size + j][1] > final_arr[i * num_nodes + j - num_nodes][1]:
+                        final_arr[i * num_nodes + j - num_nodes][1] = arr_combined[i * model_size + j][1]
+
+        arr_combined = np.array(final_arr)
+
+    nodes_coord = ";".join([f"({nodes_coord[i]}, {nodes_coord[i + 1]})" for i in range(0, len(nodes_coord), 2)])
     arr_strings = np.array(['({}, {});'.format(x[0], x[1]) for x in arr_combined])
 
-    # filepath = filepath.replace(".csv", "_temp.csv")
-    # write arr_strings to file
     with open(filepath, 'w') as f:
         f.write("%s\n" % nodes_coord)
         edge = 0
@@ -147,6 +159,58 @@ def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath):
         os.fsync(f.fileno())
 
 
+def add_dummy_cities(num_nodes, model_size):
+    """
+    Args:
+        num_nodes: The number of nodes of the graph instance.
+        model_size: The size of the Graph Convolutional Network to use.
+    """
+    num_dummy_cities = model_size - num_nodes
+    filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
+    graph_str = None
+
+    with open(filepath, "r") as f:
+        lines = f.readlines()
+        graph_str = lines[0]
+
+    graph_str = graph_str.split(" output")[0]
+    if graph_str is None:
+        raise Exception("The input file is empty.")
+
+    nodes = graph_str.split(" ")
+    graph = [[float(nodes[i]), float(nodes[i + 1])] for i in range(0, len(nodes), 2)]
+    rr_index = 0
+    for i in range(num_dummy_cities):
+        find = False
+        x = None
+        y = None
+        while not find:
+            values = np.random.randint(1, 9, 2)
+            signs = np.random.choice([-1, 1], 2)
+            x = graph[rr_index][0] + signs[0] * values[0] * 0.000000000000001
+            y = graph[rr_index][1] + signs[1] * values[1] * 0.000000000000001
+            if [x, y] not in graph:
+                find = True
+
+        graph.append([x, y])
+        graph_str += " " + str(x) + " " + str(y)
+        rr_index = (rr_index + 1) % num_nodes
+
+    seq = np.linspace(1,model_size, model_size, dtype=int)
+    seq_str = ""
+    for s in seq:
+        seq_str += str(s) + " "
+
+    seq_str += "1"
+    graph_str += " output " + seq_str
+
+    with open(filepath, 'w+') as file:
+        file.writelines(graph_str)
+        file.flush()
+        os.fsync(file.fileno())
+
+
+
 def main(filepath, num_nodes, model_size):
     """
     The function that calls the previous functions and first sets the parameters for the calculation.
@@ -156,14 +220,17 @@ def main(filepath, num_nodes, model_size):
         model_size: The size of the Graph Convolutional Network to use.
     """
 
-    config_path = "./logs/tsp" + model_size + "/config.json"
+    if num_nodes < model_size:
+        add_dummy_cities(num_nodes, model_size)
+
+    config_path = "./logs/tsp" + str(model_size) + "/config.json"
     config = get_config(config_path)
 
     config.gpu_id = "0"
     config.accumulation_steps = 1
 
-    config.val_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
-    config.test_filepath = "data/hyb_tsp/test_" + num_nodes + "_nodes_temp.txt"
+    config.val_filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
+    config.test_filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
 
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = str(config.gpu_id)
@@ -192,7 +259,7 @@ def main(filepath, num_nodes, model_size):
     net.load_state_dict(checkpoint['model_state_dict'])
     config.batch_size = 1
     probs, edges_value, nodes_coord = compute_prob(net, config, dtypeLong, dtypeFloat)
-    write_adjacency_matrix(probs, edges_value, nodes_coord, filepath)
+    write_adjacency_matrix(probs, edges_value, nodes_coord, filepath, num_nodes)
 
 
 if __name__ == "__main__":
@@ -214,6 +281,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     filepath = sys.argv[1]
-    num_nodes = sys.argv[2]
-    model_size = sys.argv[3]
+    num_nodes = int(sys.argv[2])
+    model_size = int(sys.argv[3])
     main(filepath, num_nodes, model_size)

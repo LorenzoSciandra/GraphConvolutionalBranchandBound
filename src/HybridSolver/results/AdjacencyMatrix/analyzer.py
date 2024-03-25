@@ -22,41 +22,49 @@ def improvement_profile(partial_solutions, other_partial_solutions, hybrid, num_
     # take all the times of the partial solutions
     times = set()
 
-    for partial_solution in partial_solutions:
+    for _,partial_solution in partial_solutions.items():
         for solution in partial_solution:
             times.add(solution[1])
 
-    for partial_solution in other_partial_solutions:
+    for _,partial_solution in other_partial_solutions.items():
         for solution in partial_solution:
             times.add(solution[1])
 
+    ub = np.sqrt(num_nodes) * 0.00127
     times = sorted(list(times))
     points_one = []
     points_two = []
     for time in times:
-        sol_one = []
-        sol_two = []
-        for instance_solutions in partial_solutions:
+        sol_one = {}
+        sol_two = {}
+        for key,instance_solutions in partial_solutions.items():
             best_value_inst = float('inf')
             for solution in instance_solutions:
                 if solution[1] <= time:
                     best_value_inst = solution[0]
                 else:
                     break
-            sol_one.append(best_value_inst)
+            sol_one[key] = best_value_inst
 
-        for instance_solutions in other_partial_solutions:
+        for key ,instance_solutions in other_partial_solutions.items():
             best_value_inst = float('inf')
             for solution in instance_solutions:
                 if solution[1] <= time:
                     best_value_inst = solution[0]
                 else:
                     break
-            sol_two.append(best_value_inst)
+            sol_two[key] = best_value_inst
 
-        # proportion of instances where the first algorithm is better
-        points_one.append(sum([1 for i in range(len(sol_one)) if sol_one[i] < sol_two[i]]) / len(sol_one))
-        points_two.append(sum([1 for i in range(len(sol_two)) if sol_two[i] < sol_one[i]]) / len(sol_two))
+        one_count = 0
+        two_count = 0
+        for key in sol_one.keys():
+            if sol_two[key] > sol_one[key]:
+                one_count += 1
+            elif sol_one[key] > sol_two[key]:
+                two_count += 1
+
+        points_one.append(one_count / len(sol_one))
+        points_two.append(two_count / len(sol_two))
 
     # plot the performance profile
     plt.plot(times, points_one, label='Hybrid' if hybrid else 'Classic')
@@ -66,18 +74,18 @@ def improvement_profile(partial_solutions, other_partial_solutions, hybrid, num_
     plt.ylabel('Proportion of instances with a better solution')
     plt.legend()
     # store the plot in a file
-    plt.savefig('performance_profile.pdf', format='pdf')
+    plt.savefig('performance_profile_' + str(num_nodes) + '_nodes.pdf', format='pdf')
     plt.close()
 
 
-def cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes):
+def cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes, num_instances):
 
     times = set()
 
-    for partial_solution in partial_solutions:
+    for _,partial_solution in partial_solutions.items():
         times.add(partial_solution[-1][1])
 
-    for partial_solution in other_partial_solutions:
+    for _,partial_solution in other_partial_solutions.items():
         times.add(partial_solution[-1][1])
 
     times = sorted(list(times))
@@ -87,18 +95,18 @@ def cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_n
     for time in times:
         sol_one_count = 0
         sol_two_count = 0
-        for instance_solutions in partial_solutions:
+        for _,instance_solutions in partial_solutions.items():
             last_time = instance_solutions[-1][1]
             if last_time <= time:
                 sol_one_count += 1
 
-        for instance_solutions in other_partial_solutions:
+        for _,instance_solutions in other_partial_solutions.items():
             last_time = instance_solutions[-1][1]
             if last_time <= time:
                 sol_two_count += 1
 
-        points_one.append(sol_one_count / len(partial_solutions))
-        points_two.append(sol_two_count / len(partial_solutions))
+        points_one.append(sol_one_count / num_instances)
+        points_two.append(sol_two_count / num_instances)
 
     plt.plot(times, points_one, label='Hybrid' if hybrid else 'Classic')
     plt.plot(times, points_two, label='Classic' if hybrid else 'Hybrid')
@@ -106,7 +114,7 @@ def cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_n
     plt.xlabel('Time (s)')
     plt.ylabel('Proportion of instances solved')
     plt.legend()
-    plt.savefig('cumulative_profile.pdf', format='pdf')
+    plt.savefig('cumulative_profile_' + str(num_nodes) + '_nodes.pdf', format='pdf')
     plt.close()
 
 
@@ -115,9 +123,9 @@ def rateo_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
     rateo_one = []
     rateo_two = []
 
-    for i in range(len(partial_solutions)):
-        time_one = partial_solutions[i][-1][1]
-        time_two = other_partial_solutions[i][-1][1]
+    for key, _ in partial_solutions.items():
+        time_one = partial_solutions[key][-1][1]
+        time_two = other_partial_solutions[key][-1][1]
         min_time = min(time_one, time_two)
         rateo_one.append(time_one / min_time)
         rateo_two.append(time_two / min_time)
@@ -137,7 +145,7 @@ def rateo_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
     plt.xlabel('$\\tau$')
     plt.ylabel('$P ( r_{p,s} \leq \\tau)$')
     plt.legend()
-    plt.savefig('rateo_profile.pdf', format='pdf')
+    plt.savefig('rateo_profile_' + str(num_nodes) + '_nodes.pdf', format='pdf')
     plt.close()
 
 
@@ -150,7 +158,7 @@ def read_other_values(path, hybrid):
 
     abs_dir = os.path.abspath(other_path)
     all_files = os.listdir(abs_dir)
-    partial_solution_list = []
+    partial_solutions = {}
 
     for file in all_files:
         if file.endswith('.txt') and not file.startswith('mean_results'):
@@ -170,29 +178,39 @@ def read_other_values(path, hybrid):
 
                 time_taken = re.search(r"Time taken: ([0-9]+\.?[0-9]+)s", text).group(1)
                 elapsed_time = re.search(r"elapsed time = ([0-9]+\.?[0-9]+)s", text).group(1)
-                partial_solutions = []
+                solutions = []
                 time_overhead = float(time_taken) - float(elapsed_time)
 
                 # match all the "Updated best value: 5.889294, at time: 0.197784" lines
                 for match in re.finditer(r"Updated best value: ([0-9]+\.?[0-9]+), at time: ([0-9]+\.?[0-9]+)", text):
-                    partial_solutions.append((float(match.group(1)), time_overhead + float(match.group(2))))
+                    solutions.append((float(match.group(1)), time_overhead + float(match.group(2))))
 
-                partial_solutions.append((float(cost), float(time_taken)))
-                partial_solution_list.append(partial_solutions)
+                if len(solutions) == 0:
+                    solutions.append((float(cost), float(time_taken)))
+                filename = re.search(r"(.+?)\.txt", file).group(1)
+                inst_id = int(filename.split('result_')[1])
+                partial_solutions[inst_id] = solutions
 
-    return partial_solution_list
+    return partial_solutions
 
 
-def performance_profiles(partial_solutions, path, hybrid, num_nodes):
+def find_common_instances(partial_solutions, other_partial_solutions):
+    part_sol_com = {}
+    oth_sol_com = {}
+    for key, _ in partial_solutions.items():
+        if key in other_partial_solutions:
+            part_sol_com[key] = partial_solutions[key]
+            oth_sol_com[key] = other_partial_solutions[key]
+
+    return part_sol_com, oth_sol_com
+
+
+def performance_profiles(partial_solutions, path, hybrid, num_nodes, num_instances):
     other_partial_solutions = read_other_values(path, hybrid)
-
-    if len(partial_solutions) != len(other_partial_solutions):
-        print("The number of instances in the two folders is different.")
-        exit(1)
-
-    improvement_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
-    cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
-    rateo_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes)
+    part_sol_com, oth_sol_com = find_common_instances(partial_solutions, other_partial_solutions)
+    improvement_profile(part_sol_com, oth_sol_com, hybrid, num_nodes)
+    cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes, num_instances)
+    # rateo_profile(part_sol_com, oth_sol_com, hybrid, num_nodes)
 
 
 def analyze(path, num_nodes, hybrid, perf_profile):
@@ -210,7 +228,7 @@ def analyze(path, num_nodes, hybrid, perf_profile):
     file_names = []
     time_bb_list = []
     total_time_list = []
-    partial_solution_list = []
+    partial_solutions = {}
     time_to_best_list = []
     generate_bbnodes_list = []
     explored_bbnodes_list = []
@@ -274,14 +292,16 @@ def analyze(path, num_nodes, hybrid, perf_profile):
                 else:
                     num_closed_subgradient += 1
 
-                partial_solutions = []
+                solutions = []
                 time_overhead = float(time_taken) - float(elapsed_time)
 
                 # match all the "Updated best value: 5.889294, at time: 0.197784" lines
                 for match in re.finditer(r"Updated best value: ([0-9]+\.?[0-9]+), at time: ([0-9]+\.?[0-9]+)", text):
-                    partial_solutions.append((float(match.group(1)), time_overhead + float(match.group(2))))
+                    solutions.append((float(match.group(1)), time_overhead + float(match.group(2))))
 
-                partial_solutions.append((float(cost), float(time_taken)))
+                if len(solutions) == 0:
+                    solutions.append((float(cost), float(time_taken)))
+
                 time_bb_list.append(float(elapsed_time))
                 total_time_list.append(float(time_taken))
                 time_to_best_list.append(float(time_to_obtain))
@@ -295,7 +315,10 @@ def analyze(path, num_nodes, hybrid, perf_profile):
                 mandatory_edges_list.append(float(num_mandatory_edges))
                 forbidden_edges_list.append(float(num_forbidden_edges))
                 num_fixed_edges_list.append(float(num_fixed_edges))
-                partial_solution_list.append(partial_solutions)
+
+                filename = re.search(r"(.+?)\.txt", file).group(1)
+                inst_id = int(filename.split('result_')[1])
+                partial_solutions[inst_id] = solutions
 
             else:
                 current_resolved = 0
@@ -355,7 +378,7 @@ def analyze(path, num_nodes, hybrid, perf_profile):
     std_fixed_edges = (sum([(x - mean_fixed_edges) ** 2 for x in num_fixed_edges_list]) / num_resolved) ** 0.5
 
     if perf_profile:
-        performance_profiles(partial_solution_list, path, hybrid, num_nodes)
+        performance_profiles(partial_solutions, path, hybrid, num_nodes, len(resolved_list))
 
     if len(not_resolved_list) > 0:
         print("Not resolved instances: " + str(not_resolved_list))
