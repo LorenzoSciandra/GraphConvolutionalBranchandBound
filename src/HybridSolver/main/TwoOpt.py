@@ -38,17 +38,14 @@ def run_2opt(range_instance, num_nodes, multi_start):
         cities = list(range(num_nodes))
         route_finder = RouteFinder(adj_matrix, cities, iterations=multi_start, verbose=False)
         print("Instance: " + str(i) + " - Multi-start: " + str(multi_start))
-        start_time = time.time()
-        best_distance, best_route = route_finder.solve()
-        end_time = time.time()
+        _, best_route, best_distances = route_finder.solve()
         # print("Best route: " + str(best_route))
         # print("Best distance: " + str(best_distance))
         with open(output_file, "a") as f:
+            f.write("Solutions: ")
+            f.write(str(best_distances))
+            f.write("\t Final tour: ")
             f.write(" ".join(str(x) for x in best_route))
-            f.write("\t Cost: ")
-            f.write(str(best_distance))
-            f.write("\t Time: ")
-            f.write(str(end_time - start_time))
             f.write("\n")
 
 

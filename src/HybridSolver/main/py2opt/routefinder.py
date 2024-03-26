@@ -14,10 +14,11 @@ class RouteFinder:
         self.bound = np.sqrt(len(cities_names)) * 0.00127
 
     def solve(self):
-        start_time = round(time.time() * 1000)
+        start_time = time.time()
         elapsed_time = 0
         iteration = 0
         best_distance = 0
+        best_distances = []
         best_route = []
 
         while iteration < self.iterations:
@@ -28,7 +29,7 @@ class RouteFinder:
             if self.return_to_begin:
                 initial_route.append(0)
             tsp = Solver(self.distance_matrix, initial_route)
-            new_route, new_distance, distances = tsp.two_opt(improvement_threshold=self.bound)
+            new_route, new_distance, distances = tsp.two_opt()
 
             if iteration == 0:
                 best_distance = new_distance
@@ -40,7 +41,8 @@ class RouteFinder:
                 best_distance = new_distance
                 best_route = new_route
 
-            elapsed_time = round(time.time() * 1000) - start_time
+            elapsed_time = round(time.time() - start_time, 5)
+            best_distances.append((best_distance, elapsed_time))
             iteration += 1
 
         if self.writer_flag:
@@ -48,13 +50,13 @@ class RouteFinder:
 
         if self.cities_names:
             best_route = [self.cities_names[i] for i in best_route]
-            return best_distance, best_route
+            return best_distance, best_route, best_distances
         else:
-            return best_distance, best_route
+            return best_distance, best_route, best_distances
 
     def solve_from_init_cycle(self, start_cycle):
         tsp = Solver(self.distance_matrix, start_cycle)
-        route, distance, _ = tsp.two_opt(improvement_threshold=self.bound)
+        route, distance, _ = tsp.two_opt()
         return distance, route
 
     @staticmethod
