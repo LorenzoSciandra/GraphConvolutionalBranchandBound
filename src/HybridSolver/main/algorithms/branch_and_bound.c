@@ -210,7 +210,6 @@ bool infer_constraints(SubProblem * subProblem){
                 subProblem->constraints[nothing_nodes[j]][i] = FORBIDDEN;
                 subProblem->num_forbidden_edges++;
                 problem->num_fixed_edges++;
-                i = 0;
             }
         } else if (num_mandatory_node > 2 || (MAX_VERTEX_NUM - num_forbidden_node < 2)) {
             valid = false;
@@ -224,7 +223,6 @@ bool infer_constraints(SubProblem * subProblem){
                     subProblem->mandatoryEdges[subProblem->num_mandatory_edges].dest = nothing_nodes[j];
                     subProblem->num_mandatory_edges++;
                     problem->num_fixed_edges++;
-                    i = 0;
                 }
             }
         }
@@ -453,7 +451,7 @@ int variable_fixing(SubProblem *currentSubProb){
                     }
                 }
 
-                if (currentSubProb->value + current_edge.weight - max_edge_path >= problem->bestValue){
+                if (currentSubProb->oneTree.cost + current_edge.weight - max_edge_path >= problem->bestValue){
                     currentSubProb->constraints[current_edge.src][current_edge.dest] = FORBIDDEN;
                     currentSubProb->constraints[current_edge.dest][current_edge.src] = FORBIDDEN;
                     currentSubProb->num_forbidden_edges++;
@@ -477,7 +475,7 @@ int variable_fixing(SubProblem *currentSubProb){
 
         if(currentSubProb->constraints[edge_1tree.src][edge_1tree.dest] == NOTHING) {
             if (edge_1tree.src != problem->candidateNodeId && edge_1tree.dest != problem->candidateNodeId) {
-                if (currentSubProb->value + replacement_costs[i] - edge_1tree_weight >= problem->bestValue) {
+                if (currentSubProb->oneTree.cost + replacement_costs[i] - edge_1tree_weight >= problem->bestValue) {
                     currentSubProb->constraints[edge_1tree.src][edge_1tree.dest] = MANDATORY;
                     currentSubProb->constraints[edge_1tree.dest][edge_1tree.src] = MANDATORY;
                     currentSubProb->mandatoryEdges[currentSubProb->num_mandatory_edges].src = edge_1tree.src;
@@ -486,7 +484,7 @@ int variable_fixing(SubProblem *currentSubProb){
                     num_fixed++;
                 }
             } else {
-                if(currentSubProb->value + best_candidate_replacement - edge_1tree_weight >= problem->bestValue){
+                if(currentSubProb->oneTree.cost + best_candidate_replacement - edge_1tree_weight >= problem->bestValue){
                     currentSubProb->constraints[edge_1tree.src][edge_1tree.dest] = MANDATORY;
                     currentSubProb->constraints[edge_1tree.dest][edge_1tree.src] = MANDATORY;
                     currentSubProb->mandatoryEdges[currentSubProb->num_mandatory_edges].src = edge_1tree.src;
@@ -649,7 +647,7 @@ void constrained_prim(Graph * graph, SubProblem * subProblem, unsigned short can
 bool compare_subproblems(const SubProblem *a, const SubProblem *b) {
     if (HYBRID) {
         return (b->value - a->value) > EPSILON ||
-               (fabs(b->value - a->value) < EPSILON && (a->prob - b->prob) >= BETTER_PROB);
+               (fabs(b->value - a->value) <= EPSILON && (a->prob - b->prob) >= BETTER_PROB);
     } else {
         return (b->value - a->value) > EPSILON;
     }
@@ -658,7 +656,7 @@ bool compare_subproblems(const SubProblem *a, const SubProblem *b) {
 
 void bound(SubProblem *currentSubProb) {
 
-    if (compare_subproblems(currentSubProb, &problem->bestSolution) || currentSubProb->treeLevel == 1) {
+    if ((problem->bestSolution.value - currentSubProb->value) > EPSILON || currentSubProb->treeLevel == 1) {
         currentSubProb->timeToReach = ((float) (clock() - problem->start)) / CLOCKS_PER_SEC;
         problem->exploredBBNodes++;
 
@@ -669,7 +667,7 @@ void bound(SubProblem *currentSubProb) {
         int k = 10;
         int max_iter = currentSubProb->treeLevel == 1 ? (int) NUM_HK_INITIAL_ITERATIONS : (int) NUM_HK_ITERATIONS;
         max_iter += k;
-        double best_lower_bound = currentSubProb->value;
+        double best_lower_bound = 0;
         double t_0;
         SubProblemsList generatedSubProblems;
         new_SubProblemList(&generatedSubProblems);
@@ -721,7 +719,7 @@ void bound(SubProblem *currentSubProb) {
                         }
                     }
 
-                    if (!compare_subproblems(&analyzedSubProblem, &problem->bestSolution)) {
+                    if (problem->bestValue - analyzedSubProblem.value <= EPSILON) {
                         analyzedSubProblem.type = CLOSED_BOUND;
                     } else {
                         analyzedSubProblem.num_edges_in_cycle = 0;
@@ -791,7 +789,7 @@ void bound(SubProblem *currentSubProb) {
         }
 
         *currentSubProb = *get_SubProblemList_elem_index(&generatedSubProblems,0);
-        currentSubProb->oneTree.cost = currentSubProb->value;
+        currentSubProb->oneTree.cost = currentSubProb->value; // mi serve valore originale per variabile fixing
         SubProblem best_subproblem = *currentSubProb;
         SubProblemsListIterator *subProblem_iterators = create_SubProblemList_iterator(&generatedSubProblems);
         for (size_t j = 0; j < generatedSubProblems.size; j++) {
@@ -802,8 +800,10 @@ void bound(SubProblem *currentSubProb) {
             }
         }
         currentSubProb->type = best_subproblem.type;
+        currentSubProb->value = best_subproblem.value; // metto valore massimo trovato per migliorare ordinamento
         delete_SubProblemList_iterator(subProblem_iterators);
         delete_SubProblemList(&generatedSubProblems);
+        //printf("\nBest lower bound: %f, Best value: %f\n", best_lower_bound, best_subproblem.value);
 
         if(currentSubProb->type == OPEN) {
             double best_prob_branch = -1;
@@ -818,20 +818,18 @@ void bound(SubProblem *currentSubProb) {
                     if(best_subproblem.oneTree.edges_matrix[current_edge.src][current_edge.dest] != -1){
                         if ((fabs(prob_branch[i] - 0.5) < fabs(best_prob_branch - 0.5)) ||
                             (HYBRID && (fabs(prob_branch[i] - 0.5) == fabs(best_prob_branch - 0.5))
-                             && (problem->graph.edges[i].prob > best_prob))) {
+                             && (current_edge.prob > best_prob))) {
 
                             best_prob_branch = prob_branch[i];
-                            best_prob = problem->graph.edges[i].prob;
+                            best_prob = current_edge.prob;
                             currentSubProb->edge_to_branch = i;
                         }
 
                     }
                 }
             }
+            //printf("\nBest edge to branch: %d, with score %f and prob %f; BEST VALUE: %f\n", currentSubProb->edge_to_branch, best_prob_branch, best_prob, problem->bestValue);
         }
-
-        //printf("\nBest value: %f\n", currentSubProb->value);
-
     } else {
         currentSubProb->type = CLOSED_BOUND;
     }
@@ -1031,7 +1029,6 @@ void branch_and_bound(Problem *current_problem) {
         problem->generatedBBNodes++;
         problem->num_fixed_edges = 0;
 
-
         SubProblem subProblem;
         subProblem.treeLevel = 1;
         subProblem.id = problem->generatedBBNodes;
@@ -1051,9 +1048,7 @@ void branch_and_bound(Problem *current_problem) {
         while (subProblems.size != 0 && !time_limit_reached()) {
             SubProblem current_sub_problem = *get_SubProblemList_elem_index(&subProblems, 0);
             delete_SubProblemList_elem_index(&subProblems, 0);
-            //print_subProblem(&current_sub_problem);
             bound(&current_sub_problem);
-            //print_subProblem(&current_sub_problem);
             if (current_sub_problem.type == OPEN && current_sub_problem.edge_to_branch != -1) {
                 problem->num_fixed_edges += variable_fixing(&current_sub_problem);
                 branch(&subProblems, &current_sub_problem);
@@ -1147,7 +1142,7 @@ void print_problem(void) {
 
     printf("\nMST solved with: %s algorithm\n", PRIM ? "Prim" : "Kruskal");
 
-    printf("\nGHOSH_UB = %lf, SUBPROBLEM_UB = %lf", GHOSH_UB, EPSILON);
+    printf("\nGHOSH_UB = %lf, SUBPROBLEM_UB = %lf\n", GHOSH_UB, EPSILON);
 
     printf("\nB-&-B tree with generated BBNodes = %u,  explored BBNodes = %u and max tree level = %u\n",
            problem->generatedBBNodes, problem->exploredBBNodes, problem->totTreeLevels);

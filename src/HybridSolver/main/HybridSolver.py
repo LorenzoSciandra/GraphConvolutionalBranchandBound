@@ -234,43 +234,6 @@ def cluster_nodes(graph, num_nodes):
     return medoids_str, medoids_indx, len(medoids) + 1
 
 
-def remove_dummy_cities(solution, num_nodes, adj_matrix):
-    """
-    Args:
-        solution: The solution to fix.
-        num_nodes: The number of nodes of the graph instance.
-        adj_matrix: The adjacency matrix of the graph.
-    """
-
-    edges = solution.split(",  ")
-    first_dummy = num_nodes
-    final_tour = "Final cycle with " + str(num_nodes) + " edges of 0 cost: "
-    final_nodes = []
-    final_cost = 0
-    j = 0
-    for edge in edges:
-        src, _ = edge.split(" <-> ")
-        src = int(src)
-        if src < first_dummy:
-            final_nodes.append(src)
-
-    i = 0
-    for node in final_nodes:
-        if i < len(final_nodes) - 1:
-            final_tour += str(node) + " <-> " + str(final_nodes[i + 1]) + ",  "
-            final_cost += adj_matrix[node][final_nodes[i + 1]]
-
-        else:
-            final_tour += str(node) + " <-> " + str(final_nodes[0])
-            final_cost += adj_matrix[node][final_nodes[0]]
-
-        i += 1
-
-    final_tour = final_tour.replace("of 0", "of " + str(final_cost))
-
-    return final_tour
-
-
 def create_temp_file(num_nodes, graph=None, instance=None):
     filepath = "graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
 
@@ -408,7 +371,6 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
     """
 
     model_size = 0
-    rate = 0
     adj_matrix = None
 
     if hyb_mode:
@@ -416,15 +378,10 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
             raise Exception("The number of nodes must be greater than 1.")
         elif num_nodes <= 20:
             model_size = 20
-            rate = 1
         elif num_nodes <= 50:
             model_size = 50
-            rate = num_nodes / model_size
-            model_size = model_size if rate >= 0.7 else 20
         else:
             model_size = 100
-            rate = num_nodes / model_size
-            model_size = model_size if rate >= 0.7 else 50
     else:
         model_size = num_nodes
 
@@ -464,7 +421,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
 
         if hyb_mode:
             adj_matrix = adjacency_matrix(orig_graph)
-            if rate < 0.7:
+            if num_nodes > 100:
                 to_fix = True
                 medoids_indx = fix_instance_size(orig_graph, num_nodes)
             else:
@@ -510,11 +467,7 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
             solution = get_solution(output_file)
             if adj_matrix is None:
                 raise Exception("The original graph is empty.")
-            if num_nodes < model_size:
-                final_tour = remove_dummy_cities(solution, num_nodes, adj_matrix)
-            elif num_nodes > model_size:
-                final_tour = vertex_insertion(solution, medoids_indx, orig_graph, adj_matrix, two_opt)
-
+            final_tour = vertex_insertion(solution, medoids_indx, orig_graph, adj_matrix, two_opt)
             if final_tour is None:
                 raise Exception("The final tour is empty.")
 

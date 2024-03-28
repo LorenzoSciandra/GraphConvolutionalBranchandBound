@@ -34,37 +34,49 @@ def improvement_profile(partial_solutions, other_partial_solutions, hybrid, num_
     times = sorted(list(times))
     points_one = []
     points_two = []
+    i = 0
     for time in times:
         sol_one = {}
         sol_two = {}
-        for key,instance_solutions in partial_solutions.items():
-            best_value_inst = float('inf')
-            for solution in instance_solutions:
+        for key in partial_solutions.keys():
+            best_value_one = float('inf')
+            best_value_two = float('inf')
+            for solution in partial_solutions[key]:
                 if solution[1] <= time:
-                    best_value_inst = solution[0]
+                    best_value_one = solution[0]
                 else:
                     break
-            sol_one[key] = best_value_inst
+            for solution in other_partial_solutions[key]:
+                if solution[1] <= time:
+                    best_value_two = solution[0]
+                else:
+                    break
 
-        for key ,instance_solutions in other_partial_solutions.items():
-            best_value_inst = float('inf')
-            for solution in instance_solutions:
-                if solution[1] <= time:
-                    best_value_inst = solution[0]
-                else:
-                    break
-            sol_two[key] = best_value_inst
+            sol_one[key] = best_value_one
+            sol_two[key] = best_value_two
 
         one_count = 0
         two_count = 0
         for key in sol_one.keys():
-            if sol_two[key] > sol_one[key]:
-                one_count += 1
-            elif sol_one[key] > sol_two[key]:
-                two_count += 1
+            # if the two solutions are contained in the ub range, we consider them equal
+            if not abs(sol_one[key] - sol_two[key]) < ub:
+                if sol_one[key] < sol_two[key]:
+                    one_count += 1
+                else:
+                    two_count += 1
 
         points_one.append(one_count / len(sol_one))
         points_two.append(two_count / len(sol_two))
+
+        if i == len(times)-1:
+            for key in sol_one.keys():
+                if not abs(sol_one[key] - sol_two[key]) < ub:
+                    if sol_one[key] < sol_two[key]:
+                        print("Hybrid better than Classic for instance " + str(key) + " with values " + str(sol_one[key]) + " and " + str(sol_two[key]) + " and difference " + str(sol_two[key] - sol_one[key]))
+                    else:
+                        print("Classic better than Hybrid for instance " + str(key) + " with values " + str(sol_one[key]) + " and " + str(sol_two[key]) + " and difference " + str(sol_one[key] - sol_two[key]))
+
+        i += 1
 
     # plot the performance profile
     plt.plot(times, points_one, label='Hybrid' if hybrid else 'Classic')
@@ -205,12 +217,34 @@ def find_common_instances(partial_solutions, other_partial_solutions):
     return part_sol_com, oth_sol_com
 
 
+def read_two_opt_solutions(num_nodes):
+    filename = "tsp_" + str(num_nodes) + "_nodes_2Opt.txt"
+    partial_solutions = {}
+    lines = []
+    with open(filename, 'r') as result_file:
+        lines = result_file.readlines()
+
+    i = 1
+    for line in lines:
+        solutions = re.findall(r"([0-9]+\.?[0-9]+), ([0-9]+\.?[0-9]+)", line)
+        partial_solutions[i] = [(float(x[0]), float(x[1])) for x in solutions]
+        i += 1
+
+    return partial_solutions
+
+
 def performance_profiles(partial_solutions, path, hybrid, num_nodes, num_instances):
-    other_partial_solutions = read_other_values(path, hybrid)
+
+    if num_nodes <= 100:
+        other_partial_solutions = read_other_values(path, hybrid)
+    else:
+        other_partial_solutions = read_two_opt_solutions(num_nodes)
+
     part_sol_com, oth_sol_com = find_common_instances(partial_solutions, other_partial_solutions)
     improvement_profile(part_sol_com, oth_sol_com, hybrid, num_nodes)
     cumulative_profile(partial_solutions, other_partial_solutions, hybrid, num_nodes, num_instances)
     # rateo_profile(part_sol_com, oth_sol_com, hybrid, num_nodes)
+
 
 
 def analyze(path, num_nodes, hybrid, perf_profile):
@@ -328,6 +362,7 @@ def analyze(path, num_nodes, hybrid, perf_profile):
             resolved_list.append(current_resolved)
 
     num_resolved = sum(resolved_list)
+    sample_num_res = num_resolved -1
     mean_resolved = num_resolved / len(resolved_list)
     mean_closed_nn = num_closed_nn / num_resolved
     mean_closed_nnHybrid = num_closed_nnHybrid / num_resolved
@@ -335,47 +370,47 @@ def analyze(path, num_nodes, hybrid, perf_profile):
     mean_closed_subgradient = num_closed_subgradient / num_resolved
 
     mean_total_time = sum(total_time_list) / num_resolved
-    std_total_time = (sum([(x - mean_total_time) ** 2 for x in total_time_list]) / num_resolved) ** 0.5
+    std_total_time = (sum([(x - mean_total_time) ** 2 for x in total_time_list]) / sample_num_res) ** 0.5
 
     mean_time_bb = sum(time_bb_list) / num_resolved
-    std_time_bb = (sum([(x - mean_time_bb) ** 2 for x in time_bb_list]) / num_resolved) ** 0.5
+    std_time_bb = (sum([(x - mean_time_bb) ** 2 for x in time_bb_list]) / sample_num_res) ** 0.5
 
     mean_total_tree_level = sum(total_tree_level_list) / num_resolved
     std_total_tree_level = (sum([(x - mean_total_tree_level) ** 2 for x in
-                                 total_tree_level_list]) / num_resolved) ** 0.5
+                                 total_tree_level_list]) / sample_num_res) ** 0.5
 
     mean_generate_bbnodes = sum(generate_bbnodes_list) / num_resolved
     std_generate_bbnodes = (sum([(x - mean_generate_bbnodes) ** 2 for x in
-                                 generate_bbnodes_list]) / num_resolved) ** 0.5
+                                 generate_bbnodes_list]) / sample_num_res) ** 0.5
 
     mean_explored_bbnodes = sum(explored_bbnodes_list) / num_resolved
     std_explored_bbnodes = (sum([(x - mean_explored_bbnodes) ** 2 for x in
-                                 explored_bbnodes_list]) / num_resolved) ** 0.5
+                                 explored_bbnodes_list]) / sample_num_res) ** 0.5
 
     mean_time_to_best = sum(time_to_best_list) / num_resolved
-    std_time_to_best = (sum([(x - mean_time_to_best) ** 2 for x in time_to_best_list]) / num_resolved) ** 0.5
+    std_time_to_best = (sum([(x - mean_time_to_best) ** 2 for x in time_to_best_list]) / sample_num_res) ** 0.5
 
     mean_best_level = sum(best_level_list) / num_resolved
-    std_best_level = (sum([(x - mean_best_level) ** 2 for x in best_level_list]) / num_resolved) ** 0.5
+    std_best_level = (sum([(x - mean_best_level) ** 2 for x in best_level_list]) / sample_num_res) ** 0.5
 
     mean_prob_best = sum(prob_best_list) / num_resolved
-    std_prob_best = (sum([(x - mean_prob_best) ** 2 for x in prob_best_list]) / num_resolved) ** 0.5
+    std_prob_best = (sum([(x - mean_prob_best) ** 2 for x in prob_best_list]) / sample_num_res) ** 0.5
 
     mean_bbnodes_before_best = sum(bbnodes_before_best_list) / num_resolved
     std_bbnodes_before_best = (sum([(x - mean_bbnodes_before_best) ** 2 for x in
-                                    bbnodes_before_best_list]) / num_resolved) ** 0.5
+                                    bbnodes_before_best_list]) / sample_num_res) ** 0.5
 
     mean_best_value = sum(best_value_list) / num_resolved
-    std_best_value = (sum([(x - mean_best_value) ** 2 for x in best_value_list]) / num_resolved) ** 0.5
+    std_best_value = (sum([(x - mean_best_value) ** 2 for x in best_value_list]) / sample_num_res) ** 0.5
 
     mean_mandatory_edges = sum(mandatory_edges_list) / num_resolved
-    std_mandatory_edges = (sum([(x - mean_mandatory_edges) ** 2 for x in mandatory_edges_list]) / num_resolved) ** 0.5
+    std_mandatory_edges = (sum([(x - mean_mandatory_edges) ** 2 for x in mandatory_edges_list]) / sample_num_res) ** 0.5
 
     mean_forbidden_edges = sum(forbidden_edges_list) / num_resolved
-    std_forbidden_edges = (sum([(x - mean_forbidden_edges) ** 2 for x in forbidden_edges_list]) / num_resolved) ** 0.5
+    std_forbidden_edges = (sum([(x - mean_forbidden_edges) ** 2 for x in forbidden_edges_list]) / sample_num_res) ** 0.5
 
     mean_fixed_edges = sum(num_fixed_edges_list) / num_resolved
-    std_fixed_edges = (sum([(x - mean_fixed_edges) ** 2 for x in num_fixed_edges_list]) / num_resolved) ** 0.5
+    std_fixed_edges = (sum([(x - mean_fixed_edges) ** 2 for x in num_fixed_edges_list]) / sample_num_res) ** 0.5
 
     if perf_profile:
         performance_profiles(partial_solutions, path, hybrid, num_nodes, len(resolved_list))
@@ -415,7 +450,7 @@ if __name__ == "__main__":
         --path: The path to the directory containing the results files to analyze.
         --num_nodes: The number of nodes in each TSP instance.
         --hybrid If the TSP results are from the hybrid mode.
-        --perf_profile: If the results are from the performance profile.
+        --perf_prof: If the results are from the performance profile.
     """
 
     parser = argparse.ArgumentParser()

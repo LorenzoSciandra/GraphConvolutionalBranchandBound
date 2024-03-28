@@ -129,7 +129,7 @@ def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath, num_n
     # stack the arrays horizontally and convert to string data type
     arr_combined = np.stack((x_edges_values, y_probs), axis=1).astype('U')
 
-    if num_nodes != model_size:
+    if num_nodes < model_size:
         nodes_coord = nodes_coord[:num_nodes*2]
         final_arr = []
         for i in range(num_nodes):
@@ -142,6 +142,9 @@ def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath, num_n
                         final_arr[i * num_nodes + j - num_nodes][1] = arr_combined[i * model_size + j][1]
 
         arr_combined = np.array(final_arr)
+
+    else:
+        num_nodes = model_size
 
     nodes_coord = ";".join([f"({nodes_coord[i]}, {nodes_coord[i + 1]})" for i in range(0, len(nodes_coord), 2)])
     arr_strings = np.array(['({}, {});'.format(x[0], x[1]) for x in arr_combined])
