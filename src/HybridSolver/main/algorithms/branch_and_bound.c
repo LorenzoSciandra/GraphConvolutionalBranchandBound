@@ -647,7 +647,7 @@ void constrained_prim(Graph * graph, SubProblem * subProblem, unsigned short can
 bool compare_subproblems(const SubProblem *a, const SubProblem *b) {
     if (HYBRID) {
         return (b->value - a->value) > EPSILON ||
-               (fabs(b->value - a->value) <= EPSILON && (a->prob - b->prob) >= BETTER_PROB);
+                ( (b->value >= a->value) && (a->prob >= b->prob));
     } else {
         return (b->value - a->value) > EPSILON;
     }
@@ -951,7 +951,7 @@ void nearest_prob_neighbour(unsigned short start_node) {
 bool compare_candidate_node(SubProblem * a, SubProblem * b){
     if (HYBRID) {
         return (a->value - b->value) >= EPSILON ||
-            (fabs(a->value - b->value) < EPSILON && (a->prob - b->prob) >= BETTER_PROB);
+            ((a->value >= b->value) && (a->prob >= b->prob));
     } else {
         return (a->value - b->value) >= EPSILON;
     }
