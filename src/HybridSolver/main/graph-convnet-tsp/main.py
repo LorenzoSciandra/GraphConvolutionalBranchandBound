@@ -8,7 +8,7 @@
     @copyright Copyright (c) 2023, license MIT
     Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
 """
-
+import errno
 import os
 import sys
 import time
@@ -30,6 +30,7 @@ from utils.graph_utils import *
 from utils.google_tsp_reader import GoogleTSPReader
 from utils.plot_utils import *
 from models.gcn_model import ResidualGatedGCNModel
+from sklearn_extra.cluster import KMedoids
 from utils.model_utils import *
 
 
@@ -111,18 +112,10 @@ def compute_prob(net, config, dtypeLong, dtypeFloat):
     return y_probs, x_edges_values, nodes_coord
 
 
-def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath, num_nodes):
-    """
-    This function simply writes the probabilistic adjacency matrix in a file, where each cell
-    is a tuple (distance, probability).
-    Args:
-        y_probs: The probability of the edges being in the optimal tour.
-        x_edges_values: The distance between the nodes.
-        filepath: The path to the file where the adjacency matrix will be written.
-    """
-    # Convert to numpy
+def write_adjacency_matrix(graph, y_probs, x_edges_values, nodes_coord, filepath, num_nodes, kmedoids_labels=None):
+
     model_size = y_probs.shape[1]
-    num_dummies = model_size - num_nodes
+    medoids = [[nodes_coord[i], nodes_coord[i + 1]] for i in range(0, len(nodes_coord), 2)]
     y_probs = y_probs.flatten().numpy()
     x_edges_values = x_edges_values.flatten().numpy()
 
@@ -143,8 +136,31 @@ def write_adjacency_matrix(y_probs, x_edges_values, nodes_coord, filepath, num_n
 
         arr_combined = np.array(final_arr)
 
-    else:
-        num_nodes = model_size
+    elif num_nodes > model_size:
+        nodes_coord = [[nodes_coord[i], nodes_coord[i + 1]] for i in range(0, len(nodes_coord), 2)]
+        arr_combined = arr_combined.flatten()
+        arr_combined = arr_combined.reshape(model_size, model_size, 2).tolist()
+        j = 0
+        for node in graph:
+            if node not in nodes_coord:
+                new_row = []
+                label = kmedoids_labels[j]
+
+                for i in range(len(nodes_coord)):
+                    distance = np.linalg.norm(np.array(node) - np.array(nodes_coord[i]))
+                    prob = arr_combined[label][i][1]
+                    arr_combined[i].append([distance, prob])
+                    new_row.append([distance, prob])
+
+                new_row.append([0.0, 0.0])
+                arr_combined.append(new_row)
+                nodes_coord.append(node)
+
+            j += 1
+
+        arr_combined = np.array(arr_combined).flatten().tolist()
+        arr_combined = [[arr_combined[i], arr_combined[i + 1]] for i in range(0, len(arr_combined), 2)]
+        nodes_coord = np.array(nodes_coord).flatten().tolist()
 
     nodes_coord = ";".join([f"({nodes_coord[i]}, {nodes_coord[i + 1]})" for i in range(0, len(nodes_coord), 2)])
     arr_strings = np.array(['({}, {});'.format(x[0], x[1]) for x in arr_combined])
@@ -213,6 +229,76 @@ def add_dummy_cities(num_nodes, model_size):
         os.fsync(file.fileno())
 
 
+def create_temp_file(num_nodes, str_grap):
+    filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
+
+    with open(filepath, 'w+') as file:
+        file.writelines(str_grap)
+        file.flush()
+        os.fsync(file.fileno())
+
+
+def cluster_nodes(graph, k):
+    """
+    Args:
+        graph: The graph to cluster.
+        k: The number of clusters to create.
+    """
+    graph = np.array(graph)
+    kmedoids = KMedoids(n_clusters=k, method='pam', random_state=42).fit(graph)
+    medoids = kmedoids.cluster_centers_
+    medoids_str = " ".join(f"{x} {y}" for x, y in medoids)
+
+    return medoids_str, kmedoids.labels_
+
+
+def fix_instance_size(graph, num_nodes, model_size=100):
+    """
+    Args:
+        graph: The graph to fix.
+        num_nodes: The number of nodes of the graph instance.
+        model_size: The size of the Graph Convolutional Network to use.
+    """
+
+    new_graph_str = ""
+    end_str = " output "
+
+    print("Need to fix the instance size with clustering")
+    new_graph_str, kmedoids_labels = cluster_nodes(graph, model_size)
+
+    for i in range(1, model_size + 1):
+        end_str += str(i) + " "
+
+    end_str += "1"
+
+    create_temp_file(num_nodes, new_graph_str + end_str)
+    return kmedoids_labels
+
+
+def get_instance(num_nodes):
+    lines = None
+    file_path = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
+
+    with open(file_path, "r") as f:
+        lines = f.readlines()
+
+    if lines is None or len(lines) == 0:
+        raise Exception(
+            "The current instance for the number of nodes " + str(num_nodes) + " does not exist.")
+
+    str_graph = lines[0]
+
+    if "output" in str_graph:
+        str_graph = str_graph.split(" output")[0]
+
+    str_graph = str_graph.replace("\n", "").strip()
+    nodes = str_graph.split(" ")
+    graph = [float(x) for x in nodes]
+    graph = [[graph[i], graph[i + 1]] for i in range(0, len(graph), 2)]
+
+    return graph
+
+
 
 def main(filepath, num_nodes, model_size):
     """
@@ -223,8 +309,14 @@ def main(filepath, num_nodes, model_size):
         model_size: The size of the Graph Convolutional Network to use.
     """
 
+    graph = None
+    kmedoids_labels = None
+
     if num_nodes < model_size:
         add_dummy_cities(num_nodes, model_size)
+    elif num_nodes > model_size:
+        graph = get_instance(num_nodes)
+        kmedoids_labels = fix_instance_size(graph, num_nodes)
 
     config_path = "./logs/tsp" + str(model_size) + "/config.json"
     config = get_config(config_path)
@@ -262,7 +354,7 @@ def main(filepath, num_nodes, model_size):
     net.load_state_dict(checkpoint['model_state_dict'])
     config.batch_size = 1
     probs, edges_value, nodes_coord = compute_prob(net, config, dtypeLong, dtypeFloat)
-    write_adjacency_matrix(probs, edges_value, nodes_coord, filepath, num_nodes)
+    write_adjacency_matrix(graph, probs, edges_value, nodes_coord, filepath, num_nodes, kmedoids_labels)
 
 
 if __name__ == "__main__":
