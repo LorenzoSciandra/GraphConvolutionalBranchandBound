@@ -125,14 +125,13 @@ def build_c_program(build_directory, num_nodes, hyb_mode):
         raise Exception("Build failed")
 
 
-def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
+def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix):
     """
     Args:
         num_instances: The range of instances to run on the Solver.
         num_nodes: The number of nodes in each TSP instance.
         hyb_mode: True if the program is in hybrid mode, False otherwise.
         gen_matrix: True if the adjacency matrix is already generated, False otherwise.
-        two_opt: True if the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering, False otherwise.
     """
 
     model_size = 0
@@ -224,8 +223,6 @@ def hybrid_solver(num_instances, num_nodes, hyb_mode, gen_matrix, two_opt):
             os.remove("graph-convnet-tsp/data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt")
 
         with open(output_file, "a") as f:
-            if two_opt:
-                f.write("\nImproved the tsp tour with 2Opt\n\n")
             f.write("\nNodes: \n" + cities)
             f.write("\nTime taken: " + str(end_time - start_time) + "s\n")
             f.flush()
@@ -238,18 +235,16 @@ if __name__ == "__main__":
         --range_instances: The range of instances to run on the Solver.
         --num_nodes: The number of nodes in each TSP instance.
         --hybrid_mode: If present, the program is in hybrid mode, otherwise it is in classic mode.
-        --two_opt: If present, the 2-opt algorithm will be used to fix the heuristic solution obtained with clustering.
     """
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--range_instances", type=str, default="1-1")
     parser.add_argument("--num_nodes", type=int, default=20)
     parser.add_argument("--hybrid", action="store_true")
-    parser.add_argument("--two_opt", action="store_true")
     opts = parser.parse_args()
 
     pp.pprint(vars(opts))
 
     gen_matrix = opts.hybrid == False
 
-    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid, gen_matrix, opts.two_opt)
+    hybrid_solver(opts.range_instances, opts.num_nodes, opts.hybrid, gen_matrix)

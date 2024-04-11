@@ -315,20 +315,14 @@ def analyze(path, num_nodes, hybrid, perf_profile):
             resolved_list.append(current_resolved)
             solutions = []
             time_overhead = time_taken - elapsed_time
-            if num_nodes <= 100:
 
                 # match all the "Updated best value: 5.889294, at time: 0.197784" lines
-                for match in re.finditer(r"Updated best value: ([0-9]+\.?[0-9]+), at time: ([0-9]+\.?[0-9]+)",
+            for match in re.finditer(r"Updated best value: ([0-9]+\.?[0-9]+), at time: ([0-9]+\.?[0-9]+)",
                                          text):
-                    solutions.append((float(match.group(1)), time_overhead + float(match.group(2))))
+                solutions.append((float(match.group(1)), time_overhead + float(match.group(2))))
 
-                if len(solutions) == 0:
-                    solutions.append((cost, time_overhead + time_to_obtain))
-
-            else:
-                heur_sol = re.search(r"Final cycle with " + str(num_nodes) + " edges of ([0-9]+\.?[0-9]+) cost:",
-                                     text).group(1)
-                solutions.append((float(heur_sol), time_taken))
+            if len(solutions) == 0:
+                solutions.append((cost, time_overhead + time_to_obtain))
 
             filename = re.search(r"(.+?)\.txt", file).group(1)
             inst_id = int(filename.split('result_')[1])
