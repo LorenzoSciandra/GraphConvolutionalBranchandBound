@@ -148,7 +148,7 @@ def write_adjacency_matrix(graph, y_probs, x_edges_values, nodes_coord, filepath
 
                 for i in range(len(nodes_coord)):
                     distance = np.linalg.norm(np.array(node) - np.array(nodes_coord[i]))
-                    prob = arr_combined[label][i][1]
+                    prob = 0.0 #arr_combined[label][i][1]
                     arr_combined[i].append([distance, prob])
                     new_row.append([distance, prob])
 

@@ -146,14 +146,10 @@ def read_two_opt_solutions(num_nodes):
     return partial_solutions
 
 
-def performance_profiles(hyb_partial_solutions, cla_partial_solutions, num_nodes):
+def performance_profiles(hyb_partial_solutions, cla_partial_solutions, num_nodes, output_path):
 
-    profiles_path = 'performance_profiles/' + str(num_nodes) + '_nodes/'
-    if not os.path.exists(profiles_path):
-        os.makedirs(profiles_path)
-
-    improvement_profile(hyb_partial_solutions, cla_partial_solutions, num_nodes, profiles_path)
-    cumulative_profile(hyb_partial_solutions, cla_partial_solutions, num_nodes, profiles_path)
+    improvement_profile(hyb_partial_solutions, cla_partial_solutions, num_nodes, output_path)
+    cumulative_profile(hyb_partial_solutions, cla_partial_solutions, num_nodes, output_path)
 
 
 def read_values(path):
@@ -278,17 +274,18 @@ def conduct_tt_test(stats_hyb, stats_cla):
     stats_hyb = np.array([stats_hyb[id] for id in same_ids])
     stats_cla = np.array([stats_cla[id] for id in same_ids])
     t_stat, p_val = stats.ttest_rel(stats_hyb, stats_cla)
+    same_inst_stats = {"hyb_mean": np.mean(stats_hyb), "cla_mean": np.mean(stats_cla), "hyb_std": np.std(stats_hyb),
+                       "cla_std": np.std(stats_cla), "t_stat": t_stat, "p_val": p_val}
 
-    return p_val < 0.05
+    return same_inst_stats
 
 
-def analyze(num_nodes, hybrid, perf_profile):
+def analyze(num_nodes, perf_profile):
     """
     Cycle through all the files in the directory, and extract the metrics from each one.
     Then compute the mean of each metric, and write it in a new file.
     Args:
         num_nodes: The number of nodes in each TSP instance.
-        hybrid: If the TSP results are from the hybrid mode.
         perf_profile: If the results are from the performance profile.
     """
 
@@ -297,9 +294,11 @@ def analyze(num_nodes, hybrid, perf_profile):
     all_stats_hyb = read_values(hyb_path)
     all_stats_cla = read_values(cla_path)
 
-    output_filename = "mean_results_" + str(num_nodes) + "_nodes.txt"
+    output_path = "mean_results/" + str(num_nodes) + "_nodes/"
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
 
-    columns = {"Hybrid Mean": [], "Hybrid Std": [], "Classic Mean": [], "Classic Std": [], "Paired t-test": []}
+    columns = {"Hybrid Mean": [], "Hybrid Std": [], "Classic Mean": [], "Classic Std": [], "P-val for paired t-test": []}
     df = pd.DataFrame(columns)
 
     df.loc[len(df.index)] = [all_stats_hyb["resolved"], 0, all_stats_cla["resolved"], 0, "-"]
@@ -322,18 +321,13 @@ def analyze(num_nodes, hybrid, perf_profile):
         hyb = all_stats_hyb[key]
         cla = all_stats_cla[key]
 
-        hyb_val = np.array(list(hyb.values()))
-        cla_val = np.array(list(cla.values()))
+        same_inst_stats = conduct_tt_test(hyb, cla)
 
-        hyb_mean = np.mean(hyb_val)
-        hyb_std = np.std(hyb_val)
-        cla_mean = np.mean(cla_val)
-        cla_std = np.std(cla_val)
-        t_test = conduct_tt_test(hyb, cla)
-
-        df.loc[len(df.index)] = [hyb_mean, hyb_std, cla_mean, cla_std, t_test]
+        df.loc[len(df.index)] = [same_inst_stats["hyb_mean"], same_inst_stats["hyb_std"], same_inst_stats["cla_mean"],
+                                 same_inst_stats["cla_std"], same_inst_stats["p_val"]]
         df = df.rename(index={len(df.index) - 1: key})
 
+    output_filename = output_path + "mean_results.txt"
     with open(output_filename, 'w') as f:
         f.write(df.to_string())
         f.write("\n\n")
@@ -342,21 +336,20 @@ def analyze(num_nodes, hybrid, perf_profile):
         f.write("Not resolved " + str(len(all_stats_cla["not_resolved"])) + " instances for classic: " + str(all_stats_cla["not_resolved"]))
 
     if perf_profile:
-        performance_profiles(all_stats_hyb["partial_solutions"], all_stats_cla["partial_solutions"], num_nodes)
+        performance_profiles(all_stats_hyb["partial_solutions"], all_stats_cla["partial_solutions"], num_nodes, output_path)
+
 
 if __name__ == "__main__":
     """
     Args:
         --num_nodes: The number of nodes in each TSP instance.
-        --hybrid If the TSP results are from the hybrid mode.
         --perf_prof: If the results are from the performance profile.
     """
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--num_nodes", type=int, default=20)
-    parser.add_argument("--hybrid", action="store_true")
     parser.add_argument("--perf_prof", action="store_true")
     opts = parser.parse_args()
 
     pp.pprint(vars(opts))
-    analyze(opts.num_nodes, opts.hybrid, opts.perf_prof)
+    analyze(opts.num_nodes, opts.perf_prof)
