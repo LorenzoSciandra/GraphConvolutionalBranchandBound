@@ -647,7 +647,7 @@ void constrained_prim(Graph * graph, SubProblem * subProblem, unsigned short can
 bool compare_subproblems(const SubProblem *a, const SubProblem *b) {
     if (HYBRID) {
         return (b->value - a->value) > EPSILON ||
-                ( (b->value >= a->value) && (a->prob >= b->prob));
+                ( (b->value > a->value) && (a->prob - b->prob) >= BETTER_PROB);
     } else {
         return (b->value - a->value) > EPSILON;
     }
@@ -950,8 +950,8 @@ void nearest_prob_neighbour(unsigned short start_node) {
 // "a" is better than "b" if its LB is higher
 bool compare_candidate_node(SubProblem * a, SubProblem * b){
     if (HYBRID) {
-        return (a->value - b->value) >= EPSILON ||
-            ((a->value >= b->value) && (a->prob >= b->prob));
+        return (a->value - b->value) > EPSILON ||
+            ((a->value > b->value) && (a->prob - b->prob) >= BETTER_PROB);
     } else {
         return (a->value - b->value) >= EPSILON;
     }

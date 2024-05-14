@@ -17,6 +17,7 @@ import pprint as pp
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
+from scipy.stats import wilcoxon
 import pandas as pd
 
 
@@ -76,9 +77,12 @@ def improvement_profile(hyb_solutions, cla_solutions, num_nodes, profiles_path):
     plt.xlabel('Time (s)')
     plt.ylabel('Proportion of instances with a better solution')
     plt.legend()
-    # store the plot in a file
+
     plt.savefig(profiles_path + '/performance_profile.pdf', format='pdf')
     plt.close()
+
+    data_frame = pd.DataFrame({'Time': times, 'Hybrid': points_one, 'Classic': points_two})
+    data_frame.to_csv(profiles_path + '/performance_profile.csv', index=False)
 
 
 def cumulative_profile(hyb_solutions, cla_solutions, num_nodes, profiles_path):
@@ -86,6 +90,7 @@ def cumulative_profile(hyb_solutions, cla_solutions, num_nodes, profiles_path):
     same_ids = set(hyb_solutions.keys()).intersection(set(cla_solutions.keys()))
     hyb_solutions = {key: value for key, value in hyb_solutions.items() if key in same_ids}
     cla_solutions = {key: value for key, value in cla_solutions.items() if key in same_ids}
+
     num_instances = len(same_ids)
 
     times = set()
@@ -128,6 +133,8 @@ def cumulative_profile(hyb_solutions, cla_solutions, num_nodes, profiles_path):
     plt.legend()
     plt.savefig(profiles_path + '/cumulative_profile.pdf', format='pdf')
     plt.close()
+    data_frame = pd.DataFrame({'Time': times, 'Hybrid': points_one, 'Classic': points_two})
+    data_frame.to_csv(profiles_path + '/cumulative_profile.csv', index=False)
 
 
 def read_two_opt_solutions(num_nodes):
@@ -252,30 +259,36 @@ def read_values(path):
     all_stats["num_closed_nnHybrid"] = str(round((num_closed_nnHybrid / resolved) * 100, 2)) + "%"
     all_stats["num_closed_1Tree"] = str(round((num_closed_1Tree / resolved) * 100, 2)) + "%"
     all_stats["num_closed_subgradient"] = str(round((num_closed_subgradient / resolved) * 100, 2)) + "%"
-    all_stats["total_time"] = total_time
-    all_stats["time_bb"] = time_bb
-    all_stats["time_to_best"] = time_to_best
-    all_stats["generate_bbnodes"] = generate_bbnodes
-    all_stats["explored_bbnodes"] = explored_bbnodes
-    all_stats["bbnodes_before_best"] = bbnodes_before_best
-    all_stats["total_tree_level"] = total_tree_level
-    all_stats["best_level"] = best_level
-    all_stats["prob_best"] = prob_best
-    all_stats["best_value"] = best_value
-    all_stats["partial_solutions"] = partial_solutions
+
+    all_stats["total_time"] = dict(sorted(total_time.items()))
+    all_stats["time_bb"] = dict(sorted(time_bb.items()))
+    all_stats["time_to_best"] = dict(sorted(time_to_best.items()))
+    all_stats["generate_bbnodes"] = dict(sorted(generate_bbnodes.items()))
+    all_stats["explored_bbnodes"] = dict(sorted(explored_bbnodes.items()))
+    all_stats["bbnodes_before_best"] = dict(sorted(bbnodes_before_best.items()))
+    all_stats["total_tree_level"] = dict(sorted(total_tree_level.items()))
+    all_stats["best_level"] = dict(sorted(best_level.items()))
+    all_stats["prob_best"] = dict(sorted(prob_best.items()))
+    all_stats["best_value"] = dict(sorted(best_value.items()))
+    all_stats["partial_solutions"] = dict(sorted(partial_solutions.items()))
     all_stats["not_resolved"] = sorted(not_resolved_list)
 
     return all_stats
 
 
-def conduct_tt_test(stats_hyb, stats_cla):
+def significance_test(stats_hyb, stats_cla):
 
     same_ids = set(stats_hyb.keys()).intersection(set(stats_cla.keys()))
-    stats_hyb = np.array([stats_hyb[id] for id in same_ids])
-    stats_cla = np.array([stats_cla[id] for id in same_ids])
-    t_stat, p_val = stats.ttest_rel(stats_hyb, stats_cla)
-    same_inst_stats = {"hyb_mean": np.mean(stats_hyb), "cla_mean": np.mean(stats_cla), "hyb_std": np.std(stats_hyb),
-                       "cla_std": np.std(stats_cla), "t_stat": t_stat, "p_val": p_val}
+    values_hyb = []
+    values_cla = []
+    for id in same_ids:
+        values_hyb.append(stats_hyb[id])
+        values_cla.append(stats_cla[id])
+    values_hyb = np.array(values_hyb)
+    values_cla = np.array(values_cla)
+    t_stat, p_val = wilcoxon(values_hyb, values_cla)
+    same_inst_stats = {"hyb_mean": np.mean(values_hyb), "cla_mean": np.mean(values_cla), "hyb_std": np.std(values_hyb),
+                       "cla_std": np.std(values_cla), "t_stat": t_stat, "p_val": p_val}
 
     return same_inst_stats
 
@@ -298,7 +311,7 @@ def analyze(num_nodes, perf_profile):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    columns = {"Hybrid Mean": [], "Hybrid Std": [], "Classic Mean": [], "Classic Std": [], "P-val for paired t-test": []}
+    columns = {"Hybrid Mean": [], "Hybrid Std": [], "Classic Mean": [], "Classic Std": [], "P-val for Wilcoxon signed-rank test": []}
     df = pd.DataFrame(columns)
 
     df.loc[len(df.index)] = [all_stats_hyb["resolved"], 0, all_stats_cla["resolved"], 0, "-"]
@@ -321,19 +334,44 @@ def analyze(num_nodes, perf_profile):
         hyb = all_stats_hyb[key]
         cla = all_stats_cla[key]
 
-        same_inst_stats = conduct_tt_test(hyb, cla)
+        same_inst_stats = significance_test(hyb, cla)
+        #print(same_inst_stats)
 
         df.loc[len(df.index)] = [same_inst_stats["hyb_mean"], same_inst_stats["hyb_std"], same_inst_stats["cla_mean"],
                                  same_inst_stats["cla_std"], same_inst_stats["p_val"]]
         df = df.rename(index={len(df.index) - 1: key})
 
     output_filename = output_path + "mean_results.txt"
+
+    columns_curve = ["H_mean_generated", "H_mean_+_std", "H_mean_-_std", "C_mean_generated", "C_mean_+_std", "C_mean_-_std"]
+    curve_pts = pd.DataFrame(columns=columns_curve)
+    curve_pts.loc[len(curve_pts.index)] = [np.log10(np.mean(list(all_stats_hyb["generate_bbnodes"].values()))),
+                                            np.log10(np.mean(list(all_stats_hyb["generate_bbnodes"].values())) + np.std(list(all_stats_hyb["generate_bbnodes"].values()))),
+                                            np.log10(1 if np.mean(list(all_stats_hyb["generate_bbnodes"].values())) - np.std(list(all_stats_hyb["generate_bbnodes"].values())) < 0
+                                                     else np.mean(list(all_stats_hyb["generate_bbnodes"].values())) - np.std(list(all_stats_hyb["generate_bbnodes"].values()))),
+                                            np.log10(np.mean(list(all_stats_cla["generate_bbnodes"].values()))),
+                                            np.log10(np.mean(list(all_stats_cla["generate_bbnodes"].values())) + np.std(list(all_stats_cla["generate_bbnodes"].values()))),
+                                            np.log10(1 if np.mean(list(all_stats_cla["generate_bbnodes"].values())) - np.std(list(all_stats_cla["generate_bbnodes"].values())) < 0
+                                                     else np.mean(list(all_stats_cla["generate_bbnodes"].values())) - np.std(list(all_stats_cla["generate_bbnodes"].values())))]
+
+    curve_pts = curve_pts.rename(index={len(curve_pts.index) - 1: "Log values"})
+    curve_pts.loc[len(curve_pts.index)] = [np.mean(list(all_stats_hyb["generate_bbnodes"].values())),
+                                           np.mean(list(all_stats_hyb["generate_bbnodes"].values())) + np.std(list(all_stats_hyb["generate_bbnodes"].values())),
+                                           np.mean(list(all_stats_hyb["generate_bbnodes"].values())) - np.std(list(all_stats_hyb["generate_bbnodes"].values())),
+                                           np.mean(list(all_stats_cla["generate_bbnodes"].values())),
+                                           np.mean(list(all_stats_cla["generate_bbnodes"].values())) + np.std(list(all_stats_cla["generate_bbnodes"].values())),
+                                           np.mean(list(all_stats_cla["generate_bbnodes"].values())) - np.std(list(all_stats_cla["generate_bbnodes"].values()))]
+
+    curve_pts = curve_pts.rename(index={len(curve_pts.index) - 1: "Original values"})
+
     with open(output_filename, 'w') as f:
         f.write(df.to_string())
         f.write("\n\n")
         f.write("Not resolved " + str(len(all_stats_hyb["not_resolved"])) + " instances for hybrid: " + str(all_stats_hyb["not_resolved"]))
         f.write("\n\n")
         f.write("Not resolved " + str(len(all_stats_cla["not_resolved"])) + " instances for classic: " + str(all_stats_cla["not_resolved"]))
+        f.write("\n\n")
+        f.write(curve_pts.to_string())
 
     if perf_profile:
         performance_profiles(all_stats_hyb["partial_solutions"], all_stats_cla["partial_solutions"], num_nodes, output_path)

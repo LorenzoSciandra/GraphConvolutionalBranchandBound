@@ -79,7 +79,7 @@
  * the one that has a greater probability than the other of at least BETTER_PROB is considered better.
  * @see branch_and_bound.c::compare_subproblems()
  */
-#define BETTER_PROB 0.1f
+#define BETTER_PROB 0.05f
 
 
 //! The way with generate the children of a SubProblem.

@@ -1,0 +1,24 @@
+                     Hybrid Mean   Hybrid Std Classic Mean  Classic Std P-val for Wilcoxon signed-rank test
+Resolved Instances         99.3%     0.000000        99.2%     0.000000                                   -
+Closed NN                   0.0%     0.000000         0.0%     0.000000                                   -
+Closed NN Hybrid           4.43%     0.000000         0.0%     0.000000                                   -
+Closed 1Tree                0.0%     0.000000         0.0%     0.000000                                   -
+Closed Subgradient        95.57%     0.000000       100.0%     0.000000                                   -
+total_time             16.286045    42.114670    14.610851    41.084791                                 0.0
+time_bb                13.881732    41.997446    14.514768    40.975797                            0.021049
+time_to_best            7.330475    23.221152     8.409235    25.605901                            0.155151
+generate_bbnodes     2619.970737  7628.741801  2790.408678  7638.386591                            0.001913
+explored_bbnodes     2190.021191  6644.005884  2264.985873  6465.144485                            0.103383
+bbnodes_before_best  1278.100908  4310.945135  1455.345106  4480.959057                            0.160019
+total_tree_level        13.42886     6.589042    13.572149     6.661227                            0.002891
+best_level              8.572149     4.229848     8.858729     4.140838                             0.00196
+prob_best               0.850688     0.053939          0.0     0.000000                                 0.0
+best_value              6.813928     0.237111     6.813815     0.236930                            0.474202
+
+Not resolved 7 instances for hybrid: [90, 350, 377, 591, 879, 902, 943]
+
+Not resolved 8 instances for classic: [90, 350, 440, 591, 879, 902, 943, 999]
+
+                 H_mean_generated  H_mean_+_std  H_mean_-_std  C_mean_generated  C_mean_+_std  C_mean_-_std
+Log values               3.442371      4.051785      0.000000          3.448162      4.019438      0.000000
+Original values       2769.304129  11266.395844  -5727.787586       2806.477823  10457.754036  -4844.798391

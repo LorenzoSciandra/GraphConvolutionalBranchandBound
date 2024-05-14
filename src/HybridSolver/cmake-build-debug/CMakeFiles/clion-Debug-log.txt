@@ -1,0 +1,5 @@
+/home/lorenzosciandra/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/lorenzosciandra/.local/share/JetBrains/Toolbox/apps/clion/bin/ninja/linux/x64/ninja -G Ninja -S /home/lorenzosciandra/Documenti/Code/GithubProjects/GraphConvolutionalBranchandBound/src/HybridSolver -B /home/lorenzosciandra/Documenti/Code/GithubProjects/GraphConvolutionalBranchandBound/src/HybridSolver/cmake-build-debug
+Using Clang compiler with optimization flags.
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/lorenzosciandra/Documenti/Code/GithubProjects/GraphConvolutionalBranchandBound/src/HybridSolver/cmake-build-debug

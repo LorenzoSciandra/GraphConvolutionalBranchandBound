@@ -1,0 +1,54 @@
+MEAN RESULTS for 956 instances
+Percentage of resolved instances: 95.6%
+	of which NN = 0.0%		NN Hybrid = 48.11715481171548%		1Tree = 0.0%		Subgradient = 51.88284518828452%
+
+
+- - - - - - - - - - - - - - - - - - - - TOTAL TIME - - - - - - - - - - - - - - - - - - - -
+
+Mean value: 47.96341475906731 +- 90.3695260491774s
+
+
+- - - - - - - - - - - - - - - - - - - - BRANCH & BOUND TIME - - - - - - - - - - - - - - - - - - - -
+
+Mean value: 45.4845639445607 +- 90.14433939339732s
+
+
+- - - - - - - - - - - - - - - - - - - - TIME TO BEST - - - - - - - - - - - - - - - - - - - -
+
+Mean value: 19.73830484518825 +- 51.73586936815743s
+
+
+
+- - - - - - - - - - TOTAL TREE LEVEL - - - - - - - - - -
+
+Mean value: 15.609832635983263 +- 6.8958950968398325
+
+
+- - - - - - - - - - GENERATED BRANCH & BOUND Nodes - - - - - - - - - -
+
+Mean value: 3766.807531380753 +- 7380.245166019962
+
+
+- - - - - - - - - - EXPLORED BRANCH & BOUND Nodes - - - - - - - - - -
+
+Mean value: 3177.894351464435 +- 6410.760420164127
+
+
+- - - - - - - - - - BRANCH & BOUND NODES BEFORE BEST - - - - - - - - - -
+
+Mean value: 1624.9006276150628 +- 4442.577557040988
+
+
+- - - - - - - - - - BEST LEVEL - - - - - - - - - -
+
+Mean value: 6.4738493723849375 +- 6.7720047558229925
+
+
+- - - - - - - - - - PROBABILITY OF BEST - - - - - - - - - -
+
+Mean value: 0.9914977217573209 +- 0.0111494767341348
+
+
+- - - - - - - - - - BEST VALUE - - - - - - - - - -
+
+Mean value: 7.757525225941419 +- 0.22544474571383574

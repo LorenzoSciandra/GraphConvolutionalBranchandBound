@@ -1,0 +1,24 @@
+                    Hybrid Mean  Hybrid Std Classic Mean  Classic Std P-val for Wilcoxon signed-rank test
+Resolved Instances       100.0%    0.000000       100.0%     0.000000                                   -
+Closed NN                  0.2%    0.000000         0.4%     0.000000                                   -
+Closed NN Hybrid          16.1%    0.000000         0.0%     0.000000                                   -
+Closed 1Tree               0.0%    0.000000         0.0%     0.000000                                   -
+Closed Subgradient        83.7%    0.000000        99.6%     0.000000                                   -
+total_time             1.795651    0.148138     0.077641     0.155043                                 0.0
+time_bb                0.056189    0.147312     0.058673     0.154509                            0.001807
+time_to_best           0.029546    0.077161     0.032876     0.089855                            0.030037
+generate_bbnodes          83.72  224.490752       88.022   234.061905                            0.078481
+explored_bbnodes         70.335  198.420414       73.718   207.330968                            0.316036
+bbnodes_before_best       40.03  107.127462       44.753   136.447865                            0.040146
+total_tree_level          5.819    4.926686        5.855     4.894484                              0.3116
+best_level                3.458    2.989354        3.805     2.792664                                 0.0
+prob_best              0.671642    0.091539          0.0     0.000000                                 0.0
+best_value             4.882733    0.274304     4.882709     0.274391                            0.670675
+
+Not resolved 0 instances for hybrid: []
+
+Not resolved 0 instances for classic: []
+
+                 H_mean_generated  H_mean_+_std  H_mean_-_std  C_mean_generated  C_mean_+_std  C_mean_-_std
+Log values               1.922829      2.488848      0.000000          1.944591      2.507969      0.000000
+Original values         83.720000    308.210752   -140.770752         88.022000    322.083905   -146.039905
