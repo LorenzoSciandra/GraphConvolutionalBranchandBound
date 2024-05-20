@@ -286,9 +286,12 @@ def significance_test(stats_hyb, stats_cla):
         values_cla.append(stats_cla[id])
     values_hyb = np.array(values_hyb)
     values_cla = np.array(values_cla)
-    t_stat, p_val = wilcoxon(values_hyb, values_cla)
-    same_inst_stats = {"hyb_mean": np.mean(values_hyb), "cla_mean": np.mean(values_cla), "hyb_std": np.std(values_hyb),
-                       "cla_std": np.std(values_cla), "t_stat": t_stat, "p_val": p_val}
+    _, p_val = wilcoxon(values_hyb, values_cla)
+    same_inst_stats = {"hyb_mean": np.mean(values_hyb),
+                       "cla_mean": np.mean(values_cla),
+                       "hyb_conf_int": np.std(values_hyb) * 1.96 / np.sqrt(len(values_hyb)),
+                       "cla_conf_int": np.std(values_cla) * 1.96 / np.sqrt(len(values_cla)),
+                       "p_val": p_val}
 
     return same_inst_stats
 
@@ -311,7 +314,7 @@ def analyze(num_nodes, perf_profile):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    columns = {"Hybrid Mean": [], "Hybrid Std": [], "Classic Mean": [], "Classic Std": [], "P-val for Wilcoxon signed-rank test": []}
+    columns = {"Hybrid Mean": [], "Hybrid Int": [], "Classic Mean": [], "Classic Int": [], "P-val for Wilcoxon signed-rank test": []}
     df = pd.DataFrame(columns)
 
     df.loc[len(df.index)] = [all_stats_hyb["resolved"], 0, all_stats_cla["resolved"], 0, "-"]
@@ -337,8 +340,8 @@ def analyze(num_nodes, perf_profile):
         same_inst_stats = significance_test(hyb, cla)
         #print(same_inst_stats)
 
-        df.loc[len(df.index)] = [same_inst_stats["hyb_mean"], same_inst_stats["hyb_std"], same_inst_stats["cla_mean"],
-                                 same_inst_stats["cla_std"], same_inst_stats["p_val"]]
+        df.loc[len(df.index)] = [same_inst_stats["hyb_mean"], same_inst_stats["hyb_conf_int"], same_inst_stats["cla_mean"],
+                                 same_inst_stats["cla_conf_int"], same_inst_stats["p_val"]]
         df = df.rename(index={len(df.index) - 1: key})
 
     output_filename = output_path + "mean_results.txt"
@@ -377,17 +380,164 @@ def analyze(num_nodes, perf_profile):
         performance_profiles(all_stats_hyb["partial_solutions"], all_stats_cla["partial_solutions"], num_nodes, output_path)
 
 
+def modify_string(old_tab, line, name, j):
+
+    hyb_m = round(float(line.split()[1]), 2)
+    hyb_std = round(float(line.split()[2]), 2)
+    cla_m = round(float(line.split()[3]), 2)
+    cla_std = round(float(line.split()[4]), 2)
+    p_val = round(float(line.split()[5]), 2)
+    #print(hyb_m, cla_m, name)
+    if hyb_m < cla_m:
+        old_tab = old_tab.replace("std_" + name + "_" + str(j), "\stdf{" + str(cla_std) + "}")
+        old_tab = old_tab.replace(name + "_" + str(j),  str(cla_m))
+        old_tab = old_tab.replace("std_" + name + "_" + str(j + 1), "\stdf{" + str(hyb_std) + "}")
+        if p_val < 0.05:
+            old_tab = old_tab.replace(name + "_" + str(j + 1),  "\\textbf{" + str(hyb_m) + "}$^\star$")
+        else:
+            old_tab = old_tab.replace(name + "_" + str(j + 1),  "\\textbf{" + str(hyb_m) + "}")
+    elif hyb_m > cla_m:
+        old_tab = old_tab.replace("std_" + name + "_" + str(j), "\stdf{" + str(cla_std) + "}")
+        if p_val < 0.05:
+            old_tab = old_tab.replace(name + "_" + str(j),  "\\textbf{" + str(cla_m) + "}$^\star$")
+        else:
+            old_tab = old_tab.replace(name + "_" + str(j),  "\textbf{" + str(cla_m) + "}")
+
+        old_tab = old_tab.replace("std_" + name + "_" + str(j + 1), "\stdf{" + str(hyb_std) + "}")
+        old_tab = old_tab.replace(name + "_" + str(j + 1),  str(hyb_m))
+    else:
+        old_tab = old_tab.replace("std_" + name + "_" + str(j), "\stdf{" + str(cla_std) + "}")
+        old_tab = old_tab.replace(name + "_" + str(j),  str(cla_m))
+        old_tab = old_tab.replace("std_" + name + "_" + str(j + 1), "\stdf{" + str(hyb_std) + "}")
+        old_tab = old_tab.replace(name + "_" + str(j + 1),  str(hyb_m))
+
+    return old_tab
+
+
+def create_tables():
+
+    tab_template = """
+    \\begin{tabular}{lr@{}l r@{}lr@{}l r@{}l r@{}l r@{}l}
+            \\toprule
+            & \multicolumn{4}{c}{$n=numn_1$} & \multicolumn{4}{c}{$n=numn_2$} & \multicolumn{4}{c}{$n=numn_3$}\\\\
+            & \multicolumn{2}{c}{BB} & \multicolumn{2}{c}{GCBB} & \multicolumn{2}{c}{BB} & \multicolumn{2}{c}{GCBB} & \multicolumn{2}{c}{BB} & \multicolumn{2}{c}{GCBB} \\\\
+            \midrule
+            Instances solved & perc_1 && perc_2 && perc_3 && perc_4 && perc_5 && perc_6 &\\\\
+            $\qquad$ with NN & perc_nn_1 && perc_nn_2 && perc_nn_3 && perc_nn_4 && perc_nn_5 && perc_nn_6 &\\\\
+            $\qquad$ with PNN & - && perc_pnn_1 && -&& perc_pnn_2 &&-&& perc_pnn_3 &\\\\
+            Total time (s) & ttime_1 & std_ttime_1 & ttime_2 & std_ttime_2 & ttime_3 & std_ttime_3 & ttime_4 & std_ttime_4 & ttime_5 & std_ttime_5 & ttime_6 & std_ttime_6\\\\
+            BB time (s) & bbtime_1 & std_bbtime_1 &  bbtime_2 & std_bbtime_2 & bbtime_3 & std_bbtime_3 & bbtime_4 & std_bbtime_4 & bbtime_5 & std_bbtime_5 & bbtime_6 & std_bbtime_6\\\\
+            Time to Best (s) & timetb_1 &std_timetb_1 & timetb_2 & std_timetb_2 & timetb_3 & std_timetb_3 & timetb_4 & std_timetb_4 & timetb_5 & std_timetb_5 & timetb_6 & std_timetb_6\\\\
+            BB tree depth  & tdep_1 &  std_tdep_1 &  tdep_2 &  std_tdep_2 & tdep_3 & std_tdep_3 &  tdep_4 &  std_tdep_4 & tdep_5 &  std_tdep_5 &  tdep_6 & std_tdep_6\\\\
+            Depth of the best & bdep_1 & std_bdep_1 & bdep_2 & std_bdep_2 & bdep_3 & std_bdep_3 & bdep_4 & std_bdep_4 & bdep_5 & std_bdep_5 & bdep_6 & std_bdep_6\\\\
+            Generated BB nodes  & gbbn_1 &  std_gbbn_1 & gbbn_2 & std_gbbn_2 &  gbbn_3 & std_gbbn_3 & gbbn_4 & std_gbbn_4 &  gbbn_5 & std_gbbn_5 &  gbbn_6 & std_gbbn_6\\\\
+            Explored BB nodes & ebbn_1 & std_ebbn_1 & ebbn_2 & std_ebbn_2 & ebbn_3 & std_ebbn_3 & ebbn_4 & std_ebbn_4 & ebbn_5 & std_ebbn_5 & ebbn_6 & std_ebbn_6\\\\
+            BB nodes before best & bbnbb_1 & std_bbnbb_1 & bbnbb_2 & std_bbnbb_2& bbnbb_3 & std_bbnbb_3 & bbnbb_4 & std_bbnbb_4 & bbnbb_5 & std_bbnbb_5 & bbnbb_6 & std_bbnbb_6\\\\
+            $\\frac{O_{T^\star}}{n}$ &-&& os_1 & std_os_1 &-&   & os_2 & std_os_2 &-&& os_3 & std_os_3\\\\
+            \\bottomrule
+        \end{tabular}
+    """
+
+    exact_tab = tab_template
+    heur_tab = tab_template
+    output_path = "mean_results/"
+    exact_n = [20, 50, 100]
+    heur_n = [35, 75, 150]
+
+    for k in range(0,2):
+
+        table = exact_tab if k == 0 else heur_tab
+        inst = exact_n if k == 0 else heur_n
+
+        j = 1
+        for i in inst:
+            filename = output_path + str(i) + "_nodes/mean_results.txt"
+
+            with open (filename, 'r') as f:
+                lines = f.readlines()
+
+            table = table.replace("numn_" + str(j), str(i))
+
+            for line in lines:
+                perc_id = 1 + (j - 1) * 2
+                if "Resolved Instances" in line:
+                    hyb_perc_res = line.split()[2].replace("%", "\%")
+                    cla_perc_res = line.split()[4].replace("%", "\%")
+                    table = table.replace("perc_" + str(perc_id), cla_perc_res)
+                    table = table.replace("perc_" + str(perc_id + 1), hyb_perc_res)
+
+                if "Closed NN" in line:
+                    hyb_perc_nn = line.split()[2].replace("%", "\%")
+                    cla_perc_nn = line.split()[4].replace("%", "\%")
+                    table = table.replace("perc_nn_" + str(perc_id), cla_perc_nn)
+                    table = table.replace("perc_nn_" + str(perc_id + 1), hyb_perc_nn)
+
+                if "Closed NN Hybrid" in line:
+                    hyb_perc_pnn = line.split()[3].replace("%", "\%")
+                    table = table.replace("perc_pnn_" + str(j), hyb_perc_pnn)
+
+                if "total_time" in line:
+                    table = modify_string(table, line, "ttime", perc_id)
+
+                if "time_bb" in line:
+                    table = modify_string(table, line, "bbtime", perc_id)
+
+                if "time_to_best" in line:
+                    table = modify_string(table, line, "timetb", perc_id)
+
+                if "total_tree_level" in line:
+                    table = modify_string(table, line, "tdep", perc_id)
+
+                if "best_level" in line:
+                    table = modify_string(table, line, "bdep", perc_id)
+
+                if "generate_bbnodes" in line:
+                    table = modify_string(table, line, "gbbn", perc_id)
+
+                if "explored_bbnodes" in line:
+                    table = modify_string(table, line, "ebbn", perc_id)
+
+                if "bbnodes_before_best" in line:
+                    table = modify_string(table, line, "bbnbb", perc_id)
+
+                if "prob_best" in line:
+                    prob_best = float(line.split()[1])
+                    std_prob_best = float(line.split()[2])
+                    table = table.replace("std_os_" + str(j), "\stdf{" + str(round(std_prob_best, 2)) + "}")
+                    table = table.replace("os_" + str(j), str(round(prob_best, 2)))
+
+            j += 1
+
+        if k == 0:
+            exact_tab = table
+        else:
+            heur_tab = table
+
+    with open(output_path + "exact_table.tex", 'w') as f:
+        f.write(exact_tab)
+
+    with open(output_path + "heur_table.tex", 'w') as f:
+        f.write(heur_tab)
+
+
 if __name__ == "__main__":
     """
     Args:
         --num_nodes: The number of nodes in each TSP instance.
         --perf_prof: If the results are from the performance profile.
+        --tab: If you want to build a create with the results.
     """
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--num_nodes", type=int, default=20)
     parser.add_argument("--perf_prof", action="store_true")
+    parser.add_argument("--tab", action="store_true")
     opts = parser.parse_args()
 
     pp.pprint(vars(opts))
-    analyze(opts.num_nodes, opts.perf_prof)
+
+    if opts.num_nodes > 0:
+        analyze(opts.num_nodes, opts.perf_prof)
+
+    if opts.tab:
+        create_tables()

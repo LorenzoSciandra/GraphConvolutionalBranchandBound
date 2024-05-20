@@ -1,19 +1,19 @@
-                    Hybrid Mean   Hybrid Std Classic Mean  Classic Std P-val for Wilcoxon signed-rank test
-Resolved Instances       100.0%     0.000000       100.0%     0.000000                                   -
-Closed NN                  0.0%     0.000000         0.0%     0.000000                                   -
-Closed NN Hybrid          79.5%     0.000000         0.0%     0.000000                                   -
-Closed 1Tree               0.0%     0.000000         0.0%     0.000000                                   -
-Closed Subgradient        20.5%     0.000000       100.0%     0.000000                                   -
-total_time             3.251075    12.432724     1.653421    13.724609                                 0.0
-time_bb                 1.50267    12.393251     1.619347    13.679787                                 0.0
-time_to_best             0.5079     3.871009     0.746456     5.806390                                 0.0
-generate_bbnodes        805.144  6283.205413      874.984  6722.409863                                 0.0
-explored_bbnodes        753.883  6066.349078      778.188  6435.321070                                 0.0
-bbnodes_before_best      214.31  2055.652501      388.675  3085.301297                                 0.0
-total_tree_level          8.294     6.025576        9.161     6.218447                                 0.0
-best_level                1.654     3.575791        5.834     3.452600                                 0.0
-prob_best              0.989039     0.021440          0.0     0.000000                                 0.0
-best_value             5.687279     0.258695     5.687528     0.258853                            0.007762
+                    Hybrid Mean  Hybrid Int Classic Mean  Classic Int P-val for Wilcoxon signed-rank test
+Resolved Instances       100.0%    0.000000       100.0%     0.000000                                   -
+Closed NN                  0.0%    0.000000         0.0%     0.000000                                   -
+Closed NN Hybrid          79.5%    0.000000         0.0%     0.000000                                   -
+Closed 1Tree               0.0%    0.000000         0.0%     0.000000                                   -
+Closed Subgradient        20.5%    0.000000       100.0%     0.000000                                   -
+total_time             3.251075    0.770588     1.653421     0.850660                                 0.0
+time_bb                 1.50267    0.768142     1.619347     0.847882                                 0.0
+time_to_best             0.5079    0.239928     0.746456     0.359884                                 0.0
+generate_bbnodes        805.144  389.437106      874.984   416.659280                                 0.0
+explored_bbnodes        753.883  375.996211      778.188   398.865332                                 0.0
+bbnodes_before_best      214.31  127.410662      388.675   191.228956                                 0.0
+total_tree_level          8.294    0.373469        9.161     0.385423                                 0.0
+best_level                1.654    0.221630        5.834     0.213994                                 0.0
+prob_best              0.989039    0.001329          0.0     0.000000                                 0.0
+best_value             5.687279    0.016034     5.687528     0.016044                            0.007762
 
 Not resolved 0 instances for hybrid: []
 
