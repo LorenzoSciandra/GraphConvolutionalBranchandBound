@@ -6,8 +6,8 @@
  * The two MACROs MAX_VERTEX_NUM and HYBRID that are used to set the maximum number of Node in the Graph and to choose the algorithm to use
  * are now in the CMakeLists.txt file, so that they can be changed from the command line.
  * @version 0.1.0
- * @date 2023-04-18
- * @copyright Copyright (c) 2023, license MIT
+ * @data 2024-05-1
+ * @copyright Copyright (c) 2024, license MIT
  *
  * Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
  *

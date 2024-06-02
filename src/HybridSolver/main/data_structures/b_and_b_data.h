@@ -5,8 +5,8 @@
  * @brief Header file that contains the core data structures used in the Branch and Bound algorithm.
  * There are the data structures used to represent the problem, the sub-problems and the list of sub-problems.
  * @version 0.1.0
- * @date 2023-04-18
- * @copyright Copyright (c) 2023, license MIT
+ * @data 2024-05-1
+ * @copyright Copyright (c) 2024, license MIT
  *
  * Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
  *

@@ -1,11 +1,11 @@
 """
     @file main.py
-    @author Lorenzo Sciandra, by Chaitanya K. Joshi, Thomas Laurent and Xavier Bresson.
+    @author Lorenzo Sciandra
     @brief A recombination of code take from: https://github.com/chaitjo/graph-convnet-tsp.
-    Some functions were created for the purpose of this project.
+    Some functions were created for the purpose of the paper.
     @version 0.1.0
-    @date 2023-04-18
-    @copyright Copyright (c) 2023, license MIT
+    @data 2024-05-1
+    @copyright Copyright (c) 2024, license MIT
     Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
 """
 import errno
@@ -113,9 +113,27 @@ def compute_prob(net, config, dtypeLong, dtypeFloat):
 
 
 def write_adjacency_matrix(graph, y_probs, x_edges_values, nodes_coord, filepath, num_nodes, kmedoids_labels=None):
+    """
+    This function writes the adjacency matrix to a file.
+    The file is in the format:
+            cities: (x1, y1);(x2, y2);...;(xn, yn)
+            adjacency matrix:
+            (0.0, 0.0);(0.23, 0.9);...;(0.15, 0.56)
+            ...
+            (0.23, 0.9);(0.3, 0.59);...;(0.0, 0.0)
+            where each entry is (distance, probability)
+    If needed adjusts the size of the graph when the model size is different from the number of nodes in the instance.
+    Args:
+        graph: The set of nodes in the graph.
+        y_probs: The probability of the edges being in the optimal tour.
+        x_edges_values: The weight of the edges.
+        nodes_coord: The nodes coordinates used in the GCN.
+        filepath: The path to the file where the adjacency matrix will be written.
+        num_nodes: The number of nodes in the TSP instance.
+        kmedoids_labels: The labels of the k-medoids clustering.
+    """
 
     model_size = y_probs.shape[1]
-    medoids = [[nodes_coord[i], nodes_coord[i + 1]] for i in range(0, len(nodes_coord), 2)]
     y_probs = y_probs.flatten().numpy()
     x_edges_values = x_edges_values.flatten().numpy()
 
@@ -180,10 +198,13 @@ def write_adjacency_matrix(graph, y_probs, x_edges_values, nodes_coord, filepath
 
 def add_dummy_cities(num_nodes, model_size):
     """
+    This function adds dummy cities to the graph instance. The dummy cities are randomly generated are
+    added to the graph instance and the new instance is saved in a temporary file.
     Args:
         num_nodes: The number of nodes of the graph instance.
         model_size: The size of the Graph Convolutional Network to use.
     """
+
     num_dummy_cities = model_size - num_nodes
     filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
     graph_str = None
@@ -230,6 +251,13 @@ def add_dummy_cities(num_nodes, model_size):
 
 
 def create_temp_file(num_nodes, str_grap):
+    """
+    Creates a temporary file with the graph instance.
+    Args:
+        num_nodes: The number of nodes of the graph instance.
+        str_grap: The graph instance.
+    """
+
     filepath = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
 
     with open(filepath, 'w+') as file:
@@ -240,9 +268,13 @@ def create_temp_file(num_nodes, str_grap):
 
 def cluster_nodes(graph, k):
     """
+    Applies the k-medoids clustering to the graph.
     Args:
         graph: The graph to cluster.
         k: The number of clusters to create.
+    Returns:
+        medoids_str: The medoids of the clusters.
+        kmedoids.labels_: The labels of the clusters.
     """
     graph = np.array(graph)
     kmedoids = KMedoids(n_clusters=k, method='pam', random_state=42).fit(graph)
@@ -254,6 +286,8 @@ def cluster_nodes(graph, k):
 
 def fix_instance_size(graph, num_nodes, model_size=100):
     """
+    The function that fixes the instance size with clustering.
+    It applies the k-medoids clustering to the graph and creates a new instance with the medoids as the new nodes.
     Args:
         graph: The graph to fix.
         num_nodes: The number of nodes of the graph instance.
@@ -276,6 +310,14 @@ def fix_instance_size(graph, num_nodes, model_size=100):
 
 
 def get_instance(num_nodes):
+    """
+    The function that reads the current instance from the file.
+    Args:
+        num_nodes: The number of nodes of the graph instance.
+    Returns:
+        graph: The graph instance.
+    """
+
     lines = None
     file_path = "data/hyb_tsp/test_" + str(num_nodes) + "_nodes_temp.txt"
 
@@ -302,7 +344,8 @@ def get_instance(num_nodes):
 
 def main(filepath, num_nodes, model_size):
     """
-    The function that calls the previous functions and first sets the parameters for the calculation.
+    The function that runs the Graph Convolutional Network and writes the adjacency matrix to a file
+    for the given input instance.
     Args:
         filepath: The path to the file where the adjacency matrix will be written.
         num_nodes: The number of nodes in the TSP instance.

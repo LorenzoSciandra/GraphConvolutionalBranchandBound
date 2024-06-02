@@ -4,8 +4,8 @@
  * @author Lorenzo Sciandra
  * @brief A simple problem for the branch and bound algorithm and a test for the Depth First Search algorithm.
  * @version 0.1.0
- * @date 2023-04-18
- * @copyright Copyright (c) 2023, license MIT
+ * @data 2024-05-1
+ * @copyright Copyright (c) 2024, license MIT
  *
  * Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
  *

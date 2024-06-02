@@ -4,8 +4,8 @@
  * @author Lorenzo Sciandra
  * @brief This file contains the declaration of the Kruskal algorithm to find the Minimum Spanning Tree.
  * @version 0.1.0
- * @date 2023-04-18
- * @copyright Copyright (c) 2023, license MIT
+ * @data 2024-05-1
+ * @copyright Copyright (c) 2024, license MIT
  *
  * Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
  *
@@ -17,6 +17,7 @@
 #include "../data_structures/mst.h"
 
 
+//! Swaps two edges in the list of edges in the Graph.
 /**
  * @brief This function is used to swap two edges in the list of edges in the Graph.
  * @param graph The Graph to which the edges belong.
@@ -29,7 +30,7 @@ static void swap(Graph * graph, unsigned short swap_1, unsigned short swap_2);
 //! The core of the quick sort algorithm.
 /**
  * @brief This function find the pivot position to recursively call the quick sort algorithm. While doing this all the edges
- * with weight less than the pivot are moved to the left of the pivot and all the edges with weight greater than the pivot.
+ * with weight less than the pivot are moved to the left of the pivot and to the right otherwise.
  * @param graph The Graph to which we want to sort the edges.
  * @param first The index of the first Edge to consider in the list of edges.
  * @param last The index of the last Edge to consider in the list of edges.
@@ -48,6 +49,7 @@ static int pivot_quicksort(Graph * graph, unsigned short first, unsigned short l
 static void quick_sort(Graph * graph, unsigned short first, unsigned short last);
 
 
+//! The wrapper of the quick sort algorithm.
 /**
  * @brief If the Graph is not sorted, this function calls the quick sort algorithm to sort the edges of the Graph.
  * @param graph The Graph to which we want to sort the edges.

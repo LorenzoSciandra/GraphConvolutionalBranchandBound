@@ -3,8 +3,8 @@
     @author Lorenzo Sciandra
     @brief Read all the results files in a folder, and write the mean of each metric in a new "mean_results.txt" file.
     @version 0.1.0
-    @date 2023-04-18
-    @copyright Copyright (c) 2023, license MIT
+    @data 2024-05-1
+    @copyright Copyright (c) 2024, license MIT
 
     Repo: https://github.com/LorenzoSciandra/HybridTSPSolver
 """
@@ -393,13 +393,13 @@ def modify_string(old_tab, line, name, j):
         old_tab = old_tab.replace(name + "_" + str(j),  str(cla_m))
         old_tab = old_tab.replace("std_" + name + "_" + str(j + 1), "\stdf{" + str(hyb_std) + "}")
         if p_val < 0.05:
-            old_tab = old_tab.replace(name + "_" + str(j + 1),  "\\textbf{" + str(hyb_m) + "}$^\star$")
+            old_tab = old_tab.replace(name + "_" + str(j + 1),  "\\underline{\\textbf{" + str(hyb_m) + "}}")
         else:
             old_tab = old_tab.replace(name + "_" + str(j + 1),  "\\textbf{" + str(hyb_m) + "}")
     elif hyb_m > cla_m:
         old_tab = old_tab.replace("std_" + name + "_" + str(j), "\stdf{" + str(cla_std) + "}")
         if p_val < 0.05:
-            old_tab = old_tab.replace(name + "_" + str(j),  "\\textbf{" + str(cla_m) + "}$^\star$")
+            old_tab = old_tab.replace(name + "_" + str(j),  "\\underline{\\textbf{" + str(cla_m) + "}}")
         else:
             old_tab = old_tab.replace(name + "_" + str(j),  "\textbf{" + str(cla_m) + "}")
 

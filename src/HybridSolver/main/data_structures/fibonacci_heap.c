@@ -3,8 +3,8 @@
  * @author Lorenzo Sciandra
  * @brief This file contains the implementation of the Fibonacci Heap datastructure for the Minimum Spanning Tree problem.
  * @version 0.1.0
- * @date 2023-04-18
- * @copyright Copyright (c) 2023, license MIT
+ * @data 2024-05-1
+ * @copyright Copyright (c) 2024, license MIT
  *
  * Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound
  *
@@ -193,10 +193,10 @@ int extract_min(FibonacciHeap * heap) {
                 heap->min_root->tail_child_list = NULL;
             }
             else{
-                if(heap->min_root->head_child_list == child){
+                if(heap->min_root->head_child_list->key == child->key){
                     heap->min_root->head_child_list = child->right_sibling;
                 }
-                if(heap->min_root->tail_child_list == child){
+                if(heap->min_root->tail_child_list->key == child->key){
                     heap->min_root->tail_child_list = child->left_sibling;
                 }
                 child->left_sibling->right_sibling = child->right_sibling;
@@ -237,6 +237,7 @@ int extract_min(FibonacciHeap * heap) {
         else{
             // choose a new min root, arbitrarily
             heap->min_root = heap->min_root->right_sibling;
+            // re-consolidate the heap
             consolidate(heap);
         }
         heap->num_nodes--;
@@ -257,10 +258,10 @@ static void cut(FibonacciHeap * heap, OrdTreeNode * node, OrdTreeNode * parent){
         parent->tail_child_list = NULL;
     }
     else{
-        if(parent->head_child_list == node){
+        if(parent->head_child_list->key == node->key){
             parent->head_child_list = node->right_sibling;
         }
-        if(parent->tail_child_list == node){
+        if(parent->tail_child_list->key == node->key){
             parent->tail_child_list = node->left_sibling;
         }
         node->left_sibling->right_sibling = node->right_sibling;
