@@ -2,7 +2,7 @@
  * @file b_and_b_data.c
  * @author Lorenzo Sciandra
  * @brief All the functions needed to manage the list of open subproblems.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

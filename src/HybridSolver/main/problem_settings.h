@@ -5,7 +5,7 @@
  * @brief Not only MACROs for branch-and-bound, but also for testing and debugging.
  * The two MACROs MAX_VERTEX_NUM and HYBRID that are used to set the maximum number of Node in the Graph and to choose the algorithm to use
  * are now in the CMakeLists.txt file, so that they can be changed from the command line.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

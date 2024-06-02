@@ -3,7 +3,7 @@
  * @file test_read_file.h
  * @author Lorenzo Sciandra
  * @brief Test the functions that read the input Graph as csv or TSPLIB format.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

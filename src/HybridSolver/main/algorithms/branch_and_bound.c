@@ -3,7 +3,7 @@
  * @file branch_and_bound.c
  * @author Lorenzo Sciandra
  * @brief This file contains all the methods used by the Hybrid and Classic Branch and Bound solver.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

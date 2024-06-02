@@ -3,7 +3,7 @@
     @author Lorenzo Sciandra
     @brief A recombination of code take from: https://github.com/chaitjo/graph-convnet-tsp.
     Some functions were created for the purpose of the paper.
-    @version 0.1.0
+    @version 1.0.0
     @data 2024-05-1
     @copyright Copyright (c) 2024, license MIT
     Repo: https://github.com/LorenzoSciandra/GraphConvolutionalBranchandBound

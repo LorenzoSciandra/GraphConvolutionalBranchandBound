@@ -3,7 +3,7 @@
  * @file test_kruskal.c
  * @author Lorenzo Sciandra
  * @brief The definition of the test functions for the Kruskal algorithm, its constrained version, and the quick sort algorithm.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

@@ -3,7 +3,7 @@
  * @file test_mfset.c
  * @author Lorenzo Sciandra
  * @brief The definition of the test functions for the MFSet data structure.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

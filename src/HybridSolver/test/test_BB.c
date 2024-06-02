@@ -3,7 +3,7 @@
  * @file test_BB.c
  * @author Lorenzo Sciandra
  * @brief A simple problem for the branch and bound algorithm and a test for the Depth First Search algorithm.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

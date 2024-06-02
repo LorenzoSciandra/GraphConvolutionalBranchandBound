@@ -3,7 +3,7 @@
  * @file tsp_instance_reader.c
  * @author Lorenzo Sciandra
  * @brief There are two functions to read the input files, one for the .tsp format and one for the .csv format.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

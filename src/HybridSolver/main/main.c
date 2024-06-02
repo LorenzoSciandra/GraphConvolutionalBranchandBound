@@ -2,7 +2,7 @@
  * @file main.c
  * @author Lorenzo Sciandra
  * @brief Project main file, where you start the program, read the input file and print/write the results.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

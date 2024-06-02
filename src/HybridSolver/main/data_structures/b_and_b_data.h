@@ -4,7 +4,7 @@
  * @author Lorenzo Sciandra
  * @brief Header file that contains the core data structures used in the Branch and Bound algorithm.
  * There are the data structures used to represent the problem, the sub-problems and the list of sub-problems.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

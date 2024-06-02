@@ -2,7 +2,7 @@
     @file: analyzer.py
     @author Lorenzo Sciandra
     @brief Read all the results files in a folder, and write the mean of each metric in a new "mean_results.txt" file.
-    @version 0.1.0
+    @version 1.0.0
     @data 2024-05-1
     @copyright Copyright (c) 2024, license MIT
 

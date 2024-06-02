@@ -3,7 +3,7 @@
  * @file test_graph.h
  * @author Lorenzo Sciandra
  * @brief The declaration of the test functions for the Graph data structure.
- * @version 0.1.0
+ * @version 1.0.0
  * @data 2024-05-1
  * @copyright Copyright (c) 2024, license MIT
  *

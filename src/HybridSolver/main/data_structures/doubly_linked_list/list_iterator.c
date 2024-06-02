@@ -3,7 +3,7 @@
  * @file list_iterator.c
  * @authors Lorenzo Sciandra, Stefano Vittorio Porta and Ivan Spada
  * @brief This is a double linked List implementation that we have realized for an university project.
- * @version 0.1.0
+ * @version 1.0.0
  * @date 2019-07-9
  * @copyright Copyright (c) 2024, license MIT
  *
