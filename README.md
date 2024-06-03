@@ -28,7 +28,8 @@ All code documentation was completed using [Doxygen](https://www.doxygen.nl/), a
 ## Results
 Below are some of the results obtained:
 
-<img src="src/HybridSolver/results/AdjacencyMatrix/mean_results/100_nodes/cumulative_profile.png" style="width:50%" />
+Cumulative Profiles           |  Performance Profiles
+:-------------------------:|:-------------------------:
+![cumulative_profile](src/HybridSolver/results/AdjacencyMatrix/mean_results/100_nodes/cumulative_profile.png) |  ![performance_profile](src/HybridSolver/results/AdjacencyMatrix/mean_results/100_nodes/performance_profile.png)
 
-<img src="src/HybridSolver/results/AdjacencyMatrix/mean_results/100_nodes/performance_profile.png" style="width:50%" />
 
