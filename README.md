@@ -23,7 +23,7 @@ The hybrid solver obtains the probabilities for each Edge of being in the soluti
 4. **Variable Selection**: hen a 1Tree is not a correct tour but provides a lower bound on the current best solution found, a branching step must be taken. The selection of the edge to be fixed as mandatory or forbidden in the new branch and bound nodes is accomplished by integrating the [Shutler's method](https://www.jstor.org/stable/254144) with the edge probabilities.
 
 ## Code Documentation
-All code documentation was completed using [Doxygen](https://www.doxygen.nl/), and is accessible in both [online](https://www.lorenzosciandra.com/assets/projects/HybridTSPSolver/index) and [PDF](./res/docs/code_documentation.pdf) formats.
+All code documentation was completed using [Doxygen](https://www.doxygen.nl/), and is accessible in both [online](https://www.lorenzosciandra.com/assets/projects/HybridTSPSolver/index) and [PDF](./res/docs/documentation.pdf) formats.
 
 ## Results
 Below are some of the results obtained:
