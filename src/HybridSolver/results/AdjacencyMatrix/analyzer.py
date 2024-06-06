@@ -17,7 +17,7 @@ import pprint as pp
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
-from scipy.stats import wilcoxon
+from scipy.stats import wilcoxon, ttest_rel
 import pandas as pd
 
 
@@ -286,7 +286,9 @@ def significance_test(stats_hyb, stats_cla):
         values_cla.append(stats_cla[id])
     values_hyb = np.array(values_hyb)
     values_cla = np.array(values_cla)
+    _, p_val_ttest = ttest_rel(values_hyb, values_cla)
     _, p_val = wilcoxon(values_hyb, values_cla)
+
     same_inst_stats = {"hyb_mean": np.mean(values_hyb),
                        "cla_mean": np.mean(values_cla),
                        "hyb_conf_int": np.std(values_hyb) * 1.96 / np.sqrt(len(values_hyb)),
