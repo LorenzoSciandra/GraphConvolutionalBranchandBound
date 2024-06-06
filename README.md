@@ -1,6 +1,6 @@
 # Graph Convolutional Branch and Bound TSP Solver
 
-This repository contains the implementation of the Graph Convolutional Branch and Bound solver for the Traveling Salesman Problem. It combines a 1Tree branch and bound proposed by [Held and Karp](https://pubsonline.informs.org/doi/10.1287/opre.18.6.1138) with the Graph Convolutional Network proposed by [Joshi, Laurent, and Bresson](https://arxiv.org/abs/1906.01227). In the [`src`](./src) folder, you can also find a Cplex TSP solver that I developed to verify the correctness of the hybrid one.
+This repository contains the implementation of the Graph Convolutional Branch and Bound solver for the Traveling Salesman Problem described in the [Graph Convolutional Branch and Bound paper](https://www.arxiv.org/abs/2406.03099) . It combines a 1Tree branch and bound proposed by [Held and Karp](https://pubsonline.informs.org/doi/10.1287/opre.18.6.1138) with the Graph Convolutional Network proposed by [Joshi, Laurent, and Bresson](https://arxiv.org/abs/1906.01227). In the [`src`](./src) folder, you can also find a Cplex TSP solver that I developed to verify the correctness of the hybrid one.
 
 ## Ideas 
 
