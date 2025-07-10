@@ -1,0 +1,83 @@
+- exp_name: Unsup_TSP
+  oc_prob: TSP
+  settings:
+    - seed: 43
+  logger:
+    - type: wandb
+    - wandb_args:
+      - entity: mlgroup
+      - project: Unsup_TSP
+      - tags:
+        - "correct"
+  model_confs:
+    - net_class: GNN
+    - model_type: GAT
+    - gnn_layers: 3
+    - mlp_layers: 2
+    - hidden_dim: 64
+    - out_dim: 64
+    - inp_dim: 2
+    - activation: LeakyReLU
+    - save_model: True
+    - load_model: False
+    - heads: 1
+    - skew: 1.0
+    - dropout: 0.2
+    - normalization: graph_norm
+    - residual: True
+    - cos_sim: False
+    - c: 100
+  learn_confs:
+    - optimizer: AdamW
+    - batch_size: 128
+    - num_epochs: 1204
+    - lr: 0.001
+    - use_clipping: False
+    - use_pcgrad: True
+    - clip_grad: 1.0
+    - log_interval: 1
+    - single_log_interval: 100
+    - device: cuda
+    - reg1: 0.0015
+    - reg2: 8.0
+    - reg3: 2000.0
+    - reg4: 20.0
+    - weight_decay: 0.01
+    - scheduler: True
+    - step_size: 20
+    - do_inference: False
+    - patience: 7
+    - path: ./checkpoints
+  data_confs:
+    - num_nodes: 10-100-200
+    - scale: 1000
+    - num_dims: 3
+    - distance_type: GEO
+    - preprocess: False
+    - prob_preprocess: 0.1
+    - incremental: True
+    - num_instances: 1000
+    - save_data: True
+    - load_data: False
+    - train_ratio: 0.8 
+    - all_dim_instances: 50
+  inference:
+    - num_instances: 1
+    - num_nodes: 10
+    - num_dims: 1
+    - preprocess: False
+    - test_instances: 1
+    - beam_size: 5
+    - net_class: GNN
+    - model_type: GAT
+    - save_inference: False
+    - save_data: False
+    - load_data: False
+    - interpretability: False
+  analyze:
+    - learning_results: False
+    - inference_results: True
+    - compare: True
+    - num_nodes: 10-100
+    - model_type: GAT
+    - net_class: GNN

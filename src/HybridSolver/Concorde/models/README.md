@@ -1,0 +1,1 @@
+Once the GNN models have been unsupervisedly trained within the "unsupervised gnn training" directory. Move to this folder the models saved in the subfolder "models" and rename them as present here based on which geometry was used.

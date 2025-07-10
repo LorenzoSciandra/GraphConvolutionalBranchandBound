@@ -1,0 +1,23 @@
+# Ignore logs and checkpoints
+logs/
+checkpoints/
+
+# Ignore Python cache
+**/__pycache__/
+
+# Ignore models (adjust as needed)
+models/Unsup*
+models/*.pth
+models/*.pt
+
+# Ignore wandb
+wandb/*
+
+# Ignore dataset files
+dataset/
+
+# Ignore common temporary files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
