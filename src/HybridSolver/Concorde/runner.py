@@ -6,6 +6,7 @@ import subprocess
 import signal
 import atexit
 import json
+from pprint import pprint
 import pandas as pd
 from models.experiment import Experiment
 from models.dataset import Dataset
@@ -16,82 +17,107 @@ import torch
 from torch_geometric.utils import to_dense_adj, to_undirected, add_self_loops, to_dense_batch
 from datetime import datetime
 import yaml
+import tsplib95
 
 
 initial_files = set(os.listdir())
 concorde_results = {}
 inference_results = {}
-seeds = [3284, 4532, 9439, 4431,  135,  935,  439, 4333, 3664, 6688, 6007, 6700,
+exp_seed = None
+seeds = [894]
+"""
+    3284 , 4532, 9439, 4431,  135,  935,  439, 4333, 3664, 6688, 6007, 6700,
         1381, 2374, 7703, 4781, 2565, 6452, 1823, 8797, 2369, 5586,  865, 2001,
         4969, 2227, 1063, 9085, 5056, 7123, 2309, 3876, 7774, 8008,  351, 8659,
         2995, 7085, 1703, 7612, 8136, 9247, 8330, 6045, 9453, 3761, 3218, 8231,
         4753, 9093,  417, 4909, 6972, 7561, 7733, 1759, 3986, 5426, 2185, 2945,
-        7211, 8137, 4105, 5856, 8008, 2225, 1556, 6283, 3300, 6270, 5571, 7837,
+        7211, 8137, 4105, 5856, 8009, 2225, 1556, 6283, 3300, 6270, 5571, 7837,
         3802, 4277, 8795,  894, 9839, 2314, 8757, 8989, 2830, 1222,  552, 6852,
         9511, 1184, 8211, 9524, 8423, 5526, 7935, 2839, 1460, 3282, 2070, 2737,
         9867, 9700,  483, 1321]
+"""
+    
+def write_records(csv_file, existing_df, results):
 
+    for experiment, datasets in results.items():
+        for dataset, values in datasets.items():
+            bbnodes = values["bbnodes"]
+            bbtime = values["bb_times"]
+            probs = values["opt_probs"]
+            total_pnode_ties = values["total_pnode_ties"]
+            used_pnode_ties = values["used_pnode_ties"]
+            total_pvar_ties = values["total_pvar_ties"]
+            used_pvar_ties = values["used_pvar_ties"]
+            total_frac_ties = values["total_frac_ties"]
+            used_frac_ties = values["used_frac_ties"]
+            seeds = values["seeds"]
 
-def write_results():
-    csv_file = "results.csv"
-    existing_df = pd.read_csv(csv_file) if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0 else pd.DataFrame()
+            if dataset in inference_results:
+                #print("Found inference results for dataset: ", dataset, " with times: ", inference_results[dataset]["inf_time"])
+                inf_time = np.mean(inference_results[dataset]["inf_time"])
+            else:
+                inf_time = 0
 
-    for _, node_results in concorde_results.items():
-        for experiment, datasets in node_results.items():
-            if experiment == "Seeds":
-                continue
-            for dataset, values in datasets.items():
-                bbnodes = values["bbnodes"]
-                bbtime = values["bb_times"]
-                probs = values["opt_probs"]
-                total_pnode_ties = values["total_pnode_ties"]
-                used_pnode_ties = values["used_pnode_ties"]
-                total_pvar_ties = values["total_pvar_ties"]
-                used_pvar_ties = values["used_pvar_ties"]
-                total_frac_ties = values["total_frac_ties"]
-                used_frac_ties = values["used_frac_ties"]
-
-                if dataset in inference_results:
-                    inf_time = np.mean(inference_results[dataset]["inf_time"])
-                else:
-                    inf_time = 0
-
-                record = {
-                    "Experiment": experiment,
-                    "Dataset": dataset,
-                    "Prob": np.mean(probs),
-                    "MeanBBNodes": np.mean(bbnodes),
-                    "MeanInfTime": inf_time,
-                    "MeanBBTime": np.mean(bbtime),
-                    "MeanPNodeTies": np.mean(used_pnode_ties),
-                    "MeanTotalPNodeTies": np.mean(total_pnode_ties),
-                    "MeanPVarTies": np.mean(used_pvar_ties),
-                    "MeanTotalPVarTies": np.mean(total_pvar_ties),
-                    "MeanFracTies": np.mean(used_frac_ties),
-                    "MeanTotalFracTies": np.mean(total_frac_ties),
-                    "Probs": probs,
-                    "BBNodes": bbnodes,
-                    "BBTimes": bbtime,
-                    "TotalPNodeTies": total_pnode_ties,
-                    "UsedPNodeTies": used_pnode_ties,
-                    "TotalPVarTies": total_pvar_ties,
-                    "UsedPVarTies": used_pvar_ties,
-                    "TotalFracTies": total_frac_ties,
-                    "UsedFracTies": used_frac_ties
-                }
+            record = {
+                "Experiment": experiment,
+                "Dataset": dataset,
+                "Prob": np.mean(probs),
+                "MeanBBNodes": np.mean(bbnodes),
+                "MeanInfTime": inf_time,
+                "MeanBBTime": np.mean(bbtime),
+                "MeanPNodeTies": np.mean(used_pnode_ties),
+                "MeanTotalPNodeTies": np.mean(total_pnode_ties),
+                "MeanPVarTies": np.mean(used_pvar_ties),
+                "MeanTotalPVarTies": np.mean(total_pvar_ties),
+                "MeanFracTies": np.mean(used_frac_ties),
+                "MeanTotalFracTies": np.mean(total_frac_ties),
+                "Probs": probs,
+                "BBNodes": bbnodes,
+                "BBTimes": bbtime,
+                "TotalPNodeTies": total_pnode_ties,
+                "UsedPNodeTies": used_pnode_ties,
+                "TotalPVarTies": total_pvar_ties,
+                "UsedPVarTies": used_pvar_ties,
+                "TotalFracTies": total_frac_ties,
+                "UsedFracTies": used_frac_ties,
+                "Seeds": seeds
+            }
 
                 # Check if this record already exists in the existing DataFrame
-                if not existing_df.empty:
-                    exists = ((existing_df["Experiment"] == experiment) &
+            if not existing_df.empty:
+                exists = ((existing_df["Experiment"] == experiment) &
                               (existing_df["Dataset"] == dataset)).any()
-                else:
-                    exists = False
+            else:
+                exists = False
 
-                if not exists:
-                    df_row = pd.DataFrame([record])
-                    df_row.to_csv(csv_file, mode='a', index=False, header=not os.path.exists(csv_file) or os.path.getsize(csv_file) == 0)
-                    print(f"Wrote result for ({experiment}, {dataset})")
-                
+            if not exists:
+                df_row = pd.DataFrame([record])
+                df_row.to_csv(csv_file, mode='a', index=False, header=not os.path.exists(csv_file) or os.path.getsize(csv_file) == 0)
+                print(f"Wrote result for ({experiment}, {dataset})")
+
+
+def write_results(dataset):
+    
+    global concorde_results, seeds, exp_seed
+    
+    with open("output.txt", "w") as f:
+        pprint(concorde_results, stream=f)
+    
+    #pprint(concorde_results)
+    
+    csv_file = "results.csv" if dataset != "TSPLIB" else f"{dataset}_results.csv"
+    
+     # Load existing results if the file exists
+    existing_df = pd.read_csv(csv_file) if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0 else pd.DataFrame()
+
+    seeds = seeds if dataset == "TSPLIB" else exp_seed
+    
+    if dataset == "TSPLIB":
+        write_records(csv_file, existing_df, concorde_results)
+    else:
+        for _, results in concorde_results.items():
+            write_records(csv_file, existing_df, results)
+    
 
 def cleanup():
     current_files = set(os.listdir())
@@ -100,7 +126,6 @@ def cleanup():
         if os.path.isfile(file):
             os.remove(file)
     print("Cleanup completed.")
-    write_results()
 
 
 def handle_exit_signal(signum, frame):
@@ -151,7 +176,7 @@ def compiler(pnode, pvar):
 
 
 def run_instance(concorde_path, file_path, seed):
-    # run the python file
+    
     cmd = [concorde_path, "-s", str(seed), "-x", file_path]
     result = subprocess.run(cmd, capture_output=True).stdout
     lines = result.decode().split("\n")
@@ -223,28 +248,24 @@ def run_instance(concorde_path, file_path, seed):
     return output
 
 
-def run(dataset, seeds, mode, distance_type=None, num_nodes=None):
+def run(dataset, seeds, mode, distance_type=None, num_nodes=0):
+
+    global concorde_results
+
     concorde_path = os.path.abspath("build/concorde-bin")
-    concorde_results[num_nodes][mode] = {}
-    directory = "examples/TSPLIB" if dataset == "TSPLIB" else "examples/random/"
+    
+    directory = "examples/TSPLIB/" if dataset == "TSPLIB" else "examples/random/"
     
     if dataset != "TSPLIB":
-        
         if distance_type!= None and num_nodes != None:
             directory += f"{distance_type}/"f"{num_nodes}/"
         else:
             raise Exception("Distance type and number of nodes must be provided for non-TSPLIB datasets")
     
+    
     for file in os.listdir(directory):
         
-        if file.endswith(".tsp"):
-            
-            name = file.rsplit("_", 1)[0]
-            key = file if dataset == "TSPLIB" else name
-            
-            if key not in concorde_results[num_nodes][mode]:
-                concorde_results[num_nodes][mode][key] = {
-                    "bbnodes": [],
+        empty_res =  {  "bbnodes": [],
                     "bb_times": [],
                     "opt_probs": [],
                     "total_pnode_ties": [],
@@ -252,20 +273,44 @@ def run(dataset, seeds, mode, distance_type=None, num_nodes=None):
                     "total_pvar_ties": [],
                     "used_pvar_ties": [],
                     "total_frac_ties": [],
-                    "used_frac_ties": []
-                }
+                    "used_frac_ties": [],
+                    "seeds": []
+                }  
+        
+        if file.endswith(".tsp"):
+            
+            filename = file if dataset == "TSPLIB" else file.rsplit("_", 1)[0]
+            
+            problem = tsplib95.load(directory + file)
+            metric = problem.edge_weight_type
+
+            if distance_type != metric:
+                print(f"Skipping file {file} due to distance type mismatch: {distance_type} != {metric}")
+                continue
 
             
             print("Start running for file: ", file)
             i = 0
             for seed in seeds:
+
+                if dataset == "TSPLIB":
+                    if filename not in concorde_results[mode]:
+                        concorde_results[mode][filename] = empty_res.copy()
+                else:
+                    if mode not in concorde_results[num_nodes]:
+                        concorde_results[num_nodes][mode] = {}
+                    
+                    if filename not in concorde_results[num_nodes][mode]:
+                        concorde_results[num_nodes][mode][filename] = empty_res.copy()
+              
+                
                 now = datetime.now()
                 # dd/mm/YY H:M:S
                 dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
                 print("Running ", i + 1, " seed: ", seed, " at ", dt_string)
                 output = run_instance(concorde_path, directory + file, seed)
                 
-                entry = concorde_results[num_nodes][mode][key]
+                entry = concorde_results[mode][filename] if dataset == "TSPLIB" else concorde_results[num_nodes][mode][filename]
                 entry["bbnodes"].append(output["bbnodes"])
                 entry["bb_times"].append(output["time"])
                 entry["opt_probs"].append(output["opt_prob"])
@@ -275,6 +320,7 @@ def run(dataset, seeds, mode, distance_type=None, num_nodes=None):
                 entry["used_pvar_ties"].append(output["used_pvar_ties"])
                 entry["total_frac_ties"].append(output["total_frac_ties"])
                 entry["used_frac_ties"].append(output["used_frac_ties"])
+                entry["seeds"].append(seed)
                 i += 1
 
 
@@ -320,8 +366,8 @@ def inference(model, dataset, device="cpu"):
 
             all_probs.append((name, formatted_output))
             
-            inference_results[name] = {}
             if "Random" in name:
+                inference_results[name] = {}
                 global_name = name.rsplit("_", 1)[0]
                 if global_name not in inference_results:
                     inference_results[global_name] = {}
@@ -329,15 +375,16 @@ def inference(model, dataset, device="cpu"):
                 
                 inference_results[global_name]["inf_time"].append((end_time - start_time).total_seconds())
             else:
-                inference_results[name]["inf_time"] = (end_time - start_time).total_seconds()
+                inference_results[f"{name}.tsp"] = {}
+                inference_results[f"{name}.tsp"]["inf_time"] = (end_time - start_time).total_seconds()
             
 
     save_probs(all_probs)
 
 
-def run_inference(new_dataset, dataset, distance_type, num_nodes, num_times, device="cpu"):
+def run_inference(new_dataset, save_dataset, dataset, distance_type, num_nodes, num_times, device="cpu"):
     experiment = Experiment("TSP")
-    data = Dataset(experiment, create_dataset = new_dataset, dataset_type = dataset,
+    data = Dataset(experiment, create_dataset = new_dataset, save_dataset = save_dataset, dataset_type = dataset,
                    distance_type = distance_type, num_nodes = num_nodes, num_graphs = num_times,
                    device = device)
     model = Model(experiment, distance_type)
@@ -391,9 +438,10 @@ def find_combs_to_run():
     return missing_experiment_codes, used_seeds
 
 
-def all_run(dataset, configs, read_seed, seeds, distance_type=None, num_nodes=None):
-
+def all_run(dataset, configs, read_seed, seeds, distance_type=None, num_nodes=0):
     
+    global concorde_results
+
     combs = []
     
     for config in configs:
@@ -423,16 +471,23 @@ def all_run(dataset, configs, read_seed, seeds, distance_type=None, num_nodes=No
         mode = "Classic" if i == 0 and j == 0 else "Hybrid"
         if mode == "Hybrid":
             mode += " with" + (" PVAR" if j == 1 else "") + (" PNODE" if i == 1 else "")
+        
+        if dataset == "TSPLIB":
+            concorde_results[mode] = {}
+        else:
+            concorde_results[num_nodes][mode] = {}
 
         compiler(i, j)
         run(dataset, seeds, mode, distance_type, num_nodes)
-        cleanup()
+    
+    cleanup()
+    write_results(dataset)
 
 
 def main(config_path):
-    
-    global initial_files, concorde_results, seeds
-    
+
+    global initial_files, concorde_results, seeds, exp_seed
+
     with open(config_path, 'r') as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
     
@@ -444,9 +499,12 @@ def main(config_path):
     seed = config["seed"]
     distance_type = config["distance_type"]
     generate_dataset = config["generate_dataset"]
+    save_dataset = config["save_dataset"]
     make_inference = config["make_inference"]
     read_seed = config["read_seed"]
     device = config["device"]
+    
+    exp_seed = seed
   
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
@@ -455,18 +513,23 @@ def main(config_path):
     torch.backends.cudnn.benchmark = False
     torch.set_default_dtype(torch.float32)
     
-    for n in num_nodes:
-        print(f"Running for dataset: {dataset}, num_nodes: {n}, distance_type: {distance_type}, num_times: {num_times}")
-        
-        concorde_results[n] = {}
+    
+    if dataset == "TSPLIB":
         
         if make_inference:
-            run_inference(generate_dataset, dataset, distance_type, n, num_times, device)
-        if dataset != "TSPLIB":
-            seeds = [seed]
+            run_inference(generate_dataset, save_dataset, dataset, distance_type, num_nodes, num_times, device)
+           
+        all_run(dataset, configs, read_seed, seeds, distance_type, 0)
+    else:
+        for n in num_nodes:
+            print(f"Running for dataset: {dataset}, num_nodes: {n}, distance_type: {distance_type}, num_times: {num_times}")
+            
+            if make_inference:
+                run_inference(generate_dataset, save_dataset, dataset, distance_type, n, num_times, device)
+            
+            concorde_results[n] = {}
             all_run(dataset, configs, read_seed, seeds, distance_type, n)
-        else:
-            all_run(dataset,configs, read_seed, seeds)
+           
     
 
 

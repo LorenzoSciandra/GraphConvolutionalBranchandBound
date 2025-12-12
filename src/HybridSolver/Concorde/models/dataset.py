@@ -83,9 +83,9 @@ class VectorialDataset(Dataset):
 
 
 class Dataset:
-    
-    def __init__(self, experiment, create_dataset = True, 
-                 dataset_type = "TSPLIB", distance_type = "euclidean", 
+
+    def __init__(self, experiment, create_dataset = True, save_dataset = True,
+                 dataset_type = "TSPLIB", distance_type = "euclidean",
                  num_nodes = 10, num_graphs = 100, device = "cpu"):
         self.device = device
         self.experiment = experiment
@@ -95,30 +95,31 @@ class Dataset:
         self.num_nodes = num_nodes
         self.num_graphs = num_graphs
         
-        self.name = dataset_type if dataset_type == "TSPLIB" else f"{dataset_type}_{distance_type}_{num_nodes}_{num_graphs}"
+        self.name = f"{dataset_type}_{distance_type}" if dataset_type == "TSPLIB" else f"{dataset_type}_{distance_type}_{num_nodes}_{num_graphs}"
 
         if not create_dataset:
             self.load_data()
         else:
             self.generate_dataset(dataset_type, distance_type, num_nodes, num_graphs)
-            self.save_data()
+            if save_dataset:
+                self.save_data()
         
         self.dataset = self.dataset.to(device)
 
 
     def geo_distance(self, node1, node2):
         pi = 3.141592
-        deg1x = torch.round(node1[0])
+        deg1x = np.round(node1[0])
         min1x = node1[0] - deg1x
         lat1 = pi * (deg1x + 5.0 * min1x / 3.0) / 180.0
-        deg1y = torch.round(node1[1])
+        deg1y = np.round(node1[1])
         min1y = node1[1] - deg1y
         long1 = pi * (deg1y + 5.0 * min1y / 3.0) / 180.0
 
-        deg2x = torch.round(node2[0])
+        deg2x = np.round(node2[0])
         min2x = node2[0] - deg2x
         lat2 = pi * (deg2x + 5.0 * min2x / 3.0) / 180.0
-        deg2y = torch.round(node2[1])
+        deg2y = np.round(node2[1])
         min2y = node2[1] - deg2y
         long2 = pi * (deg2y + 5.0 * min2y / 3.0) / 180.0
 
@@ -140,23 +141,41 @@ class Dataset:
             return tij
 
     def calculate_weights(self, nodes, distance_type):
-        weights = []
-        for i in range(len(nodes)):
-            for j in range(len(nodes)):
-                if distance_type == "EUC_2D":
-                    weights.append(round(((nodes[i][0].item() - nodes[j][0].item())**2 + (nodes[i][1].item() - nodes[j][1].item())**2)**0.5))
-                elif distance_type == "MAN_2D":
-                    weights.append(round(abs(nodes[i][0].item() - nodes[j][0].item()) + abs(nodes[i][1].item() - nodes[j][1].item())))
-                elif distance_type == "GEO":
-                    weights.append(self.geo_distance(nodes[i], nodes[j]))
-                elif distance_type == "ATT":
-                    weights.append(self.att_distance(nodes[i], nodes[j]))
-                elif distance_type == "CEIL_2D":
-                    weights.append(np.ceil(((nodes[i][0] - nodes[j][0])**2 + (nodes[i][1] - nodes[j][1])**2)**0.5))
-                else:
-                    raise Exception("Distance type not supported")
-                
-        return weights
+        nodes = np.array(nodes, dtype=float)
+        n = nodes.shape[0]
+
+        x_diff = nodes[:, 0][:, None] - nodes[:, 0]
+        y_diff = nodes[:, 1][:, None] - nodes[:, 1]
+
+        if distance_type == "EUC_2D":
+            # Euclidean distance (rounded)
+            weights = np.round(np.sqrt(x_diff**2 + y_diff**2))
+
+        elif distance_type == "MAN_2D":
+            # Manhattan distance (rounded)
+            weights = np.round(np.abs(x_diff) + np.abs(y_diff))
+
+        elif distance_type == "CEIL_2D":
+            # Ceil of Euclidean distance
+            weights = np.ceil(np.sqrt(x_diff**2 + y_diff**2))
+
+        elif distance_type == "GEO":
+            # Use the original function, fall back to loop (can't easily vectorize)
+            weights = np.zeros((n, n))
+            for i in range(n):
+                for j in range(n):
+                    weights[i, j] = self.geo_distance(nodes[i], nodes[j])
+
+        elif distance_type == "ATT":
+            weights = np.zeros((n, n))
+            for i in range(n):
+                for j in range(n):
+                    weights[i, j] = self.att_distance(nodes[i], nodes[j])
+
+        else:
+            raise ValueError(f"Unsupported distance type: {distance_type}")
+
+        return weights.flatten().tolist()
 
 
     def triangular_to_full(self, num_nodes, triang, kind='lower'):
@@ -186,12 +205,17 @@ class Dataset:
 
     def generate_tsplib_dataset(self):
         print("Generating TSPLIB dataset")
-        for file in os.listdir("examples"):
+        for file in os.listdir("examples/TSPLIB"):
             if file.endswith(".tsp"):
                 print("Processing file: ", file)
-                problem = tsplib95.load("examples/" + file)
+                problem = tsplib95.load("examples/TSPLIB/" + file)
                 nodes = list(problem.node_coords.values())
                 distance_type = problem.edge_weight_type
+                
+                if distance_type != self.distance_type:
+                    print(f"Skipping file {file} due to distance type mismatch: {distance_type} != {self.distance_type}")
+                    continue
+                
                 weights = problem.edge_weights
 
                 if len(weights) == 0:

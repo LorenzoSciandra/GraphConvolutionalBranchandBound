@@ -1,11 +1,12 @@
 - exp_name: TSP
-  dataset: random
-  distance_type: GEO
+  dataset: TSPLIB
+  distance_type: EUC_2D
   device: cuda:0
-  num_nodes: [100,200,500,800,1000]
+  num_nodes: [1000]
   num_times: 100
   seed: 42
-  configs: ["CLASSIC","PVAR", "PVAR_PNODE"]
+  configs: ["CLASSIC", "PVAR_PNODE"]
   make_inference: True
   generate_dataset: True
+  save_dataset: True
   read_seed: False

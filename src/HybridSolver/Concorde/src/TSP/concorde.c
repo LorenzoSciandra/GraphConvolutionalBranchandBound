@@ -132,6 +132,9 @@ int read_prob_file(int ncount){
     double prob;
     char filename[128];
 
+    printf("Reading probabilities file for %s...\n", nn_edges_probs.filename);
+    fflush(stdout);
+
     snprintf(filename, sizeof(filename), "src/PROBS/probs_%s.txt", nn_edges_probs.filename); // mettere ../src se locale
 
     FILE *fp = fopen(filename, "r");
@@ -139,9 +142,6 @@ int read_prob_file(int ncount){
         fprintf(stderr, "Error opening file\n");
         return 1;
     }
-
-    printf("\nINIT Probabilities - Reading the file %s...\n\n", filename);
-    fflush(stdout);
 
     // Initialize the nn_edges_probs structure
     nn_edges_probs.total_pnode_ties = 0;
