@@ -19,6 +19,8 @@ Please cite as:
 	journal      = {European Journal of Operational Research},
 	doi          = {doi.org/10.1016/j.ejor.2026.03.036},
 	issn         = {0377-2217},
+	volume 		 = {334},
+	number 		 = {3},
 	keywords     = {Traveling salesman, Combinatorial optimization, Branch and bound, Graph neural network, Deep learning},
 }
 ```
